@@ -1,4 +1,12 @@
+[![GitHub Release](https://img.shields.io/github/release/oliver-zehentleitner/unicorn-binance-depth-ache-cluster.svg?label=github)](https://github.com/oliver-zehentleitner/unicorn-binance-depth-ache-cluster/releases)
+[![GitHub Downloads](https://img.shields.io/github/downloads/oliver-zehentleitner/unicorn-binance-depth-ache-cluster/total?color=blue)](https://github.com/oliver-zehentleitner/unicorn-binance-depth-ache-cluster/releases)
 [![License](https://img.shields.io/badge/license-MIT-blue)](https://oliver-zehentleitner.github.io/unicorn-binance-depth-cache-cluster/license.html)
+[![Supported Python Version](https://img.shields.io/pypi/pyversions/unicorn_binance_websocket_api.svg)](https://www.python.org/downloads/)
+[![PyPI - Status](https://img.shields.io/pypi/status/unicorn_binance_websocket_api.svg)](https://github.com/oliver-zehentleitner/unicorn-binance-websocket-api/issues)
+[![codecov](https://codecov.io/gh/oliver-zehentleitner/unicorn-binance-websocket-api/branch/master/graph/badge.svg?token=5I03AZ3F5S)](https://codecov.io/gh/oliver-zehentleitner/unicorn-binance-websocket-api)
+[![CodeQL](https://github.com/oliver-zehentleitner/unicorn-binance-websocket-api/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/oliver-zehentleitner/unicorn-binance-websocket-api/actions/workflows/codeql-analysis.yml)
+[![Unit Tests](https://github.com/oliver-zehentleitner/unicorn-binance-websocket-api/actions/workflows/unit-tests.yml/badge.svg)](https://github.com/oliver-zehentleitner/unicorn-binance-websocket-api/actions/workflows/unit-tests.yml)
+
 [![Build and Publish PyPi (ubdcc-dcn)](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/build_wheels_ubdcc_dcn.yml/badge.svg)](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/build_wheels_ubdcc_dcn.yml)
 [![Build and Publish PyPi (ubdcc-mgmt)](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/build_wheels_ubdcc_mgmt.yml/badge.svg)](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/build_wheels_ubdcc_mgmt.yml)
 [![Build and Publish PyPi (ubdcc-restapi)](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/build_wheels_ubdcc_restapi.yml/badge.svg)](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/build_wheels_ubdcc_restapi.yml)
@@ -15,11 +23,8 @@ Instances on a Kubernetes Cluster for high-frequency access to Binance's DepthCa
 The cluster can be accessed from any programming language via a REST API, allowing Asks and Bids to be retrieved in 
 JSON format.
 
-[Get help](https://about.me/oliver-zehentleitner/get-support.html)!
 
-If you like the project, please 
-[![star](https://raw.githubusercontent.com/oliver-zehentleitner/unicorn-binance-local-depth-cache/master/images/misc/star.png)](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/stargazers) it on 
-[GitHub](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster)! 
+Part of '[UNICORN Binance Suite](https://github.com/oliver-zehentleitner/unicorn-binance-suite)'.
 
 ## What is UBDCC?
 
@@ -61,19 +66,9 @@ provided by
 | [Binance USD-M Futures Testnet](https://testnet.binancefuture.com) | `binance.com-futures-testnet` |
 | [Binance US](https://www.binance.us/)                              | `binance.us`                  |
 
-
-## Current State
-
-The first MVP is stable and offers the most critical features for efficient DepthCache management. Future improvements 
-might include switching to websockets instead of REST queries, or implementing simultaneous queries for both Asks and 
-Bids. [Vote here for new features!](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement)
-
-For more information, check out the 
-[GitHub Repository](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster) and the
-[Docs](https://oliver-zehentleitner.github.io/unicorn-binance-depth-cache-cluster).
-
-## Watch a Demo Video
-[![Watch the demo video](https://img.youtube.com/vi/hq2iZPiFnvE/maxresdefault.jpg)](https://www.youtube.com/watch?v=hq2iZPiFnvE)
+If you like the project, please 
+[![star](https://raw.githubusercontent.com/oliver-zehentleitner/unicorn-binance-local-depth-cache/master/images/misc/star.png)](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/stargazers) it on 
+[GitHub](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster)! 
 
 ## Installation
 
@@ -217,7 +212,3 @@ jurisdiction.
 
 Under no circumstances will we be responsible or liable for any claims, damages, losses, expenses, costs or liabilities 
 of any kind, including but not limited to direct or indirect damages for loss of profits.
-
-## Commercial Support
-
-***Do you need a developer, operator or consultant?*** [Get in touch](https://about.me/oliver-zehentleitner/get-support.html) for a non-binding initial consultation!
