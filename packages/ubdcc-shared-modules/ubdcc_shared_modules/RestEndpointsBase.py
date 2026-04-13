@@ -17,7 +17,7 @@
 # Copyright (c) 2024-2026, Oliver Zehentleitner (https://about.me/oliver-zehentleitner)
 # All rights reserved.
 
-import json
+import orjson as json
 import time
 from fastapi import Request
 from fastapi.responses import JSONResponse

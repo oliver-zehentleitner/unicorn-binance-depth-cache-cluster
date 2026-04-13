@@ -25,6 +25,7 @@ repository = "https://github.com/oliver-zehentleitner/unicorn-binance-depth-cach
 python = ">=3.12.0"
 aiohttp = "*"
 Cython = "*"
+orjson = "*"
 fastapi = "*"
 kubernetes = "*"
 uvicorn = "*"

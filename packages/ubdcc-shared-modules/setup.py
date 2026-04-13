@@ -38,7 +38,7 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     license='MIT',
-    install_requires=['aiohttp', 'Cython', 'fastapi', 'kubernetes', 'uvicorn'],
+    install_requires=['aiohttp', 'Cython', 'fastapi', 'kubernetes', 'orjson', 'uvicorn'],
     keywords='',
     project_urls={
         'Howto': 'https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster#howto',
