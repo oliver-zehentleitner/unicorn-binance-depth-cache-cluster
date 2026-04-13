@@ -17,7 +17,6 @@
 # Copyright (c) 2024-2026, Oliver Zehentleitner (https://about.me/oliver-zehentleitner)
 # All rights reserved.
 
-import base64
 import orjson as json
 from ubdcc_shared_modules.Database import Database
 from ubdcc_shared_modules.RestEndpointsBase import RestEndpointsBase, Request
@@ -35,7 +34,7 @@ class RestEndpoints(RestEndpointsBase):
         async def create_depthcache(request: Request):
             return await self.create_depthcache(request=request)
 
-        @self.fastapi.get("/create_depthcaches")
+        @self.fastapi.post("/create_depthcaches")
         async def create_depthcaches(request: Request):
             return await self.create_depthcaches(request=request)
 
@@ -125,11 +124,12 @@ class RestEndpoints(RestEndpointsBase):
         ready_check = self.throw_error_if_mgmt_not_ready(request=request, event=event)
         if ready_check is not None:
             return ready_check
-        exchange = request.query_params.get("exchange", None)
-        markets = request.query_params.get("markets", None)
-        desired_quantity = request.query_params.get("desired_quantity", None)
-        update_interval = request.query_params.get("update_interval", None)
-        refresh_interval = request.query_params.get("refresh_interval", None)
+        body = json.loads(await request.body())
+        exchange = body.get("exchange", None)
+        markets = body.get("markets", None)
+        desired_quantity = body.get("desired_quantity", None)
+        update_interval = body.get("update_interval", None)
+        refresh_interval = body.get("refresh_interval", None)
         if exchange == "None":
             exchange = None
         if markets == "None":
@@ -149,7 +149,6 @@ class RestEndpoints(RestEndpointsBase):
         if exchange is None or markets is None:
             return self.get_error_response(event=event, error_id="#1016",
                                            message="Missing required parameter: exchange, markets")
-        markets = json.loads(base64.b64decode(markets).decode('utf-8'))
         for market in markets:
             if self.db.exists_depthcache(exchange=exchange, market=market) is False:
                 try:
