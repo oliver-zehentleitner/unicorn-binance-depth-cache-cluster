@@ -1,5 +1,6 @@
 aiohttp
 cython
 fastapi
+orjson
 kubernetes
 uvicorn

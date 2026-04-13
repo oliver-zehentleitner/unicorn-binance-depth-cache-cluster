@@ -21,7 +21,7 @@ import aiohttp
 import asyncio
 import cython
 import logging
-import json
+import orjson as json
 import os
 import signal as sys_signal
 import socket

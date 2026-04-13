@@ -18,7 +18,7 @@
 # All rights reserved.
 
 import base64
-import json
+import orjson as json
 from ubdcc_shared_modules.Database import Database
 from ubdcc_shared_modules.RestEndpointsBase import RestEndpointsBase, Request
 

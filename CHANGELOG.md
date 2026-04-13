@@ -9,6 +9,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 [How to upgrade to the latest version!](https://oliver-zehentleitner.github.io/unicorn-binance-depth-cache-cluster/readme.html#installation-and-upgrade)
 
+## 0.2.1 (development)
+### Changed
+- Replaced `json` with `orjson` for faster JSON parsing (closes #5)
+
 ## 0.2.0
 ### Added
 - AGENTS.md and TASKS.md
