@@ -32,7 +32,7 @@ class RestEndpoints(RestEndpointsBase):
         async def create_depthcache(request: Request):
             return await self.create_depthcache(request=request)
 
-        @self.fastapi.get("/create_depthcaches")
+        @self.fastapi.post("/create_depthcaches")
         async def create_depthcaches(request: Request):
             return await self.create_depthcaches(request=request)
 
@@ -152,18 +152,9 @@ class RestEndpoints(RestEndpointsBase):
         request_url = str(request.url)
         used_pods: list = [[self.app.id['name'], self.app.id['uid']]]
         host = self.app.get_cluster_mgmt_address()
-        exchange = request.query_params.get("exchange")
-        markets = request.query_params.get("markets")
-        desired_quantity = request.query_params.get("desired_quantity")
-        update_interval = request.query_params.get("update_interval")
-        refresh_interval = request.query_params.get("refresh_interval")
-        query = (f"?exchange={exchange}&"
-                 f"markets={markets}&"
-                 f"update_interval={update_interval}&"
-                 f"refresh_interval={refresh_interval}&"
-                 f"desired_quantity={desired_quantity}")
-        url = host + endpoint + query
-        result = await self.app.request(url=url, method="get")
+        body = await request.json()
+        url = host + endpoint
+        result = await self.app.request(url=url, method="post", params=body)
         if result.get('error') is not None and result.get('error_id') is not None:
             return self.get_error_response(event=event, error_id="#9000", message=f"Mgmt service not available!",
                                            params={"error": str(result)}, process_start_time=process_start_time,

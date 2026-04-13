@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## 0.2.1 (development)
 ### Changed
 - Replaced `json` with `orjson` for faster JSON parsing (closes #5)
+- `/create_depthcaches` switched from GET to POST — markets list is now sent as JSON body, fixing URL-too-long errors when creating many DepthCaches at once (closes #10)
 
 ## 0.2.0
 ### Added
