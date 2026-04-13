@@ -552,6 +552,3 @@ class App:
                                 log="error")
             await asyncio.sleep(3)
         return False
-        except AttributeError as error_msg:
-            self.stdout_msg(f"Invalid license! - AttributeError: {error_msg}", log="error")
-            return False
