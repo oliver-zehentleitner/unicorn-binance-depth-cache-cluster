@@ -6,10 +6,8 @@
 [![Read the Docs](https://img.shields.io/badge/read-%20docs-yellow)](https://oliver-zehentleitner.github.io/unicorn-binance-depth-cache-cluster)
 [![Github](https://img.shields.io/badge/source-github-cbc2c8)](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster)
 [![Telegram](https://img.shields.io/badge/community-telegram-41ab8c)](https://t.me/unicorndevs)
-[![Gitter](https://img.shields.io/badge/community-gitter-41ab8c)](https://gitter.im/unicorn-trading-suite/unicorn-binance-depth-cache-cluster?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Get Free Professional Support](
 
-# UNICORN DepthCache Cluster for Binance (UBDCC)
+# UNICORN Binance DepthCache Cluster (UBDCC)
 
 A highly scalable Kubernetes application to manage multiple and redundant UNICORN Binance Local Depth Cache 
 Instances on a Kubernetes Cluster for high-frequency access to Binance's DepthCache data (order books). 
