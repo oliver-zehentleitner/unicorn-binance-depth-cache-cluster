@@ -160,9 +160,28 @@ noticeable in production because at least one copy is always running.
 
 ## REST API
 
-The REST API (default port **42081** locally, port **80** on Kubernetes) provides the following endpoints:
+The REST API (default port **42081** locally, port **80** on Kubernetes) is your single access point to the cluster. 
+On Kubernetes, a LoadBalancer service distributes requests across restapi pods automatically. Locally, you connect 
+directly to one restapi instance — it handles all routing to mgmt and DCN processes internally.
 
-### Create DepthCaches
+### Endpoints
+
+| Endpoint | Method | Parameters | Description |
+|----------|--------|------------|-------------|
+| `/create_depthcache` | GET | `exchange`, `market`, `desired_quantity`, `update_interval`, `refresh_interval` | Create a single DepthCache |
+| `/create_depthcaches` | POST/GET | `exchange`, `markets`, `desired_quantity`, `update_interval`, `refresh_interval` | Create multiple DepthCaches (POST: JSON body, GET: comma-separated markets) |
+| `/get_asks` | GET | `exchange`, `market`, `limit_count`, `threshold_volume` | Get ask side of the order book |
+| `/get_bids` | GET | `exchange`, `market`, `limit_count`, `threshold_volume` | Get bid side of the order book |
+| `/get_cluster_info` | GET | — | Cluster overview: registered pods, versions, DB state |
+| `/get_depthcache_list` | GET | — | List all DepthCaches with status and distribution |
+| `/get_depthcache_info` | GET | `exchange`, `market` | Detailed info for a specific DepthCache |
+| `/stop_depthcache` | GET | `exchange`, `market` | Stop and remove a DepthCache |
+
+All endpoints accept `debug=true` as an additional parameter for timing and routing details.
+
+### Examples
+
+#### Create DepthCaches
 
 ```bash
 # Create multiple DepthCaches (POST with JSON body)
@@ -177,7 +196,7 @@ curl 'http://127.0.0.1:42081/create_depthcache?exchange=binance.com&market=BTCUS
 curl 'http://127.0.0.1:42081/create_depthcaches?exchange=binance.com&markets=BTCUSDT,ETHUSDT&desired_quantity=1'
 ```
 
-### Query order book data
+#### Query order book data
 
 ```bash
 # Get top 3 asks
@@ -187,7 +206,7 @@ curl 'http://127.0.0.1:42081/get_asks?exchange=binance.com&market=BTCUSDT&limit_
 curl 'http://127.0.0.1:42081/get_bids?exchange=binance.com&market=ETHUSDT&threshold_volume=100000'
 ```
 
-### Manage and monitor
+#### Manage and monitor
 
 ```bash
 # List all DepthCaches and their status
@@ -203,7 +222,7 @@ curl 'http://127.0.0.1:42081/get_cluster_info'
 curl 'http://127.0.0.1:42081/stop_depthcache?exchange=binance.com&market=BTCUSDT'
 ```
 
-### Debugging
+#### Debugging
 
 Add `debug=true` to any request to get timing and routing details:
 
