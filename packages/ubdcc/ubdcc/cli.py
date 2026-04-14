@@ -174,13 +174,17 @@ def cmd_start(args):
 
     while True:
         try:
-            cmd = input("ubdcc> ").strip().lower()
+            raw = input("ubdcc> ").strip()
         except (KeyboardInterrupt, EOFError):
             do_shutdown()
 
-        if not cmd:
+        if not raw:
             continue
-        elif cmd in ('status', '/status'):
+        parts = raw.split(None, 1)
+        cmd = parts[0].lower()
+        arg = parts[1] if len(parts) > 1 else None
+
+        if cmd in ('status', '/status'):
             try:
                 response = requests.get(f"http://127.0.0.1:{mgmt_port}/get_cluster_info", timeout=5)
                 data = response.json()
@@ -192,24 +196,21 @@ def cmd_start(args):
                 print("Cannot connect to mgmt.")
         elif cmd in ('stop', '/stop', 'quit', 'exit'):
             do_shutdown()
-        elif cmd.startswith(('add-dcn', '/add-dcn')):
-            parts = cmd.split()
-            count = int(parts[1]) if len(parts) > 1 else 1
+        elif cmd in ('add-dcn', '/add-dcn'):
+            count = int(arg) if arg else 1
             for _ in range(count):
                 nr, pid = spawn_dcn()
                 print(f"  dcn-{nr} started (PID {pid})")
             print(f"Waiting for registration...")
             time.sleep(3)
-        elif cmd.startswith(('remove-dcn ', '/remove-dcn ')):
-            target = cmd.split(None, 1)[1] if len(cmd.split(None, 1)) > 1 else None
-            if target:
-                remove_dcn(mgmt_port, target, processes)
+        elif cmd in ('remove-dcn', '/remove-dcn'):
+            if arg:
+                remove_dcn(mgmt_port, arg, processes)
             else:
                 print("Usage: remove-dcn <pod-name>")
-        elif cmd.startswith(('restart ', '/restart ')):
-            target = cmd.split(None, 1)[1] if len(cmd.split(None, 1)) > 1 else None
-            if target:
-                restart_pod(mgmt_port, target)
+        elif cmd in ('restart', '/restart'):
+            if arg:
+                restart_pod(mgmt_port, arg)
             else:
                 print("Usage: restart <pod-name>")
         elif cmd in ('help', '/help', '?'):
