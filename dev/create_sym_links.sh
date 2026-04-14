@@ -21,4 +21,10 @@ ln -s ../ubdcc-shared-modules/ubdcc_shared_modules .
 cd ubdcc_restapi
 ln -s ../ubdcc_shared_modules .
 
+cd ../../ubdcc/
+ln -s ../ubdcc-dcn/ubdcc_dcn .
+ln -s ../ubdcc-mgmt/ubdcc_mgmt .
+ln -s ../ubdcc-restapi/ubdcc_restapi .
+ln -s ../ubdcc-shared-modules/ubdcc_shared_modules .
+
 
