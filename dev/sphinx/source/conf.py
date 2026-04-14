@@ -90,7 +90,7 @@ pygments_style = None
 html_theme = 'alabaster'
 html_context = {'github_user_name': 'oliver-zehentleitner',
                 'github_repo_name': 'unicorn-binance-depth-cache-cluster',
-                'project_name': project,
+                'project_name': project}
 
 myst_heading_anchors = 3
 
