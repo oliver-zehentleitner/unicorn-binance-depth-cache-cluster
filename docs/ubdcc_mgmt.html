@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ubdcc_mgmt package &#8212; unicorn-binance-depth-cache-cluster 0.3.0 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
+    <link rel="stylesheet" type="text/css" href="_static/pydoctheme.css?v=fdf8e9ae" />
+    
+    <script src="_static/documentation_options.js?v=6efca38a"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="ubdcc_restapi package" href="ubdcc_restapi.html" />
+    <link rel="prev" title="Unicorn Depth Cache Cluster Modules" href="modules.html" /><link rel="shortcut icon" type="image/png" href="_static/py.png" />
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+            <script type="text/javascript" src="_static/copybutton.js"></script>
+            <script type="text/javascript" src="_static/menu.js"></script> 
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <label for="menuToggler" class="toggler__label">
+        <span></span>
+    </label>
+    <nav class="nav-content" role="navigation">
+        <form role="search" class="search" action="search.html" method="get">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                <path fill-rule="nonzero"
+                        d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="#444"></path>
+            </svg>
+            <input type="text" name="q" aria-label="Quick search"/>
+            <input type="submit" value="Go"/>
+        </form>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <p class="logo">
+                <div style="text-align: center;">
+                    <a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite"><img src="https://raw.githubusercontent.com/oliver-zehentleitner/unicorn-binance-suite/refs/heads/master/images/logo/LUCIT-UBS-Logo.png"></a>
+                    <br>
+                </div>
+            </p>
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">ubdcc_mgmt package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-ubdcc_mgmt.Mgmt">ubdcc_mgmt.Mgmt module</a><ul>
+<li><a class="reference internal" href="#ubdcc_mgmt.Mgmt.Mgmt"><code class="docutils literal notranslate"><span class="pre">Mgmt</span></code></a><ul>
+<li><a class="reference internal" href="#ubdcc_mgmt.Mgmt.Mgmt.main"><code class="docutils literal notranslate"><span class="pre">Mgmt.main()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-ubdcc_mgmt.RestEndpoints">ubdcc_mgmt.RestEndpoints module</a><ul>
+<li><a class="reference internal" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints"><code class="docutils literal notranslate"><span class="pre">RestEndpoints</span></code></a><ul>
+<li><a class="reference internal" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.create_depthcache"><code class="docutils literal notranslate"><span class="pre">RestEndpoints.create_depthcache()</span></code></a></li>
+<li><a class="reference internal" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.create_depthcaches"><code class="docutils literal notranslate"><span class="pre">RestEndpoints.create_depthcaches()</span></code></a></li>
+<li><a class="reference internal" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.get_cluster_info"><code class="docutils literal notranslate"><span class="pre">RestEndpoints.get_cluster_info()</span></code></a></li>
+<li><a class="reference internal" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.get_depthcache_info"><code class="docutils literal notranslate"><span class="pre">RestEndpoints.get_depthcache_info()</span></code></a></li>
+<li><a class="reference internal" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.get_depthcache_list"><code class="docutils literal notranslate"><span class="pre">RestEndpoints.get_depthcache_list()</span></code></a></li>
+<li><a class="reference internal" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.register"><code class="docutils literal notranslate"><span class="pre">RestEndpoints.register()</span></code></a></li>
+<li><a class="reference internal" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.stop_depthcache"><code class="docutils literal notranslate"><span class="pre">RestEndpoints.stop_depthcache()</span></code></a></li>
+<li><a class="reference internal" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.ubdcc_get_responsible_dcn_addresses"><code class="docutils literal notranslate"><span class="pre">RestEndpoints.ubdcc_get_responsible_dcn_addresses()</span></code></a></li>
+<li><a class="reference internal" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.ubdcc_node_cancellation"><code class="docutils literal notranslate"><span class="pre">RestEndpoints.ubdcc_node_cancellation()</span></code></a></li>
+<li><a class="reference internal" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.ubdcc_node_registration"><code class="docutils literal notranslate"><span class="pre">RestEndpoints.ubdcc_node_registration()</span></code></a></li>
+<li><a class="reference internal" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.ubdcc_node_sync"><code class="docutils literal notranslate"><span class="pre">RestEndpoints.ubdcc_node_sync()</span></code></a></li>
+<li><a class="reference internal" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.ubdcc_update_depthcache_distribution"><code class="docutils literal notranslate"><span class="pre">RestEndpoints.ubdcc_update_depthcache_distribution()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-ubdcc_mgmt">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="modules.html"
+                          title="previous chapter">Unicorn Depth Cache Cluster Modules</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="ubdcc_restapi.html"
+                          title="next chapter">ubdcc_restapi package</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/ubdcc_mgmt.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: block" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+<div role="note" aria-label="source code">
+    <h3>GitHub</h3>
+    <ul class="this-page-menu">
+      <li><a href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster">Show Source</a></li>
+      
+<li>
+<a class="github-button" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster"
+   data-icon="octicon-star" data-show-count="true"
+   aria-label="Star oliver-zehentleitner/unicorn-binance-depth-cache-cluster on GitHub">Star</a>
+<br />
+<a class="github-button" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/subscription"
+   data-icon="octicon-eye" data-show-count="true"
+   aria-label="Watch oliver-zehentleitner/unicorn-binance-depth-cache-cluster on GitHub">Watch</a>
+<br />
+<a class="github-button" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/fork"
+   data-icon="octicon-repo-forked" data-show-count="true"
+   aria-label="Fork oliver-zehentleitner/unicorn-binance-depth-cache-cluster on GitHub">Fork</a>
+<br />
+<a class="github-button" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/issues"
+   data-icon="octicon-issue-opened"
+   data-show-count="true" aria-label="Issue oliver-zehentleitner/unicorn-binance-depth-cache-cluster on GitHub">Issue</a>
+    
+</li>
+
+    </ul>
+</div>
+        </nav>
+    </div>
+</div>
+  
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ubdcc_restapi.html" title="ubdcc_restapi package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="Unicorn Depth Cache Cluster Modules"
+             accesskey="P">previous</a> |</li>
+              
+                  
+                  
+              <li><img src="_static/py.png" alt="Python"
+                       style="vertical-align: middle; margin-top: -1px"/></li>
+              <li><a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite#documentation">Docs Index</a> | </li>
+              <li><a href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster">unicorn-binance-depth-cache-cluster</a> &#187;</li>
+                  
+              
+              
+              <a href="index.html">Docs</a> &#187;
+              
+          <li class="nav-item nav-item-1"><a href="modules.html" accesskey="U">Unicorn Depth Cache Cluster Modules</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">ubdcc_mgmt package</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="search.html" method="get">
+          <input placeholder="Quick search" aria-label="Quick search" type="text" name="q" />
+          <input type="submit" value="Go" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="ubdcc-mgmt-package">
+<h1>ubdcc_mgmt package<a class="headerlink" href="#ubdcc-mgmt-package" title="Link to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-ubdcc_mgmt.Mgmt">
+<span id="ubdcc-mgmt-mgmt-module"></span><h2>ubdcc_mgmt.Mgmt module<a class="headerlink" href="#module-ubdcc_mgmt.Mgmt" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ubdcc_mgmt.Mgmt.Mgmt">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">ubdcc_mgmt.Mgmt.</span></span><span class="sig-name descname"><span class="pre">Mgmt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cwd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mgmt_port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ubdcc_mgmt/Mgmt.html#Mgmt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ubdcc_mgmt.Mgmt.Mgmt" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="ubdcc_shared_modules.html#ubdcc_shared_modules.ServiceBase.ServiceBase" title="ubdcc_shared_modules.ServiceBase.ServiceBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">ServiceBase</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ubdcc_mgmt.Mgmt.Mgmt.main">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ubdcc_mgmt/Mgmt.html#Mgmt.main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ubdcc_mgmt.Mgmt.Mgmt.main" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-ubdcc_mgmt.RestEndpoints">
+<span id="ubdcc-mgmt-restendpoints-module"></span><h2>ubdcc_mgmt.RestEndpoints module<a class="headerlink" href="#module-ubdcc_mgmt.RestEndpoints" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ubdcc_mgmt.RestEndpoints.RestEndpoints">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">ubdcc_mgmt.RestEndpoints.</span></span><span class="sig-name descname"><span class="pre">RestEndpoints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ubdcc_mgmt/RestEndpoints.html#RestEndpoints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="ubdcc_shared_modules.html#ubdcc_shared_modules.RestEndpointsBase.RestEndpointsBase" title="ubdcc_shared_modules.RestEndpointsBase.RestEndpointsBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">RestEndpointsBase</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ubdcc_mgmt.RestEndpoints.RestEndpoints.create_depthcache">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">create_depthcache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ubdcc_mgmt/RestEndpoints.html#RestEndpoints.create_depthcache"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.create_depthcache" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ubdcc_mgmt.RestEndpoints.RestEndpoints.create_depthcaches">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">create_depthcaches</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ubdcc_mgmt/RestEndpoints.html#RestEndpoints.create_depthcaches"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.create_depthcaches" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ubdcc_mgmt.RestEndpoints.RestEndpoints.get_cluster_info">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_cluster_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ubdcc_mgmt/RestEndpoints.html#RestEndpoints.get_cluster_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.get_cluster_info" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ubdcc_mgmt.RestEndpoints.RestEndpoints.get_depthcache_info">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_depthcache_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ubdcc_mgmt/RestEndpoints.html#RestEndpoints.get_depthcache_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.get_depthcache_info" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ubdcc_mgmt.RestEndpoints.RestEndpoints.get_depthcache_list">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_depthcache_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ubdcc_mgmt/RestEndpoints.html#RestEndpoints.get_depthcache_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.get_depthcache_list" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ubdcc_mgmt.RestEndpoints.RestEndpoints.register">
+<span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ubdcc_mgmt/RestEndpoints.html#RestEndpoints.register"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.register" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ubdcc_mgmt.RestEndpoints.RestEndpoints.stop_depthcache">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">stop_depthcache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ubdcc_mgmt/RestEndpoints.html#RestEndpoints.stop_depthcache"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.stop_depthcache" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ubdcc_mgmt.RestEndpoints.RestEndpoints.ubdcc_get_responsible_dcn_addresses">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ubdcc_get_responsible_dcn_addresses</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ubdcc_mgmt/RestEndpoints.html#RestEndpoints.ubdcc_get_responsible_dcn_addresses"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.ubdcc_get_responsible_dcn_addresses" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ubdcc_mgmt.RestEndpoints.RestEndpoints.ubdcc_node_cancellation">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ubdcc_node_cancellation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ubdcc_mgmt/RestEndpoints.html#RestEndpoints.ubdcc_node_cancellation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.ubdcc_node_cancellation" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ubdcc_mgmt.RestEndpoints.RestEndpoints.ubdcc_node_registration">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ubdcc_node_registration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ubdcc_mgmt/RestEndpoints.html#RestEndpoints.ubdcc_node_registration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.ubdcc_node_registration" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ubdcc_mgmt.RestEndpoints.RestEndpoints.ubdcc_node_sync">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ubdcc_node_sync</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ubdcc_mgmt/RestEndpoints.html#RestEndpoints.ubdcc_node_sync"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.ubdcc_node_sync" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ubdcc_mgmt.RestEndpoints.RestEndpoints.ubdcc_update_depthcache_distribution">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ubdcc_update_depthcache_distribution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ubdcc_mgmt/RestEndpoints.html#RestEndpoints.ubdcc_update_depthcache_distribution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.ubdcc_update_depthcache_distribution" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-ubdcc_mgmt">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-ubdcc_mgmt" title="Link to this heading">¶</a></h2>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo">
+                <div style="text-align: center;">
+                    <a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite"><img src="https://raw.githubusercontent.com/oliver-zehentleitner/unicorn-binance-suite/refs/heads/master/images/logo/LUCIT-UBS-Logo.png"></a>
+                    <br>
+                </div>
+            </p>
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">ubdcc_mgmt package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-ubdcc_mgmt.Mgmt">ubdcc_mgmt.Mgmt module</a><ul>
+<li><a class="reference internal" href="#ubdcc_mgmt.Mgmt.Mgmt"><code class="docutils literal notranslate"><span class="pre">Mgmt</span></code></a><ul>
+<li><a class="reference internal" href="#ubdcc_mgmt.Mgmt.Mgmt.main"><code class="docutils literal notranslate"><span class="pre">Mgmt.main()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-ubdcc_mgmt.RestEndpoints">ubdcc_mgmt.RestEndpoints module</a><ul>
+<li><a class="reference internal" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints"><code class="docutils literal notranslate"><span class="pre">RestEndpoints</span></code></a><ul>
+<li><a class="reference internal" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.create_depthcache"><code class="docutils literal notranslate"><span class="pre">RestEndpoints.create_depthcache()</span></code></a></li>
+<li><a class="reference internal" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.create_depthcaches"><code class="docutils literal notranslate"><span class="pre">RestEndpoints.create_depthcaches()</span></code></a></li>
+<li><a class="reference internal" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.get_cluster_info"><code class="docutils literal notranslate"><span class="pre">RestEndpoints.get_cluster_info()</span></code></a></li>
+<li><a class="reference internal" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.get_depthcache_info"><code class="docutils literal notranslate"><span class="pre">RestEndpoints.get_depthcache_info()</span></code></a></li>
+<li><a class="reference internal" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.get_depthcache_list"><code class="docutils literal notranslate"><span class="pre">RestEndpoints.get_depthcache_list()</span></code></a></li>
+<li><a class="reference internal" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.register"><code class="docutils literal notranslate"><span class="pre">RestEndpoints.register()</span></code></a></li>
+<li><a class="reference internal" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.stop_depthcache"><code class="docutils literal notranslate"><span class="pre">RestEndpoints.stop_depthcache()</span></code></a></li>
+<li><a class="reference internal" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.ubdcc_get_responsible_dcn_addresses"><code class="docutils literal notranslate"><span class="pre">RestEndpoints.ubdcc_get_responsible_dcn_addresses()</span></code></a></li>
+<li><a class="reference internal" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.ubdcc_node_cancellation"><code class="docutils literal notranslate"><span class="pre">RestEndpoints.ubdcc_node_cancellation()</span></code></a></li>
+<li><a class="reference internal" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.ubdcc_node_registration"><code class="docutils literal notranslate"><span class="pre">RestEndpoints.ubdcc_node_registration()</span></code></a></li>
+<li><a class="reference internal" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.ubdcc_node_sync"><code class="docutils literal notranslate"><span class="pre">RestEndpoints.ubdcc_node_sync()</span></code></a></li>
+<li><a class="reference internal" href="#ubdcc_mgmt.RestEndpoints.RestEndpoints.ubdcc_update_depthcache_distribution"><code class="docutils literal notranslate"><span class="pre">RestEndpoints.ubdcc_update_depthcache_distribution()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-ubdcc_mgmt">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="modules.html"
+                          title="previous chapter">Unicorn Depth Cache Cluster Modules</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="ubdcc_restapi.html"
+                          title="next chapter">ubdcc_restapi package</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/ubdcc_mgmt.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: block" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+<div role="note" aria-label="source code">
+    <h3>GitHub</h3>
+    <ul class="this-page-menu">
+      <li><a href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster">Show Source</a></li>
+      
+<li>
+<a class="github-button" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster"
+   data-icon="octicon-star" data-show-count="true"
+   aria-label="Star oliver-zehentleitner/unicorn-binance-depth-cache-cluster on GitHub">Star</a>
+<br />
+<a class="github-button" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/subscription"
+   data-icon="octicon-eye" data-show-count="true"
+   aria-label="Watch oliver-zehentleitner/unicorn-binance-depth-cache-cluster on GitHub">Watch</a>
+<br />
+<a class="github-button" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/fork"
+   data-icon="octicon-repo-forked" data-show-count="true"
+   aria-label="Fork oliver-zehentleitner/unicorn-binance-depth-cache-cluster on GitHub">Fork</a>
+<br />
+<a class="github-button" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/issues"
+   data-icon="octicon-issue-opened"
+   data-show-count="true" aria-label="Issue oliver-zehentleitner/unicorn-binance-depth-cache-cluster on GitHub">Issue</a>
+    
+</li>
+
+    </ul>
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ubdcc_restapi.html" title="ubdcc_restapi package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="Unicorn Depth Cache Cluster Modules"
+             >previous</a> |</li>
+              
+                  
+                  
+              <li><img src="_static/py.png" alt="Python"
+                       style="vertical-align: middle; margin-top: -1px"/></li>
+              <li><a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite#documentation">Docs Index</a> | </li>
+              <li><a href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster">unicorn-binance-depth-cache-cluster</a> &#187;</li>
+                  
+              
+              
+              <a href="index.html">Docs</a> &#187;
+              
+          <li class="nav-item nav-item-1"><a href="modules.html" >Unicorn Depth Cache Cluster Modules</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">ubdcc_mgmt package</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="search.html" method="get">
+          <input placeholder="Quick search" aria-label="Quick search" type="text" name="q" />
+          <input type="submit" value="Go" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    <a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite#documentation">Index of all docs</a><br />
+    &copy; <a href="/license.html">Copyright</a> 2024-2026, Oliver Zehentleitner.
+    See <a href="/license.html">License</a> for more information.<br />
+    Last updated on Apr 14 2026 at 18:10 (CET).
+    <a href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/issues/new/choose">Found a bug</a>?
+    <br />
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+        with <a href="https://github.com/LUCIT-Systems-and-Development/python-docs-theme-lucit">python-docs-theme-lucit</a>.
+    </div>
+
+  </body>
+</html>
