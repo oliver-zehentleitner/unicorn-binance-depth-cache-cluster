@@ -27,9 +27,18 @@ rm dev/sphinx/source/security.md
 cp CHANGELOG.md dev/sphinx/source/changelog.md
 cp CODE_OF_CONDUCT.md dev/sphinx/source/code_of_conduct.md
 cp CONTRIBUTING.md dev/sphinx/source/contributing.md
-cp LICENSE dev/sphinx/source/license.rst
 cp README.md dev/sphinx/source/readme.md
 cp SECURITY.md dev/sphinx/source/security.md
+
+# license.rst needs a reST title
+{
+    echo "License"
+    echo "======="
+    echo ""
+    echo "::"
+    echo ""
+    sed 's/^/    /' LICENSE
+} > dev/sphinx/source/license.rst
 
 mkdir -vp dev/sphinx/build
 
