@@ -32,14 +32,20 @@ recovers its state automatically from the remaining nodes.
 
 ## How it works
 
-Deploy UBDCC on a Kubernetes cluster (e.g. 4 rented servers). Create and manage DepthCaches through the REST API 
-instead of running them locally.
+Deploy UBDCC on a Kubernetes cluster and create DepthCaches through the REST API instead of running them locally.
+
+The cluster consists of three pod types:
+- **mgmt** (1x) — manages the cluster state, distributes DepthCaches across nodes
+- **restapi** (1x per node) — REST API gateway, load-balances requests to DCN pods
+- **dcn** (multiple) — runs the actual DepthCaches via UBLDC
+
+Each DCN pod runs a single Python process, so **one DCN pod per CPU core** gives the best performance (Python's GIL 
+limits each process to one core). A typical setup with 2 servers and 4 cores each: 1 mgmt, 2 restapi, 6 DCN pods.
 
 For example, when you configure the system to create 200 DepthCaches with a `desired_quantity` of `2`, UBDCC will deploy
-2 DepthCaches for each symbol/market. These DepthCaches are evenly distributed across the nodes of the cluster and can 
-download order book snapshots from the Binance REST API using their own public IP addresses. On the first run, each 
-server starts 50 DepthCaches, synchronizing the full set of 200 as quickly as possible. Afterward, replicas are 
-initiated, with each node handling 100 DepthCaches.
+2 DepthCaches for each symbol/market. These are evenly distributed across the DCN pods and can download order book 
+snapshots from the Binance REST API using their own public IP addresses. On the first run, each pod starts its share of 
+DepthCaches as quickly as possible. Afterward, replicas are initiated for redundancy.
 
 [![Visual overview](https://lucid.app/publicSegments/view/7ba7d734-4bb2-467f-b7b9-74ea0d1deec2/image.png)](https://lucid.app/publicSegments/view/7ba7d734-4bb2-467f-b7b9-74ea0d1deec2/image.png)
 
