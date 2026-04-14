@@ -9,11 +9,19 @@
 [![Build and Publish PyPi (ubdcc-mgmt)](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/build_wheels_ubdcc_mgmt.yml/badge.svg)](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/build_wheels_ubdcc_mgmt.yml)
 [![Build and Publish PyPi (ubdcc-restapi)](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/build_wheels_ubdcc_restapi.yml/badge.svg)](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/build_wheels_ubdcc_restapi.yml)
 [![Build and Publish PyPi (ubdcc-shared-modules)](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/build_wheels_ubdcc_shared_modules.yml/badge.svg)](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/build_wheels_ubdcc_shared_modules.yml)
+[![Build and Push Docker Images](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/docker_build.yml/badge.svg)](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/docker_build.yml)
+[![Package and Publish Helm Chart](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/helm_release.yml/badge.svg)](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/helm_release.yml)
+[![Create GitHub Release](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/gh_release.yml/badge.svg)](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/gh_release.yml)
 [![Read the Docs](https://img.shields.io/badge/read-%20docs-yellow)](https://oliver-zehentleitner.github.io/unicorn-binance-depth-cache-cluster)
 [![Github](https://img.shields.io/badge/source-github-cbc2c8)](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster)
 [![Telegram](https://img.shields.io/badge/community-telegram-41ab8c)](https://t.me/unicorndevs)
 
 # UNICORN Binance DepthCache Cluster (UBDCC)
+
+[What](#what-is-ubdcc) | [Architecture](#architecture) | [Features](#key-features) | 
+[Local Setup](#local-setup-without-kubernetes) | [REST API](#rest-api) | [Kubernetes](#kubernetes-setup) | 
+[Python Client](#accessing-from-python) | [Bugs](#how-to-report-bugs-or-suggest-improvements) | 
+[Contributing](#contributing) | [Disclaimer](#disclaimer)
 
 Manage hundreds of Binance order book depth caches and access them via REST API — from any programming language, 
 any number of clients, with load balancing and automatic failover. Simple to set up: `pip install`, start three 
@@ -404,11 +412,11 @@ helm install ubdcc ubdcc/ubdcc --set publicPort.restapi=8080
 kubectl apply -f ./setup/01_namespace_ubdcc.yaml
 kubectl apply -f ./setup/02_role_ubdcc.yaml
 kubectl apply -f ./setup/03_rolebinding_ubdcc.yaml
-kubectl apply -f ./ubdcc-dcn.yaml  
 kubectl apply -f ./ubdcc-mgmt.yaml
 kubectl apply -f ./ubdcc-mgmt_service.yaml
 kubectl apply -f ./ubdcc-restapi.yaml
 kubectl apply -f ./ubdcc-restapi_service.yaml
+kubectl apply -f ./ubdcc-dcn.yaml
 ```
 
 - Get the "LoadBalancer Ingress" IP, the default Port is TCP 80:
@@ -437,20 +445,20 @@ helm uninstall ubdcc
 - Delete the deployment with `kubectl`
 
 ``` 
-kubectl delete -f ./setup/01_namespace_ubdcc.yaml
-kubectl delete -f ./setup/02_role_ubdcc.yaml
-kubectl delete -f ./setup/03_rolebinding_ubdcc.yaml
-kubectl delete -f ./ubdcc-dcn.yaml  
-kubectl delete -f ./ubdcc-mgmt.yaml
-kubectl delete -f ./ubdcc-mgmt_service.yaml
+kubectl delete -f ./ubdcc-dcn.yaml
 kubectl delete -f ./ubdcc-restapi.yaml
 kubectl delete -f ./ubdcc-restapi_service.yaml
+kubectl delete -f ./ubdcc-mgmt.yaml
+kubectl delete -f ./ubdcc-mgmt_service.yaml
+kubectl delete -f ./setup/03_rolebinding_ubdcc.yaml
+kubectl delete -f ./setup/02_role_ubdcc.yaml
+kubectl delete -f ./setup/01_namespace_ubdcc.yaml
 ```
 
 ## Accessing from Python
 
 While the REST API can be used from any language, Python users can use the 
-[UBLDC cluster module](https://github.com/oliver-zehentleitner/unicorn-binance-local-depth-cache?tab=readme-ov-file#connect-to-a-unicorn-binance-depth-cache-cluster) 
+[UBLDC cluster module](https://github.com/oliver-zehentleitner/unicorn-binance-local-depth-cache?tab=readme-ov-file#connect-to-a-unicorn-binance-depthcache-cluster) 
 for a native experience with sync and async support, automatic connection handling, and `debug=True` output.
 
 See the [examples](https://github.com/oliver-zehentleitner/unicorn-binance-local-depth-cache/tree/master/examples/unicorn_binance_depth_cache_cluster).

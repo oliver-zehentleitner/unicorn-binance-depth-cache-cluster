@@ -661,11 +661,18 @@ window.runMermaid = runMermaid;</script>
 <a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/build_wheels_ubdcc_mgmt.yml"><img alt="Build and Publish PyPi (ubdcc-mgmt)" src="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/build_wheels_ubdcc_mgmt.yml/badge.svg" /></a>
 <a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/build_wheels_ubdcc_restapi.yml"><img alt="Build and Publish PyPi (ubdcc-restapi)" src="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/build_wheels_ubdcc_restapi.yml/badge.svg" /></a>
 <a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/build_wheels_ubdcc_shared_modules.yml"><img alt="Build and Publish PyPi (ubdcc-shared-modules)" src="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/build_wheels_ubdcc_shared_modules.yml/badge.svg" /></a>
+<a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/docker_build.yml"><img alt="Build and Push Docker Images" src="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/docker_build.yml/badge.svg" /></a>
+<a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/helm_release.yml"><img alt="Package and Publish Helm Chart" src="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/helm_release.yml/badge.svg" /></a>
+<a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/gh_release.yml"><img alt="Create GitHub Release" src="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/gh_release.yml/badge.svg" /></a>
 <a class="reference external" href="https://oliver-zehentleitner.github.io/unicorn-binance-depth-cache-cluster"><img alt="Read the Docs" src="https://img.shields.io/badge/read-%20docs-yellow" /></a>
 <a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster"><img alt="Github" src="https://img.shields.io/badge/source-github-cbc2c8" /></a>
 <a class="reference external" href="https://t.me/unicorndevs"><img alt="Telegram" src="https://img.shields.io/badge/community-telegram-41ab8c" /></a></p>
 <section id="unicorn-binance-depthcache-cluster-ubdcc">
 <h1>UNICORN Binance DepthCache Cluster (UBDCC)<a class="headerlink" href="#unicorn-binance-depthcache-cluster-ubdcc" title="Link to this heading">¶</a></h1>
+<p><a class="reference internal" href="#what-is-ubdcc">What</a> | <a class="reference internal" href="#architecture">Architecture</a> | <a class="reference internal" href="#key-features">Features</a> |
+<a class="reference internal" href="#local-setup-without-kubernetes">Local Setup</a> | <a class="reference internal" href="#rest-api">REST API</a> | <a class="reference internal" href="#kubernetes-setup">Kubernetes</a> |
+<a class="reference internal" href="#accessing-from-python">Python Client</a> | <a class="reference internal" href="#how-to-report-bugs-or-suggest-improvements">Bugs</a> |
+<a class="reference internal" href="#contributing">Contributing</a> | <a class="reference internal" href="#disclaimer">Disclaimer</a></p>
 <p>Manage hundreds of Binance order book depth caches and access them via REST API — from any programming language,
 any number of clients, with load balancing and automatic failover. Simple to set up: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span></code>, start three
 processes, done.</p>
@@ -1246,11 +1253,11 @@ curl<span class="w"> </span><span class="s1">&#39;http://127.0.0.1:42081/stop_de
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">setup</span><span class="o">/</span><span class="mi">01</span><span class="n">_namespace_ubdcc</span><span class="o">.</span><span class="n">yaml</span>
 <span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">setup</span><span class="o">/</span><span class="mi">02</span><span class="n">_role_ubdcc</span><span class="o">.</span><span class="n">yaml</span>
 <span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">setup</span><span class="o">/</span><span class="mi">03</span><span class="n">_rolebinding_ubdcc</span><span class="o">.</span><span class="n">yaml</span>
-<span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">dcn</span><span class="o">.</span><span class="n">yaml</span>  
 <span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">mgmt</span><span class="o">.</span><span class="n">yaml</span>
 <span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">mgmt_service</span><span class="o">.</span><span class="n">yaml</span>
 <span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">restapi</span><span class="o">.</span><span class="n">yaml</span>
 <span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">restapi_service</span><span class="o">.</span><span class="n">yaml</span>
+<span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">dcn</span><span class="o">.</span><span class="n">yaml</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -1283,14 +1290,14 @@ have access to UBDCC.</p>
 <ul class="simple">
 <li><p>Delete the deployment with <code class="docutils literal notranslate"><span class="pre">kubectl</span></code></p></li>
 </ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">delete</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">setup</span><span class="o">/</span><span class="mi">01</span><span class="n">_namespace_ubdcc</span><span class="o">.</span><span class="n">yaml</span>
-<span class="n">kubectl</span> <span class="n">delete</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">setup</span><span class="o">/</span><span class="mi">02</span><span class="n">_role_ubdcc</span><span class="o">.</span><span class="n">yaml</span>
-<span class="n">kubectl</span> <span class="n">delete</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">setup</span><span class="o">/</span><span class="mi">03</span><span class="n">_rolebinding_ubdcc</span><span class="o">.</span><span class="n">yaml</span>
-<span class="n">kubectl</span> <span class="n">delete</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">dcn</span><span class="o">.</span><span class="n">yaml</span>  
-<span class="n">kubectl</span> <span class="n">delete</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">mgmt</span><span class="o">.</span><span class="n">yaml</span>
-<span class="n">kubectl</span> <span class="n">delete</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">mgmt_service</span><span class="o">.</span><span class="n">yaml</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">delete</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">dcn</span><span class="o">.</span><span class="n">yaml</span>
 <span class="n">kubectl</span> <span class="n">delete</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">restapi</span><span class="o">.</span><span class="n">yaml</span>
 <span class="n">kubectl</span> <span class="n">delete</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">restapi_service</span><span class="o">.</span><span class="n">yaml</span>
+<span class="n">kubectl</span> <span class="n">delete</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">mgmt</span><span class="o">.</span><span class="n">yaml</span>
+<span class="n">kubectl</span> <span class="n">delete</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">mgmt_service</span><span class="o">.</span><span class="n">yaml</span>
+<span class="n">kubectl</span> <span class="n">delete</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">setup</span><span class="o">/</span><span class="mi">03</span><span class="n">_rolebinding_ubdcc</span><span class="o">.</span><span class="n">yaml</span>
+<span class="n">kubectl</span> <span class="n">delete</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">setup</span><span class="o">/</span><span class="mi">02</span><span class="n">_role_ubdcc</span><span class="o">.</span><span class="n">yaml</span>
+<span class="n">kubectl</span> <span class="n">delete</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">setup</span><span class="o">/</span><span class="mi">01</span><span class="n">_namespace_ubdcc</span><span class="o">.</span><span class="n">yaml</span>
 </pre></div>
 </div>
 </section>
@@ -1298,7 +1305,7 @@ have access to UBDCC.</p>
 <section id="accessing-from-python">
 <h2>Accessing from Python<a class="headerlink" href="#accessing-from-python" title="Link to this heading">¶</a></h2>
 <p>While the REST API can be used from any language, Python users can use the
-<a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-local-depth-cache?tab=readme-ov-file#connect-to-a-unicorn-binance-depth-cache-cluster">UBLDC cluster module</a>
+<a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-local-depth-cache?tab=readme-ov-file#connect-to-a-unicorn-binance-depthcache-cluster">UBLDC cluster module</a>
 for a native experience with sync and async support, automatic connection handling, and <code class="docutils literal notranslate"><span class="pre">debug=True</span></code> output.</p>
 <p>See the <a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-local-depth-cache/tree/master/examples/unicorn_binance_depth_cache_cluster">examples</a>.</p>
 </section>
@@ -1515,7 +1522,7 @@ of any kind, including but not limited to direct or indirect damages for loss of
     <a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite#documentation">Index of all docs</a><br />
     &copy; <a href="/license.html">Copyright</a> 2024-2026, Oliver Zehentleitner.
     See <a href="/license.html">License</a> for more information.<br />
-    Last updated on Apr 14 2026 at 19:12 (CET).
+    Last updated on Apr 14 2026 at 21:04 (CET).
     <a href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/issues/new/choose">Found a bug</a>?
     <br />
     Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.

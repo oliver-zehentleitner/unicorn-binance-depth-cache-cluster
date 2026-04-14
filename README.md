@@ -18,7 +18,7 @@
 
 # UNICORN Binance DepthCache Cluster (UBDCC)
 
-[What](#what-is-ubdcc) | [Why](#why) | [Architecture](#architecture) | [Features](#key-features) | 
+[What](#what-is-ubdcc) | [Architecture](#architecture) | [Features](#key-features) | 
 [Local Setup](#local-setup-without-kubernetes) | [REST API](#rest-api) | [Kubernetes](#kubernetes-setup) | 
 [Python Client](#accessing-from-python) | [Bugs](#how-to-report-bugs-or-suggest-improvements) | 
 [Contributing](#contributing) | [Disclaimer](#disclaimer)
@@ -458,7 +458,7 @@ kubectl delete -f ./setup/01_namespace_ubdcc.yaml
 ## Accessing from Python
 
 While the REST API can be used from any language, Python users can use the 
-[UBLDC cluster module](https://github.com/oliver-zehentleitner/unicorn-binance-local-depth-cache?tab=readme-ov-file#connect-to-a-unicorn-binance-depth-cache-cluster) 
+[UBLDC cluster module](https://github.com/oliver-zehentleitner/unicorn-binance-local-depth-cache?tab=readme-ov-file#connect-to-a-unicorn-binance-depthcache-cluster) 
 for a native experience with sync and async support, automatic connection handling, and `debug=True` output.
 
 See the [examples](https://github.com/oliver-zehentleitner/unicorn-binance-local-depth-cache/tree/master/examples/unicorn_binance_depth_cache_cluster).
