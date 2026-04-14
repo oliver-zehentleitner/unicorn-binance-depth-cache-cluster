@@ -406,11 +406,11 @@ helm install ubdcc ubdcc/ubdcc --set publicPort.restapi=8080
 kubectl apply -f ./setup/01_namespace_ubdcc.yaml
 kubectl apply -f ./setup/02_role_ubdcc.yaml
 kubectl apply -f ./setup/03_rolebinding_ubdcc.yaml
-kubectl apply -f ./ubdcc-dcn.yaml  
 kubectl apply -f ./ubdcc-mgmt.yaml
 kubectl apply -f ./ubdcc-mgmt_service.yaml
 kubectl apply -f ./ubdcc-restapi.yaml
 kubectl apply -f ./ubdcc-restapi_service.yaml
+kubectl apply -f ./ubdcc-dcn.yaml
 ```
 
 - Get the "LoadBalancer Ingress" IP, the default Port is TCP 80:
@@ -439,14 +439,14 @@ helm uninstall ubdcc
 - Delete the deployment with `kubectl`
 
 ``` 
-kubectl delete -f ./setup/01_namespace_ubdcc.yaml
-kubectl delete -f ./setup/02_role_ubdcc.yaml
-kubectl delete -f ./setup/03_rolebinding_ubdcc.yaml
-kubectl delete -f ./ubdcc-dcn.yaml  
-kubectl delete -f ./ubdcc-mgmt.yaml
-kubectl delete -f ./ubdcc-mgmt_service.yaml
+kubectl delete -f ./ubdcc-dcn.yaml
 kubectl delete -f ./ubdcc-restapi.yaml
 kubectl delete -f ./ubdcc-restapi_service.yaml
+kubectl delete -f ./ubdcc-mgmt.yaml
+kubectl delete -f ./ubdcc-mgmt_service.yaml
+kubectl delete -f ./setup/03_rolebinding_ubdcc.yaml
+kubectl delete -f ./setup/02_role_ubdcc.yaml
+kubectl delete -f ./setup/01_namespace_ubdcc.yaml
 ```
 
 ## Accessing from Python
