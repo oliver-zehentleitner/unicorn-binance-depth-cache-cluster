@@ -448,7 +448,9 @@ def print_status_table(data, mgmt_port=42080):
 def main():
     parser = argparse.ArgumentParser(
         prog='ubdcc',
-        description='UNICORN Binance DepthCache Cluster — Cluster Manager'
+        description='UNICORN Binance DepthCache Cluster — Cluster Manager\n'
+                    'https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster',
+        formatter_class=argparse.RawDescriptionHelpFormatter
     )
     parser.add_argument('-v', '--version', action='version', version=f'ubdcc {__version__}')
 
