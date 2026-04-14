@@ -87,7 +87,7 @@ helm repo add ubdcc https://oliver-zehentleitner.github.io/unicorn-binance-depth
 helm repo update
 ```
 
-- Install the UNICORN DepthCache Cluster for Binance
+- Install the UNICORN Binance DepthCache Cluster
 
 ``` 
 helm install ubdcc ubdcc/ubdcc
@@ -190,7 +190,7 @@ If you don't find an issue related to your topic, please open a new [issue](http
 [Report a security bug!](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/security/policy)
 
 ## Contributing
-[UNICORN DepthCache Cluster for Binance](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster) is an open 
+[UNICORN Binance DepthCache Cluster](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster) is an open 
 source project which welcomes contributions which can be anything from simple documentation fixes and reporting dead links to new features. To 
 contribute follow 
 [this guide](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/blob/master/CONTRIBUTING.md).
