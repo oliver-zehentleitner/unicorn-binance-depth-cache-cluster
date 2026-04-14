@@ -14,12 +14,12 @@
 
 # UNICORN Binance DepthCache Cluster (UBDCC)
 
-A highly scalable Kubernetes application to manage multiple and redundant UNICORN Binance Local Depth Cache 
-Instances on a Kubernetes Cluster for high-frequency access to Binance's DepthCache data (order books). 
+A highly scalable Kubernetes application to manage multiple and redundant 
+[UNICORN Binance Local Depth Cache](https://github.com/oliver-zehentleitner/unicorn-binance-local-depth-cache) 
+instances on a Kubernetes Cluster for high-frequency access to Binance's DepthCache data (order books). 
 
 The cluster can be accessed from any programming language via a REST API, allowing Asks and Bids to be retrieved in 
 JSON format.
-
 
 Part of '[UNICORN Binance Suite](https://github.com/oliver-zehentleitner/unicorn-binance-suite)'.
 
@@ -52,6 +52,8 @@ provided by
 - **Supported Architectures**: Kubernetes on 64-bit (x86_64) and 32-bit (i686): musllinux (based on musl libc 1.1+),
   manylinux (based on glibc 2.5+ and 2.17+) compatible with manylinux1 and manylinux2014
 - **Manages Binance Weight Costs**: If the weight costs become too high, the cluster throttles the initialization.
+- **Self-Healing State**: The cluster database is replicated to every node on each sync. If the management pod 
+restarts, it automatically recovers the latest state from the nodes — no external database (Redis, etcd) required.
 - **Supported Exchanges**:
 
 | Exchange                                                           | Exchange string               | 
