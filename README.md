@@ -126,12 +126,77 @@ DepthCache data without duplicate WebSocket connections.
 ### Install
 
 ```bash
-pip install ubdcc-mgmt ubdcc-restapi ubdcc-dcn
+pip install ubdcc
 ```
 
-### Start the components
+This installs all components (mgmt, restapi, dcn) and the `ubdcc` cluster manager.
 
-Open a separate terminal for each process:
+### Start with the cluster manager
+
+```bash
+ubdcc start --dcn 4
+```
+
+This starts 1 mgmt + 1 restapi + 4 DCN processes and drops you into an interactive console:
+
+```
+UBDCC Cluster Manager v0.2.0
+Starting cluster with mgmt port 42080, 4 DCN(s)...
+  mgmt started (PID 12345)
+  restapi started (PID 12346)
+  dcn-1 started (PID 12347)
+  dcn-2 started (PID 12348)
+  dcn-3 started (PID 12349)
+  dcn-4 started (PID 12350)
+
+Waiting for 5 pods to register with mgmt...
+Cluster is ready!
+
+ROLE             NAME                 PORT     STATUS     VERSION
+----------------------------------------------------------------------
+ubdcc-mgmt       ubdcc-mgmt           42080    running    0.2.0
+ubdcc-restapi    TDMKiCnT6jZ39N       42081    running    0.2.0
+ubdcc-dcn        g3HcyluSZ5qWarm      42082    running    0.2.0
+ubdcc-dcn        gpU3hkiU9Ei          42083    running    0.2.0
+ubdcc-dcn        tDuu9mOXrt445XU      42084    running    0.2.0
+ubdcc-dcn        xg6RZRf1APErfh1      42085    running    0.2.0
+
+DepthCaches: 0
+Version: 0.2.0
+
+REST API: http://127.0.0.1:42081/
+Cluster info: http://127.0.0.1:42081/get_cluster_info
+
+Type 'help' for available commands, Ctrl+C or 'stop' to shut down.
+
+ubdcc>
+```
+
+### Interactive console commands
+
+| Command | Description |
+|---------|-------------|
+| `status` | Show all pods with role, name, port, status and version |
+| `stop` | Graceful shutdown of the entire cluster |
+| `restart <name>` | Restart a specific pod by name |
+| `help` | Show available commands |
+
+### CLI commands (from a separate terminal)
+
+While the cluster is running, you can also manage it from another terminal:
+
+```bash
+ubdcc status                     # show cluster status
+ubdcc stop                       # shut down the cluster
+ubdcc restart g3HcyluSZ5qWarm   # restart a specific pod
+```
+
+The CLI automatically remembers the mgmt port. If you started with a custom port (`ubdcc start --port 42090`), 
+`status` and `stop` will use it automatically.
+
+### Start manually (without cluster manager)
+
+If you prefer to manage processes yourself, start each component in a separate terminal:
 
 ```bash
 # Terminal 1: Management (internal, port 42080)
@@ -144,9 +209,6 @@ python -c "import os; from ubdcc_restapi.RestApi import RestApi; RestApi(cwd=os.
 python -c "import os; from ubdcc_dcn.DepthCacheNode import DepthCacheNode; DepthCacheNode(cwd=os.getcwd())"
 ```
 
-**Start order does not matter.** All components automatically discover each other and reconnect if any process 
-restarts. The mgmt needs a few seconds on first start before it accepts registrations.
-
 ### Ports
 
 | Component | Default port | Purpose |
@@ -157,6 +219,8 @@ restarts. The mgmt needs a few seconds on first start before it accepts registra
 
 ### Good to know
 
+- **Start order does not matter**: All components automatically discover each other and reconnect if any process 
+restarts.
 - **DCN ports auto-increment**: When you start multiple DCN processes on the same machine, each one automatically 
 finds the next free port (42082, 42083, 42084, ...). No manual configuration needed.
 - **DepthCaches need a moment**: After creating a DepthCache, it needs a few seconds to download the initial order 
