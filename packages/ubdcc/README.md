@@ -26,23 +26,26 @@ The `ubdcc` package is the all-in-one installer and cluster manager for the
 pip install ubdcc
 ```
 
-This installs everything you need. Start the cluster manually:
-
-```bash
-# Terminal 1: Management (internal, port 42080)
-python -c "import os; from ubdcc_mgmt.Mgmt import Mgmt; Mgmt(cwd=os.getcwd())"
-
-# Terminal 2: REST API (your access point, port 42081)
-python -c "import os; from ubdcc_restapi.RestApi import RestApi; RestApi(cwd=os.getcwd())"
-
-# Terminal 3+: DepthCacheNode (one per CPU core)
-python -c "import os; from ubdcc_dcn.DepthCacheNode import DepthCacheNode; DepthCacheNode(cwd=os.getcwd())"
-```
-
-Or use the cluster manager (coming soon):
+This installs everything you need. Start the cluster:
 
 ```bash
 ubdcc start --dcn 4
+```
+
+This starts 1 mgmt + 1 restapi + 4 DCN processes and drops you into an interactive console where you can monitor 
+and manage the cluster (`status`, `stop`, `restart <name>`, `help`).
+
+The REST API is available at `http://127.0.0.1:42081/`.
+
+### Development (without pip install)
+
+When working on the source code, run directly from the package directory:
+
+```bash
+cd packages/ubdcc
+python -m ubdcc start --dcn 4
+python -m ubdcc status
+python -m ubdcc stop
 ```
 
 For full documentation, architecture overview, REST API reference and Kubernetes setup, see the 
