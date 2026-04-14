@@ -51,16 +51,21 @@ DepthCaches as quickly as possible. Afterward, replicas are initiated for redund
 
 ## Key Features
 
-- **Fast access**: Order book Asks/Bids in ~0.01s (local) or ~0.06s (internet). All requests are load-balanced with 
-automatic failover.
-- **Any language**: Retrieve DepthCache data via HTTP/JSON. Python users can use the 
+- **Fast access**: Order book data in ~3ms (cluster-internal) or ~4ms total request time on local networks. Over the 
+internet typically ~60ms. All requests are load-balanced with automatic failover across redundant DepthCache copies.
+- **Any language**: Retrieve DepthCache data via HTTP/JSON from any programming language. Python users can use the 
 [UBLDC cluster module](https://oliver-zehentleitner.github.io/unicorn-binance-local-depth-cache/unicorn_binance_local_depth_cache.html#module-unicorn_binance_local_depth_cache.cluster) 
 for sync and async access.
-- **Flexible filtering**: Trim data at the cluster level — limit to top N Asks/Bids or filter by volume threshold.
+- **Flexible filtering**: Trim data at the cluster level — limit to top N Asks/Bids or filter by volume threshold. 
+No need to transfer the full order book when you only need the best prices.
 - **Compiled C-Extensions**: The entire cluster runs as Cython-compiled code for maximum performance.
 - **Smart rate limiting**: Automatically throttles initialization when Binance API weight costs get too high.
-- **Self-healing state**: The cluster database is replicated to every node. If the management pod restarts, it 
-recovers the latest state automatically — no external database (Redis, etcd) required.
+- **Self-healing state**: The cluster database is replicated to every node on each sync cycle. If the management pod 
+restarts, it automatically recovers the latest state from the node with the most recent backup — no external database 
+(Redis, etcd) required, zero manual intervention.
+- **Full transparency**: Every request can include `debug=true` to get detailed timing breakdowns 
+(cluster execution time, transmission time, total request time), the internal routing URL, and which pods handled the 
+request.
 - **Supported exchanges**:
 
 | Exchange                                                           | Exchange string               | 
