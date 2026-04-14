@@ -13,3 +13,8 @@ rm -f ./packages/ubdcc-mgmt/ubdcc_mgmt/ubdcc_shared_modules
 
 rm -f ./packages/ubdcc-restapi/ubdcc_shared_modules
 rm -f ./packages/ubdcc-restapi/ubdcc_restapi/ubdcc_shared_modules
+
+rm -f ./packages/ubdcc/ubdcc_dcn
+rm -f ./packages/ubdcc/ubdcc_mgmt
+rm -f ./packages/ubdcc/ubdcc_restapi
+rm -f ./packages/ubdcc/ubdcc_shared_modules
