@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>UNICORN DepthCache Cluster for Binance (UBDCC) &#8212; unicorn-depthcache-cluster-for-binance 0.1.4 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNICORN Binance DepthCache Cluster (UBDCC) &#8212; unicorn-binance-depth-cache-cluster 0.3.0 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
     <link rel="stylesheet" type="text/css" href="_static/pydoctheme.css?v=fdf8e9ae" />
@@ -17,14 +17,8 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Unicorn Depth Cache Cluster Modules" href="modules.html" />
-    <link rel="prev" title="Welcome to unicorn-depthcache-cluster-for-binance documentation!" href="index.html" /><link rel="shortcut icon" type="image/png" href="_static/lucit.png" />
+    <link rel="prev" title="Welcome to unicorn-depthcache-cluster-for-binance documentation!" href="index.html" /><link rel="shortcut icon" type="image/png" href="_static/py.png" />
     <script async defer src="https://buttons.github.io/buttons.js"></script>
-    
-    <script
-        src='//eu.fw-cdn.com/10659511/361973.js'
-        chat='true'>
-    </script>
-    
             <script type="text/javascript" src="_static/copybutton.js"></script>
             <script type="text/javascript" src="_static/menu.js"></script> 
   </head>
@@ -49,30 +43,42 @@
         <nav class="menu" role="navigation" aria-label="main navigation">
             <p class="logo">
                 <div style="text-align: center;">
-                    <a href="https://about.me/oliver-zehentleitner"><img src="https://about.me/oliver-zehentleitner/files/images/logos/LUCIT-LOGO.png"></a><br>
-                    <a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite" style="font-size: 0.85em;font-weight: 900">Get a UNICORN Binance Suite License!</a><br>
+                    <a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite"><img src="https://raw.githubusercontent.com/oliver-zehentleitner/unicorn-binance-suite/refs/heads/master/images/logo/LUCIT-UBS-Logo.png"></a>
                     <br>
-                    <a href="https://github.com/LUCIT-Systems-and-Development" target="_blank" style="text-decoration:none;"><img src="_static/icons8-github-20.png"></a>
-                    <a href="https://fb.me/lucit.systems.and.development" target="_blank" style="text-decoration:none;"><img src="_static/icons8-facebook-20.png"></a>
-                    <a href="https://twitter.com/LUCIT_SysDev" target="_blank" style="text-decoration:none;"><img src="_static/icons8-twitter-20.png"></a>
-                    <a href="https://www.linkedin.com/company/lucit-systems-and-development" target="_blank" style="text-decoration:none;"><img src="_static/icons8-linkedin-20.png"></a>
-                    <a href="https://www.xing.com/pages/lucit-systems-and-development" target="_blank" style="text-decoration:none;"><img src="_static/icons8-xing-20.png"></a>
-                    <a href="https://medium.lucit.tech" target="_blank" style="text-decoration:none;"><img src="_static/icons8-medium-monogram-20.png"></a>
-                    <a href="https://www.youtube.com/channel/UCp57u8vaPqEWQTlfpYn-KnQ" target="_blank" style="text-decoration:none;"><img src="_static/icons8-youtube-20.png"></a>
                 </div>
             </p>
   <div>
     <h3><a href="index.html">Table of Contents</a></h3>
     <ul>
-<li><a class="reference internal" href="#">UNICORN DepthCache Cluster for Binance (UBDCC)</a><ul>
-<li><a class="reference internal" href="#get-a-unicorn-depthcache-cluster-for-binance-license">Get a UNICORN DepthCache Cluster for Binance License</a></li>
+<li><a class="reference internal" href="#">UNICORN Binance DepthCache Cluster (UBDCC)</a><ul>
 <li><a class="reference internal" href="#what-is-ubdcc">What is UBDCC?</a></li>
+<li><a class="reference internal" href="#architecture">Architecture</a></li>
 <li><a class="reference internal" href="#key-features">Key Features</a></li>
-<li><a class="reference internal" href="#current-state">Current State</a></li>
-<li><a class="reference internal" href="#watch-a-demo-video">Watch a Demo Video</a></li>
-<li><a class="reference internal" href="#installation">Installation</a><ul>
+<li><a class="reference internal" href="#local-setup-without-kubernetes">Local Setup (without Kubernetes)</a><ul>
+<li><a class="reference internal" href="#install">Install</a></li>
+<li><a class="reference internal" href="#start-with-the-cluster-manager">Start with the cluster manager</a></li>
+<li><a class="reference internal" href="#interactive-console-commands">Interactive console commands</a></li>
+<li><a class="reference internal" href="#cli-commands-from-a-separate-terminal">CLI commands (from a separate terminal)</a></li>
+<li><a class="reference internal" href="#start-manually-without-cluster-manager">Start manually (without cluster manager)</a></li>
+<li><a class="reference internal" href="#ports">Ports</a></li>
+<li><a class="reference internal" href="#good-to-know">Good to know</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#rest-api">REST API</a><ul>
+<li><a class="reference internal" href="#public-endpoints-restapi">Public Endpoints (restapi)</a></li>
+<li><a class="reference internal" href="#internal-endpoints-cluster-communication">Internal Endpoints (cluster communication)</a></li>
+<li><a class="reference internal" href="#examples">Examples</a><ul>
+<li><a class="reference internal" href="#create-depthcaches">Create DepthCaches</a></li>
+<li><a class="reference internal" href="#query-order-book-data">Query order book data</a></li>
+<li><a class="reference internal" href="#manage-and-monitor">Manage and monitor</a></li>
+<li><a class="reference internal" href="#debugging">Debugging</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kubernetes-setup">Kubernetes Setup</a><ul>
 <li><a class="reference internal" href="#helm-chart">Helm Chart</a><ul>
-<li><a class="reference internal" href="#choose-an-explizit-version">Choose an explizit version</a></li>
+<li><a class="reference internal" href="#choose-an-explicit-version">Choose an explicit version</a></li>
 <li><a class="reference internal" href="#choose-a-namespace">Choose a namespace</a></li>
 <li><a class="reference internal" href="#choose-an-alternate-public-port">Choose an alternate public port</a></li>
 </ul>
@@ -86,7 +92,7 @@
 <li><a class="reference internal" href="#id2">Kubernetes Deployment</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#accessing-the-depthcaches">Accessing the DepthCaches</a></li>
+<li><a class="reference internal" href="#accessing-from-python">Accessing from Python</a></li>
 <li><a class="reference internal" href="#how-to-report-bugs-or-suggest-improvements">How to report Bugs or suggest Improvements?</a></li>
 <li><a class="reference internal" href="#contributing">Contributing</a><ul>
 <li><a class="reference internal" href="#contributors">Contributors</a></li>
@@ -96,7 +102,6 @@
 <li><a class="reference internal" href="#if-you-intend-to-use-real-money-use-it-at-your-own-risk">If you intend to use real money, use it at your own risk!</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#commercial-support">Commercial Support</a></li>
 </ul>
 </li>
 </ul>
@@ -132,24 +137,24 @@
 <div role="note" aria-label="source code">
     <h3>GitHub</h3>
     <ul class="this-page-menu">
-      <li><a href="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance">Show Source</a></li>
+      <li><a href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster">Show Source</a></li>
       
 <li>
-<a class="github-button" href="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance"
+<a class="github-button" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster"
    data-icon="octicon-star" data-show-count="true"
-   aria-label="Star oliver-zehentleitner/unicorn-depthcache-cluster-for-binance on GitHub">Star</a>
+   aria-label="Star oliver-zehentleitner/unicorn-binance-depth-cache-cluster on GitHub">Star</a>
 <br />
-<a class="github-button" href="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance/subscription"
+<a class="github-button" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/subscription"
    data-icon="octicon-eye" data-show-count="true"
-   aria-label="Watch oliver-zehentleitner/unicorn-depthcache-cluster-for-binance on GitHub">Watch</a>
+   aria-label="Watch oliver-zehentleitner/unicorn-binance-depth-cache-cluster on GitHub">Watch</a>
 <br />
-<a class="github-button" href="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance/fork"
+<a class="github-button" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/fork"
    data-icon="octicon-repo-forked" data-show-count="true"
-   aria-label="Fork oliver-zehentleitner/unicorn-depthcache-cluster-for-binance on GitHub">Fork</a>
+   aria-label="Fork oliver-zehentleitner/unicorn-binance-depth-cache-cluster on GitHub">Fork</a>
 <br />
-<a class="github-button" href="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance/issues"
+<a class="github-button" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/issues"
    data-icon="octicon-issue-opened"
-   data-show-count="true" aria-label="Issue oliver-zehentleitner/unicorn-depthcache-cluster-for-binance on GitHub">Issue</a>
+   data-show-count="true" aria-label="Issue oliver-zehentleitner/unicorn-binance-depth-cache-cluster on GitHub">Issue</a>
     
 </li>
 
@@ -177,16 +182,16 @@
               
                   
                   
-              <li><img src="_static/lucit.png" alt="LUCIT Logo"
+              <li><img src="_static/py.png" alt="Python"
                        style="vertical-align: middle; margin-top: -1px"/></li>
-              <li><a href="https://docs.lucit.tech">Docs Index</a> | </li>
-              <li><a href="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance">unicorn-depthcache-cluster-for-binance</a> &#187;</li>
+              <li><a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite#documentation">Docs Index</a> | </li>
+              <li><a href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster">unicorn-binance-depth-cache-cluster</a> &#187;</li>
                   
               
               
               <a href="index.html">Docs</a> &#187;
               
-        <li class="nav-item nav-item-this"><a href="">UNICORN DepthCache Cluster for Binance (UBDCC)</a></li>
+        <li class="nav-item nav-item-this"><a href="">UNICORN Binance DepthCache Cluster (UBDCC)</a></li>
                 <li class="right">
                     
 
@@ -209,66 +214,123 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <p><a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance"><img alt="Get a UNICORN DepthCache Cluster for Binance License" src="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance/blob/master/images/logo/LUCIT-UBDCC-License-Offer.png" /></a></p>
-<p><a class="reference external" href="https://oliver-zehentleitner.github.io/unicorn-depthcache-cluster-for-binance/license.html"><img alt="License" src="https://img.shields.io/badge/license-MIT-blue" /></a>
-<a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance/actions/workflows/build_wheels_ubdcc_dcn.yml"><img alt="Build and Publish PyPi (ubdcc-dcn)" src="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance/actions/workflows/build_wheels_ubdcc_dcn.yml/badge.svg" /></a>
-<a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance/actions/workflows/build_wheels_ubdcc_mgmt.yml"><img alt="Build and Publish PyPi (ubdcc-mgmt)" src="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance/actions/workflows/build_wheels_ubdcc_mgmt.yml/badge.svg" /></a>
-<a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance/actions/workflows/build_wheels_ubdcc_restapi.yml"><img alt="Build and Publish PyPi (ubdcc-restapi)" src="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance/actions/workflows/build_wheels_ubdcc_restapi.yml/badge.svg" /></a>
-<a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance/actions/workflows/build_wheels_ubdcc_shared_modules.yml"><img alt="Build and Publish PyPi (ubdcc-shared-modules)" src="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance/actions/workflows/build_wheels_ubdcc_shared_modules.yml/badge.svg" /></a>
-<a class="reference external" href="https://oliver-zehentleitner.github.io/unicorn-depthcache-cluster-for-binance"><img alt="Read the Docs" src="https://img.shields.io/badge/read-%20docs-yellow" /></a>
-<a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance"><img alt="Github" src="https://img.shields.io/badge/source-github-cbc2c8" /></a>
-<a class="reference external" href="https://t.me/unicorndevs"><img alt="Telegram" src="https://img.shields.io/badge/community-telegram-41ab8c" /></a>
-<a class="reference external" href="https://gitter.im/unicorn-trading-suite/unicorn-depthcache-cluster-for-binance?utm_source=badge&amp;amp;utm_medium=badge&amp;amp;utm_campaign=pr-badge&amp;amp;utm_content=badge"><img alt="Gitter" src="https://img.shields.io/badge/community-gitter-41ab8c" /></a>
-<a class="reference external" href="https://about.me/oliver-zehentleitner/get-support.html"><img alt="Get Free Professional Support" src="https://img.shields.io/badge/chat-lucit%20support-004166" /></a></p>
-<section id="unicorn-depthcache-cluster-for-binance-ubdcc">
-<h1>UNICORN DepthCache Cluster for Binance (UBDCC)<a class="headerlink" href="#unicorn-depthcache-cluster-for-binance-ubdcc" title="Link to this heading">¶</a></h1>
-<p>A highly scalable Kubernetes application from LUCIT to manage multiple and redundant UNICORN Binance Local Depth Cache
-Instances on a Kubernetes Cluster for high-frequency access to Binance’s DepthCache data (order books).</p>
-<p>The cluster can be accessed from any programming language via a REST API, allowing Asks and Bids to be retrieved in
-JSON format.</p>
-<p><a class="reference external" href="https://about.me/oliver-zehentleitner/get-support.html">Get help</a>!</p>
-<p>If you like the project, please
-<a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance/stargazers"><img alt="star" src="https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-local-depth-cache/master/images/misc/star.png" /></a> it on
-<a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance">GitHub</a>!</p>
-<section id="get-a-unicorn-depthcache-cluster-for-binance-license">
-<h2>Get a UNICORN DepthCache Cluster for Binance License<a class="headerlink" href="#get-a-unicorn-depthcache-cluster-for-binance-license" title="Link to this heading">¶</a></h2>
-<p><em><strong>Licenses will only be publicly available in the store in a few days. If you are interested in a free trial license,
-please <a class="reference external" href="https://about.me/oliver-zehentleitner/get-support.html">contact us via the chat</a>!</strong></em></p>
-<p>To run the <em>UNICORN DepthCache Cluster for Binance</em> you need a <a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance">valid license</a>!</p>
-</section>
+  <p><a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/releases"><img alt="GitHub Release" src="https://img.shields.io/github/release/oliver-zehentleitner/unicorn-binance-depth-cache-cluster.svg?label=github" /></a>
+<a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/releases"><img alt="GitHub Downloads" src="https://img.shields.io/github/downloads/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/total?color=blue" /></a>
+<a class="reference external" href="https://oliver-zehentleitner.github.io/unicorn-binance-depth-cache-cluster/license.html"><img alt="License" src="https://img.shields.io/badge/license-MIT-blue" /></a>
+<a class="reference external" href="https://codecov.io/gh/oliver-zehentleitner/unicorn-binance-depth-cache-cluster"><img alt="codecov" src="https://codecov.io/gh/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/branch/master/graph/badge.svg?token=5I03AZ3F5S" /></a>
+<a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/codeql.yml"><img alt="CodeQL" src="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/codeql.yml/badge.svg" /></a>
+<a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/unit-tests.yml"><img alt="Unit Tests" src="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/unit-tests.yml/badge.svg" /></a>
+<a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/build_wheels_ubdcc.yml"><img alt="Build and Publish PyPi (ubdcc)" src="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/build_wheels_ubdcc.yml/badge.svg" /></a>
+<a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/build_wheels_ubdcc_dcn.yml"><img alt="Build and Publish PyPi (ubdcc-dcn)" src="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/build_wheels_ubdcc_dcn.yml/badge.svg" /></a>
+<a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/build_wheels_ubdcc_mgmt.yml"><img alt="Build and Publish PyPi (ubdcc-mgmt)" src="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/build_wheels_ubdcc_mgmt.yml/badge.svg" /></a>
+<a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/build_wheels_ubdcc_restapi.yml"><img alt="Build and Publish PyPi (ubdcc-restapi)" src="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/build_wheels_ubdcc_restapi.yml/badge.svg" /></a>
+<a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/build_wheels_ubdcc_shared_modules.yml"><img alt="Build and Publish PyPi (ubdcc-shared-modules)" src="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/build_wheels_ubdcc_shared_modules.yml/badge.svg" /></a>
+<a class="reference external" href="https://oliver-zehentleitner.github.io/unicorn-binance-depth-cache-cluster"><img alt="Read the Docs" src="https://img.shields.io/badge/read-%20docs-yellow" /></a>
+<a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster"><img alt="Github" src="https://img.shields.io/badge/source-github-cbc2c8" /></a>
+<a class="reference external" href="https://t.me/unicorndevs"><img alt="Telegram" src="https://img.shields.io/badge/community-telegram-41ab8c" /></a></p>
+<section id="unicorn-binance-depthcache-cluster-ubdcc">
+<h1>UNICORN Binance DepthCache Cluster (UBDCC)<a class="headerlink" href="#unicorn-binance-depthcache-cluster-ubdcc" title="Link to this heading">¶</a></h1>
+<p>Manage hundreds of Binance order book depth caches and access them via REST API — from any programming language,
+any number of clients, with load balancing and automatic failover. Simple to set up: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span></code>, start three
+processes, done.</p>
+<p>Built on <a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-local-depth-cache">UNICORN Binance Local Depth Cache (UBLDC)</a>.
+Part of the <a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-suite">UNICORN Binance Suite</a>.</p>
 <section id="what-is-ubdcc">
 <h2>What is UBDCC?<a class="headerlink" href="#what-is-ubdcc" title="Link to this heading">¶</a></h2>
-<p>The main idea is to deploy the UBDCC on a Kubernetes cluster with, for example, 4 rented servers. After transferring a
-valid license, you can create and manage DepthCaches within the cluster environment instead of on local servers and
-access them from multiple clients.</p>
-<p>For example, when you configure the system to create 200 DepthCaches with a <code class="docutils literal notranslate"><span class="pre">desired_quantity</span></code> of <code class="docutils literal notranslate"><span class="pre">2</span></code>, UBDCC will deploy
-2 DepthCaches for each symbol/market. These DepthCaches are evenly distributed across the nodes of the cluster and can
-download order book snapshots from the Binance Rest API using their own public IP addresses. On the first run, each
-server starts 50 DepthCaches, synchronizing the full set of 200 as quickly as possible. Afterward, replicas are
-initiated, with each node handling 100 DepthCaches.</p>
-<p><a class="reference external" href="https://lucid.app/publicSegments/view/7ba7d734-4bb2-467f-b7b9-74ea0d1deec2/image.png"><img alt="Visual overview" src="https://lucid.app/publicSegments/view/7ba7d734-4bb2-467f-b7b9-74ea0d1deec2/image.png" /></a></p>
+<p>UBDCC turns Binance DepthCaches into a service. Instead of managing WebSocket connections and order book
+synchronization inside your trading bot, you run UBDCC as a standalone system and query it over HTTP whenever you need
+order book data.</p>
+<p>It works in two ways:</p>
+<ul class="simple">
+<li><p><strong>On a single machine</strong> — run a few processes locally and share DepthCache data between multiple bots or scripts
+on the same PC. No Kubernetes needed.</p></li>
+<li><p><strong>On a Kubernetes cluster</strong> — scale across multiple servers with redundancy, multiple public IPs for higher Binance
+API throughput, and automatic state recovery if pods restart.</p></li>
+</ul>
+</section>
+<section id="architecture">
+<h2>Architecture<a class="headerlink" href="#architecture" title="Link to this heading">¶</a></h2>
+<p>The system consists of three components:</p>
+<ul class="simple">
+<li><p><strong>mgmt</strong> (1x) — manages the cluster state and distributes DepthCaches across nodes</p></li>
+<li><p><strong>restapi</strong> (1-3x) — REST API gateway, load-balances data requests to DCN processes</p></li>
+<li><p><strong>dcn</strong> (multiple) — runs the actual DepthCaches via UBLDC</p></li>
+</ul>
+<p>Each DCN runs a single Python process, so <strong>one DCN per CPU core</strong> gives the best performance (Python’s GIL limits
+each process to one core).</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Setup</th>
+<th>Example configuration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Local (8-core PC)</td>
+<td>1 mgmt, 1 restapi, 6 DCN processes</td>
+</tr>
+<tr>
+<td>Kubernetes (2 servers, 4 cores each)</td>
+<td>1 mgmt, 3 restapi, 4 DCN pods</td>
+</tr>
+</tbody>
+</table>
+<p>When you create DepthCaches (e.g. 200 markets with <code class="docutils literal notranslate"><span class="pre">desired_quantity=2</span></code>), UBDCC distributes them evenly across DCN
+processes. Each DCN downloads order book snapshots using its own network connection. Replicas are created for
+redundancy — if one DCN goes down, the other copy keeps serving data.</p>
+<div class="highlight-mermaid notranslate"><div class="highlight"><pre><span></span>graph LR
+    Client[&quot;Client\n(any language)&quot;]
+    LB[&quot;LoadBalancer\n/ Firewall&quot;]
+    
+    subgraph cluster [&quot;Kubernetes Cluster / Local PC&quot;]
+        R1[&quot;RESTAPI&quot;]
+        R2[&quot;RESTAPI&quot;]
+        R3[&quot;RESTAPI&quot;]
+        Mgmt[&quot;Mgmt\n:42080&quot;]
+        DB[(&quot;DB\n(in-memory,\nsynced to\nall nodes)&quot;)]
+        DCN1[&quot;DCN 1\n:42082&quot;]
+        DCN2[&quot;DCN 2\n:42083&quot;]
+        DCN3[&quot;DCN 3\n:42084&quot;]
+        DCN4[&quot;DCN 4\n:42085&quot;]
+    end
+
+    Client --&gt;|&quot;HTTP/JSON\n:42081 / :80&quot;| LB
+    LB --&gt; R1 &amp; R2 &amp; R3
+    R1 &amp; R2 &amp; R3 --&gt;|&quot;get_asks\nget_bids&quot;| DCN1 &amp; DCN2 &amp; DCN3 &amp; DCN4
+    R1 &amp; R2 &amp; R3 --&gt;|&quot;create/stop\ncluster_info&quot;| Mgmt
+    Mgmt --&gt;|&quot;distribute\nDepthCaches&quot;| DCN1 &amp; DCN2 &amp; DCN3 &amp; DCN4
+    Mgmt --- DB
+    DB -.-&gt;|&quot;backup/recover&quot;| DCN1 &amp; DCN2 &amp; DCN3 &amp; DCN4
+</pre></div>
+</div>
 </section>
 <section id="key-features">
 <h2>Key Features<a class="headerlink" href="#key-features" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p><strong>Asynchronous Operation</strong>: The entire cluster code is built to run asynchronously.</p></li>
-<li><p><strong>Load Balancing &amp; Failover</strong>: All requests for data (Asks/Bids) are handled via a load balancer with built-in
-failover, ensuring high availability and quick response times.</p>
-<ul>
-<li><p>Local requests for Asks/Bids: ~0.01 seconds</p></li>
-<li><p>Requests via the Internet: ~0.06 seconds</p></li>
-</ul>
-</li>
-<li><p><strong>Flexible Data Retrieval</strong>: You can trim the amount of transferred data at the cluster level, either by limiting to
-a specific amount of top Asks/Bids or by setting a threshold.</p></li>
-<li><p><strong>HTTP Access</strong>: DepthCache values can be retrieved through HTTP using both synchronous and asynchronous methods
-provided by
-<a class="reference external" href="https://unicorn-binance-local-depth-cache.docs.lucit.tech/unicorn_binance_local_depth_cache.html#module-unicorn_binance_local_depth_cache.cluster">UBLDC</a>.</p></li>
-<li><p><strong>Top Performance</strong>: The entire code base is deployed in the Kubernetes cluster as a compiled C-Extension!</p></li>
-<li><p><strong>Supported Architectures</strong>: CPython 3.12 on 64-bit (x86_64) and 32-bit (i686): musllinux (based on musl libc 1.1+),
-manylinux (based on glibc 2.5+ and 2.17+) compatible with manylinux1 and manylinux2014</p></li>
-<li><p><strong>Manages Binance Weight Costs</strong>: If the weight costs become too high, the cluster throttles the initialization.</p></li>
-<li><p><strong>Supported Exchanges</strong>:</p></li>
+<li><p><strong>Fast access</strong>: Order book data in ~3ms (cluster-internal) or ~4ms total request time on local networks. Over the
+internet typically ~60ms. All requests are load-balanced with automatic failover across redundant DepthCache copies.</p></li>
+<li><p><strong>Any language</strong>: Retrieve DepthCache data via HTTP/JSON from any programming language. Python users can use the
+<a class="reference external" href="https://oliver-zehentleitner.github.io/unicorn-binance-local-depth-cache/unicorn_binance_local_depth_cache.html#module-unicorn_binance_local_depth_cache.cluster">UBLDC cluster module</a>
+for sync and async access.</p></li>
+<li><p><strong>Flexible filtering</strong>: Trim data at the cluster level — limit to top N Asks/Bids or filter by volume threshold.
+No need to transfer the full order book when you only need the best prices.</p></li>
+<li><p><strong>Fully async top to bottom</strong>: Optimized for fast processing of concurrent requests. The entire stack is built on
+asyncio — from the REST API down to the WebSocket connections. DepthCache management runs directly as a plugin inside
+the <a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-websocket-api">UBWA</a> WebSocket event loop, so order book updates are processed with zero overhead. Cluster management, data queries
+and node communication all run non-blocking, keeping response times consistent even when many clients query
+simultaneously.</p></li>
+<li><p><strong>Scales with your resources</strong>: Tested with hundreds of redundant DepthCaches across multiple nodes. Add more
+servers and DCN pods to scale further — there is no hard limit.</p></li>
+<li><p><strong>Compiled C-Extensions</strong>: The entire cluster runs as Cython-compiled code for maximum performance.</p></li>
+<li><p><strong>Smart rate limiting</strong>: Automatically throttles initialization when Binance API weight costs get too high.</p></li>
+<li><p><strong>Self-healing state</strong>: The cluster database is replicated to every node on each sync cycle. If the management pod
+restarts, it automatically recovers the latest state from the node with the most recent backup — no external database
+(Redis, etcd) required, zero manual intervention.</p></li>
+<li><p><strong>Full transparency</strong>: Every request can include <code class="docutils literal notranslate"><span class="pre">debug=true</span></code> to get detailed timing breakdowns
+(cluster execution time, transmission time, total request time), the internal routing URL, and which pods handled the
+request.</p></li>
+<li><p><strong>Supported exchanges</strong>:</p></li>
 </ul>
 <table border="1" class="docutils">
 <thead>
@@ -298,24 +360,391 @@ manylinux (based on glibc 2.5+ and 2.17+) compatible with manylinux1 and manylin
 <td><a href="https://www.binance.us/">Binance US</a></td>
 <td><code>binance.us</code></td>
 </tr>
+<tr>
+<td><a href="https://www.trbinance.com">Binance TR</a></td>
+<td><code>trbinance.com</code></td>
+</tr>
+</tbody>
+</table>
+<p>If you like the project, please
+<a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/stargazers"><img alt="star" src="https://raw.githubusercontent.com/oliver-zehentleitner/unicorn-binance-local-depth-cache/master/images/misc/star.png" /></a> it on
+<a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster">GitHub</a>!</p>
+</section>
+<section id="local-setup-without-kubernetes">
+<h2>Local Setup (without Kubernetes)<a class="headerlink" href="#local-setup-without-kubernetes" title="Link to this heading">¶</a></h2>
+<p>Run UBDCC on a single machine — useful for development or when you need multiple bots to share the same
+DepthCache data without duplicate WebSocket connections.</p>
+<section id="install">
+<h3>Install<a class="headerlink" href="#install" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>ubdcc
+</pre></div>
+</div>
+<p>This installs all components (mgmt, restapi, dcn) and the <code class="docutils literal notranslate"><span class="pre">ubdcc</span></code> cluster manager.</p>
+</section>
+<section id="start-with-the-cluster-manager">
+<h3>Start with the cluster manager<a class="headerlink" href="#start-with-the-cluster-manager" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ubdcc<span class="w"> </span>start<span class="w"> </span>--dcn<span class="w"> </span><span class="m">4</span>
+</pre></div>
+</div>
+<p>This starts 1 mgmt + 1 restapi + 4 DCN processes and drops you into an interactive console:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>UBDCC Cluster Manager v0.3.0
+Starting cluster with mgmt port 42080, 4 DCN(s)...
+  mgmt started (PID 12345)
+  restapi started (PID 12346)
+  dcn-1 started (PID 12347)
+  dcn-2 started (PID 12348)
+  dcn-3 started (PID 12349)
+  dcn-4 started (PID 12350)
+
+Waiting for 5 pods to register with mgmt...
+Cluster is ready!
+
+ROLE             NAME                 PORT     STATUS     VERSION
+----------------------------------------------------------------------
+ubdcc-mgmt       ubdcc-mgmt           42080    running    0.3.0
+ubdcc-restapi    TDMKiCnT6jZ39N       42081    running    0.3.0
+ubdcc-dcn        g3HcyluSZ5qWarm      42082    running    0.3.0
+ubdcc-dcn        gpU3hkiU9Ei          42083    running    0.3.0
+ubdcc-dcn        tDuu9mOXrt445XU      42084    running    0.3.0
+ubdcc-dcn        xg6RZRf1APErfh1      42085    running    0.3.0
+
+DepthCaches: 0
+Version: 0.3.0
+
+REST API: http://127.0.0.1:42081/
+Cluster info: http://127.0.0.1:42081/get_cluster_info
+
+Type &#39;help&#39; for available commands, Ctrl+C or &#39;stop&#39; to shut down.
+
+ubdcc&gt;
+</pre></div>
+</div>
+</section>
+<section id="interactive-console-commands">
+<h3>Interactive console commands<a class="headerlink" href="#interactive-console-commands" title="Link to this heading">¶</a></h3>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>status</code></td>
+<td>Show all pods with role, name, port, status and version</td>
+</tr>
+<tr>
+<td><code>add-dcn [count]</code></td>
+<td>Spawn new DCN process(es) for dynamic scaling</td>
+</tr>
+<tr>
+<td><code>remove-dcn &lt;count\|name&gt;</code></td>
+<td>Stop and remove DCN(s) — by count or by name</td>
+</tr>
+<tr>
+<td><code>restart &lt;name&gt;</code></td>
+<td>Restart a specific pod (mgmt, restapi or DCN by name)</td>
+</tr>
+<tr>
+<td><code>stop</code></td>
+<td>Graceful shutdown of the entire cluster</td>
+</tr>
+<tr>
+<td><code>help</code></td>
+<td>Show available commands</td>
+</tr>
 </tbody>
 </table>
 </section>
-<section id="current-state">
-<h2>Current State<a class="headerlink" href="#current-state" title="Link to this heading">¶</a></h2>
-<p>The first MVP is stable and offers the most critical features for efficient DepthCache management. Future improvements
-might include switching to websockets instead of REST queries, or implementing simultaneous queries for both Asks and
-Bids. <a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement">Vote here for new features!</a></p>
-<p>For more information, check out the
-<a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance">GitHub Repository</a> and the
-<a class="reference external" href="https://unicorn-binance-depth-cache-cluster.docs.lucit.tech">Docs</a>.</p>
+<section id="cli-commands-from-a-separate-terminal">
+<h3>CLI commands (from a separate terminal)<a class="headerlink" href="#cli-commands-from-a-separate-terminal" title="Link to this heading">¶</a></h3>
+<p>While the cluster is running, you can also manage it from another terminal:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ubdcc<span class="w"> </span>status<span class="w">                     </span><span class="c1"># show cluster status</span>
+ubdcc<span class="w"> </span>stop<span class="w">                       </span><span class="c1"># shut down the cluster</span>
+ubdcc<span class="w"> </span>restart<span class="w"> </span>g3HcyluSZ5qWarm<span class="w">   </span><span class="c1"># restart a specific pod</span>
+</pre></div>
+</div>
+<p>The CLI automatically remembers the mgmt port. If you started with a custom port (<code class="docutils literal notranslate"><span class="pre">ubdcc</span> <span class="pre">start</span> <span class="pre">--port</span> <span class="pre">42090</span></code>),
+<code class="docutils literal notranslate"><span class="pre">status</span></code> and <code class="docutils literal notranslate"><span class="pre">stop</span></code> will use it automatically.</p>
 </section>
-<section id="watch-a-demo-video">
-<h2>Watch a Demo Video<a class="headerlink" href="#watch-a-demo-video" title="Link to this heading">¶</a></h2>
-<p><a class="reference external" href="https://www.youtube.com/watch?v=hq2iZPiFnvE"><img alt="Watch the demo video" src="https://img.youtube.com/vi/hq2iZPiFnvE/maxresdefault.jpg" /></a></p>
+<section id="start-manually-without-cluster-manager">
+<h3>Start manually (without cluster manager)<a class="headerlink" href="#start-manually-without-cluster-manager" title="Link to this heading">¶</a></h3>
+<p>If you prefer to manage processes yourself, start each component in a separate terminal:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Terminal 1: Management (internal, port 42080)</span>
+python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import os; from ubdcc_mgmt.Mgmt import Mgmt; Mgmt(cwd=os.getcwd())&quot;</span>
+
+<span class="c1"># Terminal 2: REST API (your access point, port 42081)</span>
+python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import os; from ubdcc_restapi.RestApi import RestApi; RestApi(cwd=os.getcwd())&quot;</span>
+
+<span class="c1"># Terminal 3+: DepthCacheNode (start one per CPU core you want to use)</span>
+python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import os; from ubdcc_dcn.DepthCacheNode import DepthCacheNode; DepthCacheNode(cwd=os.getcwd())&quot;</span>
+</pre></div>
+</div>
 </section>
-<section id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h2>
+<section id="ports">
+<h3>Ports<a class="headerlink" href="#ports" title="Link to this heading">¶</a></h3>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Component</th>
+<th>Default port</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mgmt</td>
+<td>42080</td>
+<td>Internal cluster management (not for direct use)</td>
+</tr>
+<tr>
+<td>restapi</td>
+<td>42081</td>
+<td><strong>Your access point</strong> — all queries go here</td>
+</tr>
+<tr>
+<td>dcn</td>
+<td>42082+</td>
+<td>Internal, auto-increments if multiple DCNs run on the same host</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="good-to-know">
+<h3>Good to know<a class="headerlink" href="#good-to-know" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Start order does not matter</strong>: All components automatically discover each other and reconnect if any process
+restarts.</p></li>
+<li><p><strong>DCN ports auto-increment</strong>: When you start multiple DCN processes on the same machine, each one automatically
+finds the next free port (42082, 42083, 42084, …). No manual configuration needed.</p></li>
+<li><p><strong>DepthCaches need a moment</strong>: After creating a DepthCache, it needs a few seconds to download the initial order
+book snapshot from Binance before it can serve data. The status changes from <code class="docutils literal notranslate"><span class="pre">starting</span></code> to <code class="docutils literal notranslate"><span class="pre">running</span></code>.</p></li>
+<li><p><strong>Initialization is sequential</strong>: DepthCaches are initialized one by one to stay within Binance API rate limits.
+This is slower at startup but ensures stable operation. With redundancy (<code class="docutils literal notranslate"><span class="pre">desired_quantity</span> <span class="pre">&gt;</span> <span class="pre">1</span></code>), the delay is not
+noticeable in production because at least one copy is always running.</p></li>
+</ul>
+</section>
+</section>
+<section id="rest-api">
+<h2>REST API<a class="headerlink" href="#rest-api" title="Link to this heading">¶</a></h2>
+<p>The REST API (default port <strong>42081</strong> locally, port <strong>80</strong> on Kubernetes) is your single access point to the cluster.
+On Kubernetes, a LoadBalancer service distributes requests across restapi pods automatically. Locally, you connect
+directly to one restapi instance — it handles all routing to mgmt and DCN processes internally.</p>
+<section id="public-endpoints-restapi">
+<h3>Public Endpoints (restapi)<a class="headerlink" href="#public-endpoints-restapi" title="Link to this heading">¶</a></h3>
+<p>These are the endpoints you use to interact with the cluster. All requests go through the restapi.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Method</th>
+<th>Parameters</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/create_depthcache</code></td>
+<td>GET</td>
+<td><code>exchange</code>, <code>market</code>, <code>desired_quantity</code>, <code>update_interval</code>, <code>refresh_interval</code></td>
+<td>Create a single DepthCache</td>
+</tr>
+<tr>
+<td><code>/create_depthcaches</code></td>
+<td>POST/GET</td>
+<td><code>exchange</code>, <code>markets</code>, <code>desired_quantity</code>, <code>update_interval</code>, <code>refresh_interval</code></td>
+<td>Create multiple DepthCaches (POST: JSON body, GET: comma-separated markets)</td>
+</tr>
+<tr>
+<td><code>/get_asks</code></td>
+<td>GET</td>
+<td><code>exchange</code>, <code>market</code>, <code>limit_count</code>, <code>threshold_volume</code></td>
+<td>Get ask side of the order book</td>
+</tr>
+<tr>
+<td><code>/get_bids</code></td>
+<td>GET</td>
+<td><code>exchange</code>, <code>market</code>, <code>limit_count</code>, <code>threshold_volume</code></td>
+<td>Get bid side of the order book</td>
+</tr>
+<tr>
+<td><code>/get_cluster_info</code></td>
+<td>GET</td>
+<td>—</td>
+<td>Cluster overview: registered pods, versions, DB state</td>
+</tr>
+<tr>
+<td><code>/get_depthcache_list</code></td>
+<td>GET</td>
+<td>—</td>
+<td>List all DepthCaches with status and distribution</td>
+</tr>
+<tr>
+<td><code>/get_depthcache_info</code></td>
+<td>GET</td>
+<td><code>exchange</code>, <code>market</code></td>
+<td>Detailed info for a specific DepthCache</td>
+</tr>
+<tr>
+<td><code>/stop_depthcache</code></td>
+<td>GET</td>
+<td><code>exchange</code>, <code>market</code></td>
+<td>Stop and remove a DepthCache</td>
+</tr>
+</tbody>
+</table>
+<p>All public endpoints accept <code class="docutils literal notranslate"><span class="pre">debug=true</span></code> as an additional parameter for timing and routing details.</p>
+</section>
+<section id="internal-endpoints-cluster-communication">
+<h3>Internal Endpoints (cluster communication)<a class="headerlink" href="#internal-endpoints-cluster-communication" title="Link to this heading">¶</a></h3>
+<p>These endpoints are used by the cluster components to communicate with each other. You don’t call these directly, but
+understanding them helps when debugging or extending the system.</p>
+<p><strong>mgmt</strong> (port 42080):</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/ubdcc_node_registration</code></td>
+<td>GET</td>
+<td>DCN/restapi registers itself with mgmt on startup</td>
+</tr>
+<tr>
+<td><code>/ubdcc_node_cancellation</code></td>
+<td>GET</td>
+<td>DCN/restapi deregisters on shutdown</td>
+</tr>
+<tr>
+<td><code>/ubdcc_node_sync</code></td>
+<td>GET</td>
+<td>Periodic heartbeat — DCN/restapi reports status, mgmt pushes DB backup back</td>
+</tr>
+<tr>
+<td><code>/ubdcc_get_responsible_dcn_addresses</code></td>
+<td>GET</td>
+<td>Returns which DCN holds a specific DepthCache (used by restapi for routing)</td>
+</tr>
+<tr>
+<td><code>/ubdcc_update_depthcache_distribution</code></td>
+<td>GET</td>
+<td>DCN reports DepthCache status changes (starting, running)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>All pods</strong> (shared base):</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/test</code></td>
+<td>GET</td>
+<td>Health check — returns pod info, version, status</td>
+</tr>
+<tr>
+<td><code>/ubdcc_mgmt_backup</code></td>
+<td>GET/POST</td>
+<td>GET: return stored DB backup; POST: receive DB backup from mgmt</td>
+</tr>
+</tbody>
+</table>
+<p><strong>DCN</strong> (port 42082+):</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/get_asks</code></td>
+<td>GET</td>
+<td>Direct ask query on this DCN (called by restapi after routing)</td>
+</tr>
+<tr>
+<td><code>/get_bids</code></td>
+<td>GET</td>
+<td>Direct bid query on this DCN (called by restapi after routing)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Link to this heading">¶</a></h3>
+<section id="create-depthcaches">
+<h4>Create DepthCaches<a class="headerlink" href="#create-depthcaches" title="Link to this heading">¶</a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create multiple DepthCaches (POST with JSON body)</span>
+curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s1">&#39;http://127.0.0.1:42081/create_depthcaches&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;exchange&quot;: &quot;binance.com&quot;, &quot;markets&quot;: [&quot;BTCUSDT&quot;, &quot;ETHUSDT&quot;, &quot;BNBUSDT&quot;], &quot;desired_quantity&quot;: 2}&#39;</span>
+
+<span class="c1"># Create a single DepthCache (GET)</span>
+curl<span class="w"> </span><span class="s1">&#39;http://127.0.0.1:42081/create_depthcache?exchange=binance.com&amp;market=BTCUSDT&amp;desired_quantity=2&#39;</span>
+
+<span class="c1"># Create multiple via GET (useful for browser testing, comma-separated markets)</span>
+curl<span class="w"> </span><span class="s1">&#39;http://127.0.0.1:42081/create_depthcaches?exchange=binance.com&amp;markets=BTCUSDT,ETHUSDT&amp;desired_quantity=1&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="query-order-book-data">
+<h4>Query order book data<a class="headerlink" href="#query-order-book-data" title="Link to this heading">¶</a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get top 3 asks</span>
+curl<span class="w"> </span><span class="s1">&#39;http://127.0.0.1:42081/get_asks?exchange=binance.com&amp;market=BTCUSDT&amp;limit_count=3&#39;</span>
+
+<span class="c1"># Get bids filtered by volume threshold</span>
+curl<span class="w"> </span><span class="s1">&#39;http://127.0.0.1:42081/get_bids?exchange=binance.com&amp;market=ETHUSDT&amp;threshold_volume=100000&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="manage-and-monitor">
+<h4>Manage and monitor<a class="headerlink" href="#manage-and-monitor" title="Link to this heading">¶</a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># List all DepthCaches and their status</span>
+curl<span class="w"> </span><span class="s1">&#39;http://127.0.0.1:42081/get_depthcache_list&#39;</span>
+
+<span class="c1"># Get detailed info for a specific DepthCache</span>
+curl<span class="w"> </span><span class="s1">&#39;http://127.0.0.1:42081/get_depthcache_info?exchange=binance.com&amp;market=BTCUSDT&#39;</span>
+
+<span class="c1"># Cluster overview (registered pods, versions, timestamps)</span>
+curl<span class="w"> </span><span class="s1">&#39;http://127.0.0.1:42081/get_cluster_info&#39;</span>
+
+<span class="c1"># Stop a DepthCache</span>
+curl<span class="w"> </span><span class="s1">&#39;http://127.0.0.1:42081/stop_depthcache?exchange=binance.com&amp;market=BTCUSDT&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="debugging">
+<h4>Debugging<a class="headerlink" href="#debugging" title="Link to this heading">¶</a></h4>
+<p>Add <code class="docutils literal notranslate"><span class="pre">debug=true</span></code> to any request to get timing and routing details:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span><span class="s1">&#39;http://127.0.0.1:42081/get_asks?exchange=binance.com&amp;market=BTCUSDT&amp;limit_count=2&amp;debug=true&#39;</span>
+</pre></div>
+</div>
+<p>The response includes a <code class="docutils literal notranslate"><span class="pre">debug</span></code> block with:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cluster_execution_time</span></code> — time spent processing the request inside the cluster</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">transmission_time</span></code> — network overhead between restapi and DCN</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">request_time</span></code> — total round-trip time (filled by the UBLDC Python client)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">url</span></code> — the internal URL that was routed to</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">post_body</span></code> — the POST body (for POST requests)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">used_pods</span></code> — which pods handled this request</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="kubernetes-setup">
+<h2>Kubernetes Setup<a class="headerlink" href="#kubernetes-setup" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Get a Kubernetes cluster with powerful CPUs from a provider of your choice and connect <code class="docutils literal notranslate"><span class="pre">kubectl</span></code></p></li>
 <li><p>Install dependencies</p></li>
@@ -329,46 +758,46 @@ Bids. <a class="reference external" href="https://github.com/oliver-zehentleitne
 <li><p><a class="reference external" href="https://helm.sh/docs/intro/install">Install Helm</a></p></li>
 <li><p>Prepare <code class="docutils literal notranslate"><span class="pre">helm</span></code></p></li>
 </ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">helm</span> <span class="n">repo</span> <span class="n">add</span> <span class="n">lucit</span><span class="o">-</span><span class="n">ubdcc</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">unicorn</span><span class="o">-</span><span class="n">depthcache</span><span class="o">-</span><span class="n">cluster</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="n">binance</span><span class="o">.</span><span class="n">docs</span><span class="o">.</span><span class="n">lucit</span><span class="o">.</span><span class="n">tech</span><span class="o">/</span><span class="n">helm</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">helm</span> <span class="n">repo</span> <span class="n">add</span> <span class="n">ubdcc</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">oliver</span><span class="o">-</span><span class="n">zehentleitner</span><span class="o">.</span><span class="n">github</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">unicorn</span><span class="o">-</span><span class="n">binance</span><span class="o">-</span><span class="n">depth</span><span class="o">-</span><span class="n">cache</span><span class="o">-</span><span class="n">cluster</span><span class="o">/</span><span class="n">helm</span>
 <span class="n">helm</span> <span class="n">repo</span> <span class="n">update</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li><p>Install the UNICORN DepthCache Cluster for Binance</p></li>
+<li><p>Install the UNICORN Binance DepthCache Cluster</p></li>
 </ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">helm</span> <span class="n">install</span> <span class="n">lucit</span><span class="o">-</span><span class="n">ubdcc</span> <span class="n">lucit</span><span class="o">-</span><span class="n">ubdcc</span><span class="o">/</span><span class="n">lucit</span><span class="o">-</span><span class="n">ubdcc</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">helm</span> <span class="n">install</span> <span class="n">ubdcc</span> <span class="n">ubdcc</span><span class="o">/</span><span class="n">ubdcc</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li><p>Get the “LoadBalancer Ingress” IP, the default Port is TCP 80!</p></li>
 </ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">describe</span> <span class="n">services</span> <span class="n">lucit</span><span class="o">-</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">restapi</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">describe</span> <span class="n">services</span> <span class="n">ubdcc</span><span class="o">-</span><span class="n">restapi</span>
 </pre></div>
 </div>
-<section id="choose-an-explizit-version">
-<h4>Choose an explizit version<a class="headerlink" href="#choose-an-explizit-version" title="Link to this heading">¶</a></h4>
+<section id="choose-an-explicit-version">
+<h4>Choose an explicit version<a class="headerlink" href="#choose-an-explicit-version" title="Link to this heading">¶</a></h4>
 <ul class="simple">
 <li><p>Find a version to choose</p></li>
 </ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">helm</span> <span class="n">search</span> <span class="n">repo</span> <span class="n">lucit</span><span class="o">-</span><span class="n">ubdcc</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">helm</span> <span class="n">search</span> <span class="n">repo</span> <span class="n">ubdcc</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li><p>Then</p></li>
 </ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">helm</span> <span class="n">install</span> <span class="n">lucit</span><span class="o">-</span><span class="n">ubdcc</span> <span class="n">lucit</span><span class="o">-</span><span class="n">ubdcc</span><span class="o">/</span><span class="n">lucit</span><span class="o">-</span><span class="n">ubdcc</span> <span class="o">--</span><span class="n">version</span> <span class="mf">0.1.4</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">helm</span> <span class="n">install</span> <span class="n">ubdcc</span> <span class="n">ubdcc</span><span class="o">/</span><span class="n">ubdcc</span> <span class="o">--</span><span class="n">version</span> <span class="mf">0.3.0</span>
 </pre></div>
 </div>
 </section>
 <section id="choose-a-namespace">
 <h4>Choose a namespace<a class="headerlink" href="#choose-a-namespace" title="Link to this heading">¶</a></h4>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">helm</span> <span class="n">install</span> <span class="n">lucit</span><span class="o">-</span><span class="n">ubdcc</span> <span class="n">lucit</span><span class="o">-</span><span class="n">ubdcc</span><span class="o">/</span><span class="n">lucit</span><span class="o">-</span><span class="n">ubdcc</span> <span class="o">--</span><span class="n">namespace</span> <span class="n">lucit</span><span class="o">-</span><span class="n">ubdcc</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">helm</span> <span class="n">install</span> <span class="n">ubdcc</span> <span class="n">ubdcc</span><span class="o">/</span><span class="n">ubdcc</span> <span class="o">--</span><span class="n">namespace</span> <span class="n">ubdcc</span>
 </pre></div>
 </div>
 </section>
 <section id="choose-an-alternate-public-port">
 <h4>Choose an alternate public port<a class="headerlink" href="#choose-an-alternate-public-port" title="Link to this heading">¶</a></h4>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">helm</span> <span class="n">install</span> <span class="n">lucit</span><span class="o">-</span><span class="n">ubdcc</span> <span class="n">lucit</span><span class="o">-</span><span class="n">ubdcc</span><span class="o">/</span><span class="n">lucit</span><span class="o">-</span><span class="n">ubdcc</span> <span class="o">--</span><span class="nb">set</span> <span class="n">publicPort</span><span class="o">.</span><span class="n">restapi</span><span class="o">=</span><span class="mi">8080</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">helm</span> <span class="n">install</span> <span class="n">ubdcc</span> <span class="n">ubdcc</span><span class="o">/</span><span class="n">ubdcc</span> <span class="o">--</span><span class="nb">set</span> <span class="n">publicPort</span><span class="o">.</span><span class="n">restapi</span><span class="o">=</span><span class="mi">8080</span>
 </pre></div>
 </div>
 </section>
@@ -376,23 +805,23 @@ Bids. <a class="reference external" href="https://github.com/oliver-zehentleitne
 <section id="kubernetes-deployment">
 <h3>Kubernetes Deployment<a class="headerlink" href="#kubernetes-deployment" title="Link to this heading">¶</a></h3>
 <ul class="simple">
-<li><p><a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance/tree/master/admin/k8s">Download the deployment files</a></p></li>
+<li><p><a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/tree/master/admin/k8s">Download the deployment files</a></p></li>
 <li><p>Apply the deployment files with <code class="docutils literal notranslate"><span class="pre">kubectl</span></code></p></li>
 </ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">setup</span><span class="o">/</span><span class="mi">01</span><span class="n">_namespace_lucit</span><span class="o">-</span><span class="n">ubdcc</span><span class="o">.</span><span class="n">yaml</span>
-<span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">setup</span><span class="o">/</span><span class="mi">02</span><span class="n">_role_lucit</span><span class="o">-</span><span class="n">ubdcc</span><span class="o">.</span><span class="n">yaml</span>
-<span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">setup</span><span class="o">/</span><span class="mi">03</span><span class="n">_rolebinding_lucit</span><span class="o">-</span><span class="n">ubdcc</span><span class="o">.</span><span class="n">yaml</span>
-<span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">lucit</span><span class="o">-</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">dcn</span><span class="o">.</span><span class="n">yaml</span>  
-<span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">lucit</span><span class="o">-</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">mgmt</span><span class="o">.</span><span class="n">yaml</span>
-<span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">lucit</span><span class="o">-</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">mgmt_service</span><span class="o">.</span><span class="n">yaml</span>
-<span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">lucit</span><span class="o">-</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">restapi</span><span class="o">.</span><span class="n">yaml</span>
-<span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">lucit</span><span class="o">-</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">restapi_service</span><span class="o">.</span><span class="n">yaml</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">setup</span><span class="o">/</span><span class="mi">01</span><span class="n">_namespace_ubdcc</span><span class="o">.</span><span class="n">yaml</span>
+<span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">setup</span><span class="o">/</span><span class="mi">02</span><span class="n">_role_ubdcc</span><span class="o">.</span><span class="n">yaml</span>
+<span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">setup</span><span class="o">/</span><span class="mi">03</span><span class="n">_rolebinding_ubdcc</span><span class="o">.</span><span class="n">yaml</span>
+<span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">dcn</span><span class="o">.</span><span class="n">yaml</span>  
+<span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">mgmt</span><span class="o">.</span><span class="n">yaml</span>
+<span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">mgmt_service</span><span class="o">.</span><span class="n">yaml</span>
+<span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">restapi</span><span class="o">.</span><span class="n">yaml</span>
+<span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">restapi_service</span><span class="o">.</span><span class="n">yaml</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li><p>Get the “LoadBalancer Ingress” IP, the default Port is TCP 80:</p></li>
 </ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">describe</span> <span class="n">services</span> <span class="n">lucit</span><span class="o">-</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">restapi</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">describe</span> <span class="n">services</span> <span class="n">ubdcc</span><span class="o">-</span><span class="n">restapi</span>
 </pre></div>
 </div>
 </section>
@@ -410,7 +839,7 @@ have access to UBDCC.</p>
 </div>
 <section id="id1">
 <h3>Helm Chart<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">helm</span> <span class="n">uninstall</span> <span class="n">lucit</span><span class="o">-</span><span class="n">ubdcc</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">helm</span> <span class="n">uninstall</span> <span class="n">ubdcc</span>
 </pre></div>
 </div>
 </section>
@@ -419,41 +848,43 @@ have access to UBDCC.</p>
 <ul class="simple">
 <li><p>Delete the deployment with <code class="docutils literal notranslate"><span class="pre">kubectl</span></code></p></li>
 </ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">delete</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">setup</span><span class="o">/</span><span class="mi">01</span><span class="n">_namespace_lucit</span><span class="o">-</span><span class="n">ubdcc</span><span class="o">.</span><span class="n">yaml</span>
-<span class="n">kubectl</span> <span class="n">delete</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">setup</span><span class="o">/</span><span class="mi">02</span><span class="n">_role_lucit</span><span class="o">-</span><span class="n">ubdcc</span><span class="o">.</span><span class="n">yaml</span>
-<span class="n">kubectl</span> <span class="n">delete</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">setup</span><span class="o">/</span><span class="mi">03</span><span class="n">_rolebinding_lucit</span><span class="o">-</span><span class="n">ubdcc</span><span class="o">.</span><span class="n">yaml</span>
-<span class="n">kubectl</span> <span class="n">delete</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">lucit</span><span class="o">-</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">dcn</span><span class="o">.</span><span class="n">yaml</span>  
-<span class="n">kubectl</span> <span class="n">delete</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">lucit</span><span class="o">-</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">mgmt</span><span class="o">.</span><span class="n">yaml</span>
-<span class="n">kubectl</span> <span class="n">delete</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">lucit</span><span class="o">-</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">mgmt_service</span><span class="o">.</span><span class="n">yaml</span>
-<span class="n">kubectl</span> <span class="n">delete</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">lucit</span><span class="o">-</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">restapi</span><span class="o">.</span><span class="n">yaml</span>
-<span class="n">kubectl</span> <span class="n">delete</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">lucit</span><span class="o">-</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">restapi_service</span><span class="o">.</span><span class="n">yaml</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">delete</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">setup</span><span class="o">/</span><span class="mi">01</span><span class="n">_namespace_ubdcc</span><span class="o">.</span><span class="n">yaml</span>
+<span class="n">kubectl</span> <span class="n">delete</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">setup</span><span class="o">/</span><span class="mi">02</span><span class="n">_role_ubdcc</span><span class="o">.</span><span class="n">yaml</span>
+<span class="n">kubectl</span> <span class="n">delete</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">setup</span><span class="o">/</span><span class="mi">03</span><span class="n">_rolebinding_ubdcc</span><span class="o">.</span><span class="n">yaml</span>
+<span class="n">kubectl</span> <span class="n">delete</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">dcn</span><span class="o">.</span><span class="n">yaml</span>  
+<span class="n">kubectl</span> <span class="n">delete</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">mgmt</span><span class="o">.</span><span class="n">yaml</span>
+<span class="n">kubectl</span> <span class="n">delete</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">mgmt_service</span><span class="o">.</span><span class="n">yaml</span>
+<span class="n">kubectl</span> <span class="n">delete</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">restapi</span><span class="o">.</span><span class="n">yaml</span>
+<span class="n">kubectl</span> <span class="n">delete</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">ubdcc</span><span class="o">-</span><span class="n">restapi_service</span><span class="o">.</span><span class="n">yaml</span>
 </pre></div>
 </div>
 </section>
 </section>
-<section id="accessing-the-depthcaches">
-<h2>Accessing the DepthCaches<a class="headerlink" href="#accessing-the-depthcaches" title="Link to this heading">¶</a></h2>
-<p>The UNICORN DepthCache Cluster for Binance is accessed with the Python module <a class="reference external" href="https://github.com/LUCIT-Systems-and-Development/unicorn-binance-local-depth-cache?tab=readme-ov-file#connect-to-a-unicorn-depthcache-cluster-for-binance">UNICORN Binance Local Depth Cache</a>.</p>
-<p>Just try this <a class="reference external" href="https://github.com/LUCIT-Systems-and-Development/unicorn-binance-local-depth-cache/tree/master/examples/unicorn_depthcache_cluster_for_binance">examples</a>!</p>
+<section id="accessing-from-python">
+<h2>Accessing from Python<a class="headerlink" href="#accessing-from-python" title="Link to this heading">¶</a></h2>
+<p>While the REST API can be used from any language, Python users can use the
+<a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-local-depth-cache?tab=readme-ov-file#connect-to-a-unicorn-binance-depth-cache-cluster">UBLDC cluster module</a>
+for a native experience with sync and async support, automatic connection handling, and <code class="docutils literal notranslate"><span class="pre">debug=True</span></code> output.</p>
+<p>See the <a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-local-depth-cache/tree/master/examples/unicorn_binance_depth_cache_cluster">examples</a>.</p>
 </section>
 <section id="how-to-report-bugs-or-suggest-improvements">
 <h2>How to report Bugs or suggest Improvements?<a class="headerlink" href="#how-to-report-bugs-or-suggest-improvements" title="Link to this heading">¶</a></h2>
-<p><a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement">List of planned features</a> - click <img alt="thumbs-up" src="https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-suite/master/images/misc/thumbup.png" /> if you need one of them or suggest a new feature!</p>
-<p>Before you report a bug, <a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance#installation-and-upgrade">try the latest release</a>. If the issue still exists, provide the error trace, OS
+<p><a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement">List of planned features</a> - click <img alt="thumbs-up" src="https://raw.githubusercontent.com/oliver-zehentleitner/unicorn-binance-suite/master/images/misc/thumbup.png" /> if you need one of them or suggest a new feature!</p>
+<p>Before you report a bug, <a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster#installation-and-upgrade">try the latest release</a>. If the issue still exists, provide the error trace, OS
 and Python version and explain how to reproduce the error. A demo script is appreciated.</p>
-<p>If you don’t find an issue related to your topic, please open a new <a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance/issues">issue</a>!</p>
-<p><a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance/security/policy">Report a security bug!</a></p>
+<p>If you don’t find an issue related to your topic, please open a new <a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/issues">issue</a>!</p>
+<p><a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/security/policy">Report a security bug!</a></p>
 </section>
 <section id="contributing">
 <h2>Contributing<a class="headerlink" href="#contributing" title="Link to this heading">¶</a></h2>
-<p><a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance">UNICORN DepthCache Cluster for Binance</a> is an open
+<p><a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster">UNICORN Binance DepthCache Cluster</a> is an open
 source project which welcomes contributions which can be anything from simple documentation fixes and reporting dead links to new features. To
 contribute follow
-<a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance/blob/master/CONTRIBUTING.md">this guide</a>.</p>
+<a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/blob/master/CONTRIBUTING.md">this guide</a>.</p>
 <section id="contributors">
 <h3>Contributors<a class="headerlink" href="#contributors" title="Link to this heading">¶</a></h3>
-<p><a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance/graphs/contributors"><img alt="Contributors" src="https://contributors-img.web.app/image?repo=oliver-zehentleitner/unicorn-depthcache-cluster-for-binance" /></a></p>
-<p>We <img alt="love" src="https://raw.githubusercontent.com/lucit-systems-and-development/unicorn-binance-suite/master/images/misc/heart.png" /> open source!</p>
+<p><a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/graphs/contributors"><img alt="Contributors" src="https://contributors-img.web.app/image?repo=oliver-zehentleitner/unicorn-binance-depth-cache-cluster" /></a></p>
+<p>We <img alt="love" src="https://raw.githubusercontent.com/oliver-zehentleitner/unicorn-binance-suite/master/images/misc/heart.png" /> open source!</p>
 </section>
 </section>
 <section id="disclaimer">
@@ -469,11 +900,6 @@ jurisdiction.</p>
 of any kind, including but not limited to direct or indirect damages for loss of profits.</p>
 </section>
 </section>
-<section id="commercial-support">
-<h2>Commercial Support<a class="headerlink" href="#commercial-support" title="Link to this heading">¶</a></h2>
-<p><a class="reference external" href="https://about.me/oliver-zehentleitner/get-support.html"><img alt="Get professional and fast support" src="https://raw.githubusercontent.com/LUCIT-Systems-and-Development/unicorn-trading-suite/master/images/support/LUCIT-get-professional-and-fast-support.png" /></a></p>
-<p><em><strong>Do you need a developer, operator or consultant?</strong></em> <a class="reference external" href="https://about.me/oliver-zehentleitner/contact.html">Contact us</a> for a non-binding initial consultation!</p>
-</section>
 </section>
 
 
@@ -485,30 +911,42 @@ of any kind, including but not limited to direct or indirect damages for loss of
         <div class="sphinxsidebarwrapper">
             <p class="logo">
                 <div style="text-align: center;">
-                    <a href="https://about.me/oliver-zehentleitner"><img src="https://about.me/oliver-zehentleitner/files/images/logos/LUCIT-LOGO.png"></a><br>
-                    <a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite" style="font-size: 0.85em;font-weight: 900">Get a UNICORN Binance Suite License!</a><br>
+                    <a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite"><img src="https://raw.githubusercontent.com/oliver-zehentleitner/unicorn-binance-suite/refs/heads/master/images/logo/LUCIT-UBS-Logo.png"></a>
                     <br>
-                    <a href="https://github.com/LUCIT-Systems-and-Development" target="_blank" style="text-decoration:none;"><img src="_static/icons8-github-20.png"></a>
-                    <a href="https://fb.me/lucit.systems.and.development" target="_blank" style="text-decoration:none;"><img src="_static/icons8-facebook-20.png"></a>
-                    <a href="https://twitter.com/LUCIT_SysDev" target="_blank" style="text-decoration:none;"><img src="_static/icons8-twitter-20.png"></a>
-                    <a href="https://www.linkedin.com/company/lucit-systems-and-development" target="_blank" style="text-decoration:none;"><img src="_static/icons8-linkedin-20.png"></a>
-                    <a href="https://www.xing.com/pages/lucit-systems-and-development" target="_blank" style="text-decoration:none;"><img src="_static/icons8-xing-20.png"></a>
-                    <a href="https://medium.lucit.tech" target="_blank" style="text-decoration:none;"><img src="_static/icons8-medium-monogram-20.png"></a>
-                    <a href="https://www.youtube.com/channel/UCp57u8vaPqEWQTlfpYn-KnQ" target="_blank" style="text-decoration:none;"><img src="_static/icons8-youtube-20.png"></a>
                 </div>
             </p>
   <div>
     <h3><a href="index.html">Table of Contents</a></h3>
     <ul>
-<li><a class="reference internal" href="#">UNICORN DepthCache Cluster for Binance (UBDCC)</a><ul>
-<li><a class="reference internal" href="#get-a-unicorn-depthcache-cluster-for-binance-license">Get a UNICORN DepthCache Cluster for Binance License</a></li>
+<li><a class="reference internal" href="#">UNICORN Binance DepthCache Cluster (UBDCC)</a><ul>
 <li><a class="reference internal" href="#what-is-ubdcc">What is UBDCC?</a></li>
+<li><a class="reference internal" href="#architecture">Architecture</a></li>
 <li><a class="reference internal" href="#key-features">Key Features</a></li>
-<li><a class="reference internal" href="#current-state">Current State</a></li>
-<li><a class="reference internal" href="#watch-a-demo-video">Watch a Demo Video</a></li>
-<li><a class="reference internal" href="#installation">Installation</a><ul>
+<li><a class="reference internal" href="#local-setup-without-kubernetes">Local Setup (without Kubernetes)</a><ul>
+<li><a class="reference internal" href="#install">Install</a></li>
+<li><a class="reference internal" href="#start-with-the-cluster-manager">Start with the cluster manager</a></li>
+<li><a class="reference internal" href="#interactive-console-commands">Interactive console commands</a></li>
+<li><a class="reference internal" href="#cli-commands-from-a-separate-terminal">CLI commands (from a separate terminal)</a></li>
+<li><a class="reference internal" href="#start-manually-without-cluster-manager">Start manually (without cluster manager)</a></li>
+<li><a class="reference internal" href="#ports">Ports</a></li>
+<li><a class="reference internal" href="#good-to-know">Good to know</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#rest-api">REST API</a><ul>
+<li><a class="reference internal" href="#public-endpoints-restapi">Public Endpoints (restapi)</a></li>
+<li><a class="reference internal" href="#internal-endpoints-cluster-communication">Internal Endpoints (cluster communication)</a></li>
+<li><a class="reference internal" href="#examples">Examples</a><ul>
+<li><a class="reference internal" href="#create-depthcaches">Create DepthCaches</a></li>
+<li><a class="reference internal" href="#query-order-book-data">Query order book data</a></li>
+<li><a class="reference internal" href="#manage-and-monitor">Manage and monitor</a></li>
+<li><a class="reference internal" href="#debugging">Debugging</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kubernetes-setup">Kubernetes Setup</a><ul>
 <li><a class="reference internal" href="#helm-chart">Helm Chart</a><ul>
-<li><a class="reference internal" href="#choose-an-explizit-version">Choose an explizit version</a></li>
+<li><a class="reference internal" href="#choose-an-explicit-version">Choose an explicit version</a></li>
 <li><a class="reference internal" href="#choose-a-namespace">Choose a namespace</a></li>
 <li><a class="reference internal" href="#choose-an-alternate-public-port">Choose an alternate public port</a></li>
 </ul>
@@ -522,7 +960,7 @@ of any kind, including but not limited to direct or indirect damages for loss of
 <li><a class="reference internal" href="#id2">Kubernetes Deployment</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#accessing-the-depthcaches">Accessing the DepthCaches</a></li>
+<li><a class="reference internal" href="#accessing-from-python">Accessing from Python</a></li>
 <li><a class="reference internal" href="#how-to-report-bugs-or-suggest-improvements">How to report Bugs or suggest Improvements?</a></li>
 <li><a class="reference internal" href="#contributing">Contributing</a><ul>
 <li><a class="reference internal" href="#contributors">Contributors</a></li>
@@ -532,7 +970,6 @@ of any kind, including but not limited to direct or indirect damages for loss of
 <li><a class="reference internal" href="#if-you-intend-to-use-real-money-use-it-at-your-own-risk">If you intend to use real money, use it at your own risk!</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#commercial-support">Commercial Support</a></li>
 </ul>
 </li>
 </ul>
@@ -568,24 +1005,24 @@ of any kind, including but not limited to direct or indirect damages for loss of
 <div role="note" aria-label="source code">
     <h3>GitHub</h3>
     <ul class="this-page-menu">
-      <li><a href="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance">Show Source</a></li>
+      <li><a href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster">Show Source</a></li>
       
 <li>
-<a class="github-button" href="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance"
+<a class="github-button" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster"
    data-icon="octicon-star" data-show-count="true"
-   aria-label="Star oliver-zehentleitner/unicorn-depthcache-cluster-for-binance on GitHub">Star</a>
+   aria-label="Star oliver-zehentleitner/unicorn-binance-depth-cache-cluster on GitHub">Star</a>
 <br />
-<a class="github-button" href="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance/subscription"
+<a class="github-button" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/subscription"
    data-icon="octicon-eye" data-show-count="true"
-   aria-label="Watch oliver-zehentleitner/unicorn-depthcache-cluster-for-binance on GitHub">Watch</a>
+   aria-label="Watch oliver-zehentleitner/unicorn-binance-depth-cache-cluster on GitHub">Watch</a>
 <br />
-<a class="github-button" href="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance/fork"
+<a class="github-button" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/fork"
    data-icon="octicon-repo-forked" data-show-count="true"
-   aria-label="Fork oliver-zehentleitner/unicorn-depthcache-cluster-for-binance on GitHub">Fork</a>
+   aria-label="Fork oliver-zehentleitner/unicorn-binance-depth-cache-cluster on GitHub">Fork</a>
 <br />
-<a class="github-button" href="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance/issues"
+<a class="github-button" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/issues"
    data-icon="octicon-issue-opened"
-   data-show-count="true" aria-label="Issue oliver-zehentleitner/unicorn-depthcache-cluster-for-binance on GitHub">Issue</a>
+   data-show-count="true" aria-label="Issue oliver-zehentleitner/unicorn-binance-depth-cache-cluster on GitHub">Issue</a>
     
 </li>
 
@@ -613,16 +1050,16 @@ of any kind, including but not limited to direct or indirect damages for loss of
               
                   
                   
-              <li><img src="_static/lucit.png" alt="LUCIT Logo"
+              <li><img src="_static/py.png" alt="Python"
                        style="vertical-align: middle; margin-top: -1px"/></li>
-              <li><a href="https://docs.lucit.tech">Docs Index</a> | </li>
-              <li><a href="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance">unicorn-depthcache-cluster-for-binance</a> &#187;</li>
+              <li><a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite#documentation">Docs Index</a> | </li>
+              <li><a href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster">unicorn-binance-depth-cache-cluster</a> &#187;</li>
                   
               
               
               <a href="index.html">Docs</a> &#187;
               
-        <li class="nav-item nav-item-this"><a href="">UNICORN DepthCache Cluster for Binance (UBDCC)</a></li>
+        <li class="nav-item nav-item-this"><a href="">UNICORN Binance DepthCache Cluster (UBDCC)</a></li>
                 <li class="right">
                     
 
@@ -640,19 +1077,15 @@ of any kind, including but not limited to direct or indirect damages for loss of
       </ul>
     </div>  
     <div class="footer">
-    <a href="https://docs.lucit.tech">Index of all LUCIT Software Documentation</a><br />
-    &copy; <a href="/license.html">Copyright</a> 2022-2023, Oliver Zehentleitner. All Rights Reserved..
+    <a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite#documentation">Index of all docs</a><br />
+    &copy; <a href="/license.html">Copyright</a> 2024-2026, Oliver Zehentleitner.
     See <a href="/license.html">License</a> for more information.<br />
-    Last updated on Oct 28 2024 at 15:30 (CET).
-    <a href="https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance/issues/new/choose">Found a bug</a>?
+    Last updated on Apr 14 2026 at 18:10 (CET).
+    <a href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/issues/new/choose">Found a bug</a>?
     <br />
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
-        with <a href="https://github.com/LUCIT-Systems-and-Development/python-docs-theme-lucit">python-docs-theme-lucit</a>
-        by <a href="https://about.me/oliver-zehentleitner">Oliver Zehentleitner</a>.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+        with <a href="https://github.com/LUCIT-Systems-and-Development/python-docs-theme-lucit">python-docs-theme-lucit</a>.
     </div>
-    
-    <img referrerpolicy="no-referrer-when-downgrade" src="https://webmon.lucit.services/matomo.php?idsite=12&amp;rec=1" style="border:0" alt="" />
-    
 
   </body>
 </html>

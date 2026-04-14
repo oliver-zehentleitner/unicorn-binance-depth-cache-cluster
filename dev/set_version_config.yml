@@ -13,6 +13,9 @@ files:
 - dev/docker/ubdcc-restapi-latest.sh
 - dev/helm/ubdcc/Chart.yaml
 - dev/sphinx/source/conf.py
+- packages/ubdcc/pyproject.toml
+- packages/ubdcc/requirements.txt
+- packages/ubdcc/setup.py
 - packages/ubdcc-dcn/pyproject.toml
 - packages/ubdcc-dcn/requirements.txt
 - packages/ubdcc-dcn/setup.py
