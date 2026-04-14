@@ -26,6 +26,12 @@ Open development tasks, ideas, and decisions.
 - No test coverage exists at all
 - Start with mocked unit tests for `Database.py` and `App.py` logic
 
+### [ ] Binance API Key support per DCN
+- Currently all DCNs fetch order book snapshots without authentication (public rate limits)
+- With API keys: higher rate limits → faster initialization with many DepthCaches
+- Could pass api_key/api_secret per DCN or cluster-wide via CLI/config
+- UBLDC already supports api_key/api_secret in BinanceLocalDepthCacheManager
+
 ### [ ] Audit and fix all silent except/pass blocks
 - Suite-wide initiative — same task tracked in all unicorn-* repos
 
