@@ -29,8 +29,8 @@ order book data.
 
 It works in two ways:
 
-- **On a single machine** — run a few processes locally and share DepthCache data between multiple bots, scripts or 
-backtests on the same PC. No Kubernetes needed.
+- **On a single machine** — run a few processes locally and share DepthCache data between multiple bots or scripts 
+on the same PC. No Kubernetes needed.
 - **On a Kubernetes cluster** — scale across multiple servers with redundancy, multiple public IPs for higher Binance 
 API throughput, and automatic state recovery if pods restart.
 
@@ -120,7 +120,7 @@ If you like the project, please
 
 ## Local Setup (without Kubernetes)
 
-Run UBDCC on a single machine — useful for development, backtesting, or when you need multiple bots to share the same 
+Run UBDCC on a single machine — useful for development or when you need multiple bots to share the same 
 DepthCache data without duplicate WebSocket connections.
 
 ### Install
