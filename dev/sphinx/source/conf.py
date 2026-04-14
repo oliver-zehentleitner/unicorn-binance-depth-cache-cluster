@@ -95,6 +95,7 @@ html_context = {'github_user_name': 'oliver-zehentleitner',
                 'lucit': True}
 
 myst_heading_anchors = 3
+myst_fence_as_directive = ["mermaid"]
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
