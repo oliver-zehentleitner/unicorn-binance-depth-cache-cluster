@@ -61,12 +61,17 @@ class ServiceBase:
         asyncio.run(self.main())
 
     async def start_rest_server(self, endpoints=None) -> bool:
-        while self.is_port_free(port=self.app.api_port_rest) is False:
+        while True:
+            while self.is_port_free(port=self.app.api_port_rest) is False:
+                self.app.api_port_rest = self.app.api_port_rest + 1
+            self.rest_server = RestServer(app=self.app, endpoints=endpoints, port=self.app.api_port_rest)
+            self.rest_server.start()
+            await asyncio.sleep(1)
+            if self.rest_server.is_alive():
+                return True
+            self.app.stdout_msg(f"REST server failed to bind on port {self.app.api_port_rest}, trying next port ...",
+                                log="warn")
             self.app.api_port_rest = self.app.api_port_rest + 1
-        self.rest_server = RestServer(app=self.app, endpoints=endpoints, port=self.app.api_port_rest)
-        self.rest_server.start()
-        await asyncio.sleep(1)
-        return True
 
     def stop(self) -> bool:
         try:
