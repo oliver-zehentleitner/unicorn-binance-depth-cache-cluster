@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "ubdcc-restapi"
+name = "ubdcc"
 version = "0.2.0"
-description = "UBDCC REST API — public HTTP API for the UNICORN DepthCache Cluster"
+description = "UNICORN Binance DepthCache Cluster — cluster manager and meta-package"
 authors = ["Oliver Zehentleitner <>"]
 license = "MIT"
 readme = "README.md"
@@ -14,7 +14,7 @@ repository = "https://github.com/oliver-zehentleitner/unicorn-binance-depth-cach
 'Documentation' = 'https://oliver-zehentleitner.github.io/unicorn-binance-depth-cache-cluster'
 'Wiki' = 'https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/wiki'
 'Author' = 'https://about.me/oliver-zehentleitner'
-'Changes' = 'https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/blob/master/packages/ubdcc-restapi/CHANGELOG.md'
+'Changes' = 'https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/blob/master/packages/ubdcc/CHANGELOG.md'
 'License' = 'https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/blob/master/LICENSE'
 'Issue Tracker' = 'https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/issues'
 'Telegram' = 'https://t.me/unicorndevs'
@@ -23,13 +23,15 @@ repository = "https://github.com/oliver-zehentleitner/unicorn-binance-depth-cach
 
 [tool.poetry.dependencies]
 python = ">=3.9.0"
-ubdcc-shared-modules = "==0.2.0"
+ubdcc-mgmt = "*"
+ubdcc-restapi = "*"
+ubdcc-dcn = "*"
+
+[tool.poetry.scripts]
+ubdcc = "ubdcc.cli:main"
 
 [tool.poetry.dev-dependencies]
 
 [build-system]
-requires = ["setuptools", "wheel", "Cython", "pip"]
+requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
-
-[tool.poetry.package_data]
-"ubdcc_restapi" = ["*.so", "*.dll", "*.pyd"]

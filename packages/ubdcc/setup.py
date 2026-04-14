@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# File: packages/ubdcc-restapi/setup.py
+# File: packages/ubdcc/setup.py
 #
-# Part of ‘UNICORN Binance DepthCache Cluster’
+# Part of 'UNICORN Binance DepthCache Cluster'
 # Project website: https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster
 # Github: https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster
 # Documentation: https://oliver-zehentleitner.github.io/unicorn-binance-depth-cache-cluster
-# PyPI: https://pypi.org/project/ubdcc-restapi
+# PyPI: https://pypi.org/project/ubdcc
 #
 # License: MIT
 # https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/blob/master/LICENSE
@@ -17,13 +17,10 @@
 # Copyright (c) 2024-2026, Oliver Zehentleitner (https://about.me/oliver-zehentleitner)
 # All rights reserved.
 
-from Cython.Build import cythonize
-from setuptools import setup
+from setuptools import setup, find_packages
 
-name = "ubdcc-restapi"
-source_dir = "ubdcc_restapi"
+name = "ubdcc"
 
-# Setup
 with open("README.md", "r") as fh:
     print("Using README.md content as `long_description` ...")
     long_description = fh.read()
@@ -34,31 +31,33 @@ setup(
     author="Oliver Zehentleitner",
     author_email='',
     url="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster",
-    description="UBDCC REST API — public REST interface for the UNICORN DepthCache Cluster for Binance",
+    description="UNICORN Binance DepthCache Cluster — cluster manager and meta-package",
     long_description=long_description,
     long_description_content_type="text/markdown",
     license='MIT',
-    install_requires=['ubdcc-shared-modules==0.2.0'],
-    keywords='',
+    packages=find_packages(),
+    install_requires=['ubdcc-mgmt',
+                      'ubdcc-restapi',
+                      'ubdcc-dcn'],
+    entry_points={
+        "console_scripts": [
+            "ubdcc=ubdcc.cli:main",
+        ]
+    },
+    keywords='binance, depth cache, cluster, order book',
     project_urls={
         'Howto': 'https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster#howto',
         'Documentation': 'https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster',
         'Wiki': 'https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/wiki',
         'Author': 'https://about.me/oliver-zehentleitner',
-        'Changes': 'https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/blob/master/packages/ubdcc-restapi/CHANGELOG.md',
+        'Changes': 'https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/blob/master/packages/ubdcc/CHANGELOG.md',
         'License': 'https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/blob/master/LICENSE',
         'Issue Tracker': 'https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/issues',
         'Chat': 'https://gitter.im/unicorn-trading-suite/unicorn-binance-depth-cache-cluster',
         'Telegram': 'https://t.me/unicorndevs',
         'Get Support': 'https://about.me/oliver-zehentleitner/get-support.html',
     },
-    ext_modules=cythonize(['ubdcc_restapi/__init__.py',
-                           'ubdcc_restapi/RestEndpoints.py',
-                           'ubdcc_restapi/RestApi.py'],
-                          compiler_directives={'language_level': "3"}),
     python_requires='>=3.9.0',
-    package_data={'': ['ubdcc_restapi/*.so']},
-    exclude_package_data={'': ['ubdcc_restapi/*.py']},
     classifiers=[
         "Development Status :: 4 - Beta",
         "Programming Language :: Python :: 3.9",
@@ -67,7 +66,6 @@ setup(
         "Programming Language :: Python :: 3.12",
         "Programming Language :: Python :: 3.13",
         "Programming Language :: Python :: 3.14",
-        "Programming Language :: Cython",
         "License :: OSI Approved :: MIT License",
         "Intended Audience :: Developers",
         "Intended Audience :: Financial and Insurance Industry",
