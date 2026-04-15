@@ -2,8 +2,19 @@ apiVersion: v1
 entries:
   ubdcc:
   - apiVersion: v2
+    appVersion: 0.4.0
+    created: "2026-04-15T18:43:11.313714344Z"
+    description: 'Manage multiple and redundant UNICORN Binance Local Depth Cache
+      Instances for high-frequency access to Binance''s  DepthCache data (order books). '
+    digest: ece0f17329411da6c8f15e0d9a3d2e4ec2d24b7a68bd5c28d0f464ab066cf35d
+    name: ubdcc
+    type: application
+    urls:
+    - https://oliver-zehentleitner.github.io/unicorn-binance-depth-cache-cluster/helm/ubdcc-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v2
     appVersion: 0.3.3
-    created: "2026-04-14T18:49:39.021284729Z"
+    created: "2026-04-15T18:43:11.313496164Z"
     description: 'Manage multiple and redundant UNICORN Binance Local Depth Cache
       Instances for high-frequency access to Binance''s  DepthCache data (order books). '
     digest: 49d896ab0e03df254acdfea938ccbaf6793093a1702ecc58741206965321c899
@@ -12,4 +23,4 @@ entries:
     urls:
     - https://oliver-zehentleitner.github.io/unicorn-binance-depth-cache-cluster/helm/ubdcc-0.3.3.tgz
     version: 0.3.3
-generated: "2026-04-14T18:49:39.020973289Z"
+generated: "2026-04-15T18:43:11.313094827Z"
