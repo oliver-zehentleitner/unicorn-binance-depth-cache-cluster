@@ -34,11 +34,14 @@ except ImportError:
 
 class DepthCacheNode(ServiceBase):
     def __init__(self, cwd=None, mgmt_port=None):
-        super().__init__(app_name="ubdcc-dcn", cwd=cwd, mgmt_port=mgmt_port)
         # Thread-safe queue: UBLDC on_restart callbacks fire from their
         # manager thread; the async main loop drains the queue and forwards
-        # to mgmt. (exchange, market, timestamp) tuples.
+        # to mgmt. Must be initialized BEFORE super().__init__() because
+        # ServiceBase.__init__() calls self.app.start() which blocks and
+        # synchronously runs main() → _drain_restart_queue(). Any attribute
+        # set after super().__init__() is never assigned.
         self._restart_queue: queue.Queue = queue.Queue()
+        super().__init__(app_name="ubdcc-dcn", cwd=cwd, mgmt_port=mgmt_port)
 
     def _on_stream_restart(self, exchange: str, market: str, timestamp: float) -> None:
         """Thread-safe: invoked from UBLDC's manager thread on every stream restart."""
