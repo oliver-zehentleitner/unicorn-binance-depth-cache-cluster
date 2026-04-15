@@ -88,10 +88,15 @@ class RestEndpointsBase:
         return JSONResponse(status_code=200, content=response_sorted)
 
     def get_ok_response(self, event: str = None, params: dict = None, process_start_time: float = None,
-                        url: str = None, post_body: dict = None, used_pods: list = None):
+                        url: str = None, post_body: dict = None, used_pods: list = None,
+                        error: str = None, error_id: str = None):
         response = {"event": event, "result": "OK"}
         if params:
             response.update(params)
+        if error is not None:
+            response['error'] = error
+        if error_id is not None:
+            response['error_id'] = error_id
         if process_start_time is not None:
             response['debug'] = self.create_debug_response(process_start_time=process_start_time,
                                                            url=url, post_body=post_body,
