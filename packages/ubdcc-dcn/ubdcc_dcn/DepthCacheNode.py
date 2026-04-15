@@ -31,6 +31,9 @@ class DepthCacheNode(ServiceBase):
         self.app.data['depthcache_instances'] = {}
         self.app.data['local_depthcaches'] = []
         self.app.data['responsibilities'] = []
+        # Track last known UBLDC restart timestamp per market so we only
+        # report actual changes (delta) to mgmt.
+        self.app.data['last_reported_restart'] = {}
         await self.start_rest_server(endpoints=RestEndpoints)
         self.app.set_status_running()
         await self.app.register_or_restart(ubldc_version=ubldc_version)
@@ -38,6 +41,7 @@ class DepthCacheNode(ServiceBase):
         while self.app.is_shutdown() is False:
             await self.app.sleep()
             await self.app.ubdcc_node_sync()
+            await self._report_stream_restarts()
             self.app.data['responsibilities'] = self.db.get_dcn_responsibilities()
             self.app.stdout_msg(f"Local DepthCaches: {self.app.data['local_depthcaches']}", log="debug", stdout=False)
             self.app.stdout_msg(f"Responsibilities: {self.app.data['responsibilities']}", log="debug", stdout=False)
@@ -96,3 +100,37 @@ class DepthCacheNode(ServiceBase):
         for dc in self.app.data['local_depthcaches']:
             for update_interval in self.app.data['depthcache_instances'][dc['exchange']]:
                 self.app.data['depthcache_instances'][dc['exchange']][update_interval].stop_manager()
+
+    async def _report_stream_restarts(self) -> None:
+        """
+        Poll UBLDC's per-market restart tracking. When the last_restart_time for
+        a market advances, forward it to mgmt so the cluster database can
+        reflect fleet-wide stream stability per DepthCache/pod.
+        """
+        for dc in self.app.data['local_depthcaches']:
+            exchange = dc['exchange']
+            update_interval = dc['update_interval']
+            market = dc['market']
+            try:
+                ubldc = self.app.data['depthcache_instances'][exchange][update_interval]
+            except KeyError:
+                continue
+            try:
+                last_restart = ubldc.get_last_restart_time(market=market)
+            except DepthCacheNotFound:
+                continue
+            except AttributeError:
+                # UBLDC < 2.10.0 — getter not available
+                return
+            if last_restart is None:
+                continue
+            key = f"{exchange}:{market}"
+            previous = self.app.data['last_reported_restart'].get(key)
+            if previous == last_restart:
+                continue
+            await self.app.ubdcc_update_depthcache_distribution(
+                exchange=exchange,
+                market=market,
+                last_restart_time=last_restart,
+            )
+            self.app.data['last_reported_restart'][key] = last_restart
