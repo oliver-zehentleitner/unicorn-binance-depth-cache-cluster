@@ -6,7 +6,7 @@ All notable changes to this package will be documented in this file.
 ### Added
 - Stream restart reporting: DCN registers an `on_restart` callback with each UBLDC instance. UBLDC invokes it from its manager thread when a stream restart is detected; DCN queues the event and the async main loop forwards it to mgmt via `ubdcc_update_depthcache_distribution(last_restart_time=...)`. Event-driven — no polling, no drift.
 ### Changed
-- UBLDC dependency bumped: `>=2.8.1` → `>=2.10.1` (requires the `on_restart` callback).
+- UBLDC dependency bumped: `>=2.8.1` → `>=2.11.0` (requires the `on_restart` callback).
 
 
 ## 0.3.0
