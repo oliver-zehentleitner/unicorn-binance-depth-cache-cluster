@@ -11,6 +11,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## 0.3.3.dev (development stage/unreleased/unstable)
 ### Added
+- `get_asks` / `get_bids`: when failover recovers from one or more unreachable DCNs, the successful response now includes an `error_id` (`#5001`) and an `error` message listing the pods that failed before success. Gives monitoring a visible signal that failover occurred without changing the OK-with-data semantics. Closes #3.
+### Added
 - DepthCache distribution tracking: new DB fields `LAST_DISTRIBUTION_CHANGE` + `DISTRIBUTION_CHANGES` (top-level, counts how often a DC has been re-assigned across pods) and `RESTARTS` per distribution entry (counts stream restarts on the currently assigned pod). Visible in `get_depthcache_info` / `get_depthcache_list` — useful for diagnosing upstream stability and cluster rebalancing history. Closes #1.
 ### Removed
 - External `ubdcc restart <name>` CLI subcommand — it didn'''t actually work because the spawn functions live in the interactive shell closure. Restart is still available inside the interactive `ubdcc>` shell.

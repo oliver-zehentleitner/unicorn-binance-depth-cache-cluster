@@ -96,6 +96,7 @@ class RestEndpoints(RestEndpointsBase):
                  f"limit_count={limit_count}&"
                  f"threshold_volume={threshold_volume}")
         result_errors = []
+        failover_errors = []
         first_choice_dcn = self.app.get_dcn_uid_unused_longest_time(selection=[address[2] for address in addresses])
         for i, address in enumerate(addresses):
             if address[2] == first_choice_dcn:
@@ -110,8 +111,18 @@ class RestEndpoints(RestEndpointsBase):
                     used_pods.append([pod.get('NAME'), pod.get('UID')])
                     result['debug'] = self.create_debug_response(process_start_time=process_start_time,
                                                                  url=request_url, used_pods=used_pods)
+                if failover_errors:
+                    result['error_id'] = "#5001"
+                    result['error'] = (
+                        f"Data served after {len(failover_errors)} DCN failure(s): "
+                        + "; ".join(failover_errors)
+                    )
                 return result
             result_errors.append([address, port, str(result)])
+            pod = self.app.data['db'].get_pod_by_address(address=address)
+            pod_name = pod.get('NAME') if pod else address
+            err_detail = result.get('error') or result.get('message') or str(result)
+            failover_errors.append(f"pod={pod_name} ({err_detail})")
         self.app.stdout_msg(f"No DCN has responded to the request: {result_errors}")
         return self.get_error_response(event=event, error_id="#5000", message=f"No DCN has responded to the request!",
                                        params={"requests": result_errors}, process_start_time=process_start_time,
