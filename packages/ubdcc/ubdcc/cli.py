@@ -522,7 +522,10 @@ def cmd_credentials_list(args):
         return
     for c in credentials:
         assigned = ", ".join(c.get('assigned_dcns') or []) or "-"
-        print(f"{c['id']}  {c['account_group']:<32}  {c.get('api_key_preview','')}  assigned=[{assigned}]")
+        # api_key_preview is already masked server-side (first 4 + last 2 chars,
+        # rest replaced with '*'); api_secret is never returned by this endpoint.
+        preview = c.get('api_key_preview', '')  # nosec B105 - masked value, not a secret
+        print(f"{c['id']}  {c['account_group']:<32}  {preview}  assigned=[{assigned}]")  # lgtm[py/clear-text-logging-sensitive-data]
 
 
 def main():
