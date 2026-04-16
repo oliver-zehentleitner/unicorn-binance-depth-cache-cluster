@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Added
 - CLI `status`: show UBLDC version in parentheses next to each DCN's version
 - CLI `status`: DepthCache redundancy summary — replica breakdown (running/starting) and redundancy categories (fully redundant, degraded, no redundancy)
+- AccountGroups: `binance.com-vanilla-options` → `binance.com`, `binance.com-vanilla-options-testnet` → `binance.com-futures-testnet`
 
 ## 0.4.1
 ### Fixed
