@@ -531,8 +531,8 @@ window.runMermaid = runMermaid;</script>
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
               
-              <li><img src="../../_static/github-logo.png" alt="GitHub Logo" style="vertical-align: middle; margin-top: -1px"/></li>
               <li><a href="https://oliver-zehentleitner.github.io/unicorn-binance-suite/docs_index.html">Docs Index</a> | </li>
+              <li><img src="../../_static/github-logo.png" alt="GitHub Logo" style="vertical-align: middle; margin-top: -1px"/></li>
               <li><a href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster">unicorn-binance-depth-cache-cluster</a> &#187;</li>
               
               
@@ -596,6 +596,8 @@ window.runMermaid = runMermaid;</script>
 <span class="kn">import</span><span class="w"> </span><span class="nn">kubernetes</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">FastAPI</span>
 
 
@@ -989,8 +991,10 @@ window.runMermaid = runMermaid;</script>
         <span class="c1"># Logging</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;unicorn_binance_depthcache_cluster&quot;</span><span class="p">)</span>
+            <span class="n">ubs_logs</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()),</span> <span class="s2">&quot;.unicorn-binance-suite&quot;</span><span class="p">,</span> <span class="s2">&quot;logs&quot;</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">ubs_logs</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span>
-                                <span class="n">filename</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">socket</span><span class="o">.</span><span class="n">gethostname</span><span class="p">()</span><span class="si">}</span><span class="s2">.log&quot;</span><span class="p">,</span>
+                                <span class="n">filename</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ubs_logs</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;ubdcc-</span><span class="si">{</span><span class="n">socket</span><span class="o">.</span><span class="n">gethostname</span><span class="p">()</span><span class="si">}</span><span class="s2">.log&quot;</span><span class="p">),</span>
                                 <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{asctime}</span><span class="s2"> [</span><span class="si">{levelname:8}</span><span class="s2">] </span><span class="si">{process}</span><span class="s2"> </span><span class="si">{thread}</span><span class="s2"> </span><span class="si">{module}</span><span class="s2">: </span><span class="si">{message}</span><span class="s2">&quot;</span><span class="p">,</span>
                                 <span class="n">style</span><span class="o">=</span><span class="s2">&quot;{&quot;</span><span class="p">)</span>
 
@@ -1295,8 +1299,8 @@ window.runMermaid = runMermaid;</script>
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
               
-              <li><img src="../../_static/github-logo.png" alt="GitHub Logo" style="vertical-align: middle; margin-top: -1px"/></li>
               <li><a href="https://oliver-zehentleitner.github.io/unicorn-binance-suite/docs_index.html">Docs Index</a> | </li>
+              <li><img src="../../_static/github-logo.png" alt="GitHub Logo" style="vertical-align: middle; margin-top: -1px"/></li>
               <li><a href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster">unicorn-binance-depth-cache-cluster</a> &#187;</li>
               
               
@@ -1324,7 +1328,7 @@ window.runMermaid = runMermaid;</script>
     <a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite#documentation">Index of all docs</a><br />
     &copy; <a href="/license.html">Copyright</a> 2024-2026, Oliver Zehentleitner.
     See <a href="/license.html">License</a> for more information.<br />
-    Last updated on Apr 16 2026 at 17:31 (CET).
+    Last updated on Apr 17 2026 at 14:44 (CET).
     <a href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/issues/new/choose">Found a bug</a>?
     <br />
     Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
