@@ -1,0 +1,69 @@
+# UNICORN Binance DepthCache Cluster (UBDCC)
+
+> Production-scale depth cache management with load balancing, failover and self-healing.
+> Part of [UNICORN Binance Suite](https://github.com/oliver-zehentleitner/unicorn-binance-suite).
+
+Install: `pip install ubdcc`
+
+## Quick Start — Local
+
+```sh
+pip install ubdcc
+ubdcc start
+```
+
+This starts a management process, REST API, and one DepthCache Node (DCN) on your local machine. No Kubernetes required.
+
+## Quick Start — Python Client
+
+```python
+# use case: access cluster order books from Python
+# module: unicorn-binance-local-depth-cache (UBLDC) connects to UBDCC
+from unicorn_binance_local_depth_cache import BinanceLocalDepthCacheManager
+
+with BinanceLocalDepthCacheManager(exchange="binance.com",
+                                    ubdcc_address="127.0.0.1",
+                                    ubdcc_port=42081) as ubldc:
+    ubldc.cluster.create_depthcaches(exchange="binance.com",
+                                      markets=["BTCUSDT", "ETHUSDT"],
+                                      desired_quantity=2)
+    asks = ubldc.cluster.get_asks(exchange="binance.com", market="BTCUSDT")
+    bids = ubldc.cluster.get_bids(exchange="binance.com", market="BTCUSDT")
+```
+
+## CLI Commands
+
+```sh
+ubdcc start [--dcn N] [--port PORT]     # start cluster with N depth cache nodes
+ubdcc status                             # show cluster status
+ubdcc stop                               # shut down cluster
+ubdcc credentials add --account-group GROUP --api-key KEY --api-secret SECRET
+ubdcc credentials list
+ubdcc credentials remove ID
+```
+
+Interactive commands while running: `status`, `add-dcn`, `remove-dcn`, `restart`, `stop`, `help`
+
+## REST API
+
+Base URL: `http://127.0.0.1:{port}/`
+
+| Endpoint | Purpose |
+|----------|---------|
+| GET /create_depthcache?exchange=...&market=... | Create a depth cache |
+| GET /create_depthcaches?exchange=...&markets=...&markets=... | Create multiple |
+| GET /get_asks?exchange=...&market=... | Get ask-side order book |
+| GET /get_bids?exchange=...&market=... | Get bid-side order book |
+| GET /get_cluster_info | Cluster topology and status |
+| GET /get_depthcache_list | List all managed depth caches |
+| GET /stop_depthcache?exchange=...&market=... | Stop a depth cache |
+
+Accessible from any programming language via HTTP.
+
+## Architecture
+
+- **Management (mgmt)**: orchestrates pods, assigns depth caches to nodes
+- **REST API**: HTTP interface for external access
+- **DCN (DepthCache Node)**: runs actual UBLDC instances, managed by mgmt
+
+Runs as processes on a single machine or as pods on Kubernetes.
