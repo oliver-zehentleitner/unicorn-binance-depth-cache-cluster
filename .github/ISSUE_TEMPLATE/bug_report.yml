@@ -52,10 +52,13 @@ body:
       options:
         - concerns all
         - binance.com
+        - binance.com-testnet
         - binance.com-futures
         - binance.com-futures-testnet
-        - binance.com-testnet
+        - binance.com-vanilla-options
+        - binance.com-vanilla-options-testnet
         - binance.us
+        - trbinance.com
     validations:
       required: true
 
