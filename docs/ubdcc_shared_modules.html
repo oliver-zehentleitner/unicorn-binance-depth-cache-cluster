@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>ubdcc_shared_modules package &#8212; unicorn-binance-depth-cache-cluster 0.5.0 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ubdcc_shared_modules package &#8212; unicorn-binance-depth-cache-cluster 0.6.0 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
     <link rel="stylesheet" type="text/css" href="_static/pydoctheme.css?v=fdf8e9ae" />
@@ -121,6 +121,8 @@
 <li><a class="reference internal" href="#ubdcc_shared_modules.Database.Database.get_worst_dcn"><code class="docutils literal notranslate"><span class="pre">Database.get_worst_dcn()</span></code></a></li>
 <li><a class="reference internal" href="#ubdcc_shared_modules.Database.Database.is_empty"><code class="docutils literal notranslate"><span class="pre">Database.is_empty()</span></code></a></li>
 <li><a class="reference internal" href="#ubdcc_shared_modules.Database.Database.manage_distribution"><code class="docutils literal notranslate"><span class="pre">Database.manage_distribution()</span></code></a></li>
+<li><a class="reference internal" href="#ubdcc_shared_modules.Database.Database.rebalance_account_group"><code class="docutils literal notranslate"><span class="pre">Database.rebalance_account_group()</span></code></a></li>
+<li><a class="reference internal" href="#ubdcc_shared_modules.Database.Database.rebalance_credential_assignments_if_needed"><code class="docutils literal notranslate"><span class="pre">Database.rebalance_credential_assignments_if_needed()</span></code></a></li>
 <li><a class="reference internal" href="#ubdcc_shared_modules.Database.Database.release_credentials"><code class="docutils literal notranslate"><span class="pre">Database.release_credentials()</span></code></a></li>
 <li><a class="reference internal" href="#ubdcc_shared_modules.Database.Database.remove_orphaned_credential_assignments"><code class="docutils literal notranslate"><span class="pre">Database.remove_orphaned_credential_assignments()</span></code></a></li>
 <li><a class="reference internal" href="#ubdcc_shared_modules.Database.Database.remove_orphaned_distribution_entries"><code class="docutils literal notranslate"><span class="pre">Database.remove_orphaned_distribution_entries()</span></code></a></li>
@@ -621,6 +623,23 @@ api_key/api_secret are masked for public consumption.</p>
 <dd></dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="ubdcc_shared_modules.Database.Database.rebalance_account_group">
+<span class="sig-name descname"><span class="pre">rebalance_account_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">account_group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/ubdcc_shared_modules/Database.html#Database.rebalance_account_group"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ubdcc_shared_modules.Database.Database.rebalance_account_group" title="Link to this definition">¶</a></dt>
+<dd><p>Redistribute all active DCN uids evenly (round-robin) over the
+credentials available for this account_group. Called whenever the
+credential set or the DCN population for this group changes. Returns
+True when the assignment actually changed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ubdcc_shared_modules.Database.Database.rebalance_credential_assignments_if_needed">
+<span class="sig-name descname"><span class="pre">rebalance_credential_assignments_if_needed</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/ubdcc_shared_modules/Database.html#Database.rebalance_credential_assignments_if_needed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ubdcc_shared_modules.Database.Database.rebalance_credential_assignments_if_needed" title="Link to this definition">¶</a></dt>
+<dd><p>Detect DCN-population changes since the last revise() and rebalance
+affected account_groups. Keeps every active DCN exactly one assigned
+credential per account_group (or none if no key is configured).</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="ubdcc_shared_modules.Database.Database.release_credentials">
 <span class="sig-name descname"><span class="pre">release_credentials</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/ubdcc_shared_modules/Database.html#Database.release_credentials"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ubdcc_shared_modules.Database.Database.release_credentials" title="Link to this definition">¶</a></dt>
 <dd><p>Remove uid from ASSIGNED_DCNS of all credentials (called when DCN
@@ -902,6 +921,8 @@ from the args and kwargs arguments, respectively.</p>
 <li><a class="reference internal" href="#ubdcc_shared_modules.Database.Database.get_worst_dcn"><code class="docutils literal notranslate"><span class="pre">Database.get_worst_dcn()</span></code></a></li>
 <li><a class="reference internal" href="#ubdcc_shared_modules.Database.Database.is_empty"><code class="docutils literal notranslate"><span class="pre">Database.is_empty()</span></code></a></li>
 <li><a class="reference internal" href="#ubdcc_shared_modules.Database.Database.manage_distribution"><code class="docutils literal notranslate"><span class="pre">Database.manage_distribution()</span></code></a></li>
+<li><a class="reference internal" href="#ubdcc_shared_modules.Database.Database.rebalance_account_group"><code class="docutils literal notranslate"><span class="pre">Database.rebalance_account_group()</span></code></a></li>
+<li><a class="reference internal" href="#ubdcc_shared_modules.Database.Database.rebalance_credential_assignments_if_needed"><code class="docutils literal notranslate"><span class="pre">Database.rebalance_credential_assignments_if_needed()</span></code></a></li>
 <li><a class="reference internal" href="#ubdcc_shared_modules.Database.Database.release_credentials"><code class="docutils literal notranslate"><span class="pre">Database.release_credentials()</span></code></a></li>
 <li><a class="reference internal" href="#ubdcc_shared_modules.Database.Database.remove_orphaned_credential_assignments"><code class="docutils literal notranslate"><span class="pre">Database.remove_orphaned_credential_assignments()</span></code></a></li>
 <li><a class="reference internal" href="#ubdcc_shared_modules.Database.Database.remove_orphaned_distribution_entries"><code class="docutils literal notranslate"><span class="pre">Database.remove_orphaned_distribution_entries()</span></code></a></li>
@@ -1063,7 +1084,7 @@ from the args and kwargs arguments, respectively.</p>
     <a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite#documentation">Index of all docs</a><br />
     &copy; <a href="/license.html">Copyright</a> 2024-2026, Oliver Zehentleitner.
     See <a href="/license.html">License</a> for more information.<br />
-    Last updated on Apr 21 2026 at 12:56 (CET).
+    Last updated on Apr 21 2026 at 15:01 (CET).
     <a href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/issues/new/choose">Found a bug</a>?
     <br />
     Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.

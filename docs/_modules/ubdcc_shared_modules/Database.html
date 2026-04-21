@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ubdcc_shared_modules.Database &#8212; unicorn-binance-depth-cache-cluster 0.4.0 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ubdcc_shared_modules.Database &#8212; unicorn-binance-depth-cache-cluster 0.6.0 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=92fd9be5" />
     <link rel="stylesheet" type="text/css" href="../../_static/pydoctheme.css?v=fdf8e9ae" />
@@ -476,8 +476,9 @@ window.runMermaid = runMermaid;</script>
         <nav class="menu" role="navigation" aria-label="main navigation">
             <p class="logo">
                 <div style="text-align: center;">
-                    <a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite"><img src="https://raw.githubusercontent.com/oliver-zehentleitner/unicorn-binance-suite/refs/heads/master/images/logo/LUCIT-UBS-Logo.png"></a>
-                    <br>
+                    <a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite">
+                        <img src="https://raw.githubusercontent.com/oliver-zehentleitner/unicorn-binance-suite/refs/heads/master/images/logo/UBS-Logo.png">
+                    </a>
                 </div>
             </p>
 <div id="searchbox" style="display: block" role="search">
@@ -530,13 +531,9 @@ window.runMermaid = runMermaid;</script>
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
               
-                  
-                  
-              <li><img src="../../_static/py.png" alt="Python"
-                       style="vertical-align: middle; margin-top: -1px"/></li>
-              <li><a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite#documentation">Docs Index</a> | </li>
+              <li><a href="https://oliver-zehentleitner.github.io/unicorn-binance-suite/docs_index.html">Docs Index</a> | </li>
+              <li><img src="../../_static/github-logo.png" alt="GitHub Logo" style="vertical-align: middle; margin-top: -1px"/></li>
               <li><a href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster">unicorn-binance-depth-cache-cluster</a> &#187;</li>
-                  
               
               
               <a href="../../index.html">Docs</a> &#187;
@@ -736,7 +733,42 @@ window.runMermaid = runMermaid;</script>
                 <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;credentials&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;credentials&#39;</span><span class="p">][</span><span class="n">credential_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">credential</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_set_update_timestamp</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rebalance_account_group</span><span class="p">(</span><span class="n">account_group</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">credential_id</span></div>
+
+
+<div class="viewcode-block" id="Database.rebalance_account_group">
+<a class="viewcode-back" href="../../ubdcc_shared_modules.html#ubdcc_shared_modules.Database.Database.rebalance_account_group">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rebalance_account_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">account_group</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Redistribute all active DCN uids evenly (round-robin) over the</span>
+<span class="sd">        credentials available for this account_group. Called whenever the</span>
+<span class="sd">        credential set or the DCN population for this group changes. Returns</span>
+<span class="sd">        True when the assignment actually changed.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">account_group</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Missing mandatory parameter: account_group&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_lock</span><span class="p">:</span>
+            <span class="n">credentials</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;credentials&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{}</span>
+            <span class="n">candidates</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">credentials</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+                          <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;ACCOUNT_GROUP&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">account_group</span><span class="p">]</span>
+            <span class="n">dcn_uids</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">uid</span> <span class="k">for</span> <span class="n">uid</span><span class="p">,</span> <span class="n">pod</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;pods&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                              <span class="k">if</span> <span class="n">pod</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ROLE&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;ubdcc-dcn&quot;</span><span class="p">)</span>
+            <span class="n">before</span> <span class="o">=</span> <span class="p">{</span><span class="n">c</span><span class="p">[</span><span class="s1">&#39;ID&#39;</span><span class="p">]:</span> <span class="nb">list</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="s1">&#39;ASSIGNED_DCNS&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">candidates</span><span class="p">}</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">candidates</span><span class="p">:</span>
+                <span class="c1"># no keys for this group — nothing to do (the credentials dict</span>
+                <span class="c1"># is empty for this group anyway)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">candidates</span><span class="p">:</span>
+                <span class="n">c</span><span class="p">[</span><span class="s1">&#39;ASSIGNED_DCNS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">uid</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dcn_uids</span><span class="p">):</span>
+                <span class="n">candidates</span><span class="p">[</span><span class="n">i</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">candidates</span><span class="p">)][</span><span class="s1">&#39;ASSIGNED_DCNS&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span>
+            <span class="n">after</span> <span class="o">=</span> <span class="p">{</span><span class="n">c</span><span class="p">[</span><span class="s1">&#39;ID&#39;</span><span class="p">]:</span> <span class="nb">list</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="s1">&#39;ASSIGNED_DCNS&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">candidates</span><span class="p">}</span>
+            <span class="k">if</span> <span class="n">before</span> <span class="o">!=</span> <span class="n">after</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_set_update_timestamp</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">stdout_msg</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Rebalanced credentials for &#39;</span><span class="si">{</span><span class="n">account_group</span><span class="si">}</span><span class="s2">&#39;: &quot;</span>
+                                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">dcn_uids</span><span class="p">)</span><span class="si">}</span><span class="s2"> DCN(s) over </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">candidates</span><span class="p">)</span><span class="si">}</span><span class="s2"> key(s)&quot;</span><span class="p">,</span>
+                                    <span class="n">log</span><span class="o">=</span><span class="s2">&quot;info&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
 
 
 <div class="viewcode-block" id="Database.assign_credentials">
@@ -774,8 +806,10 @@ window.runMermaid = runMermaid;</script>
             <span class="n">credentials</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;credentials&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{}</span>
             <span class="k">if</span> <span class="n">credential_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">credentials</span><span class="p">:</span>
                 <span class="k">return</span> <span class="kc">False</span>
+            <span class="n">account_group</span> <span class="o">=</span> <span class="n">credentials</span><span class="p">[</span><span class="n">credential_id</span><span class="p">][</span><span class="s1">&#39;ACCOUNT_GROUP&#39;</span><span class="p">]</span>
             <span class="k">del</span> <span class="n">credentials</span><span class="p">[</span><span class="n">credential_id</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_set_update_timestamp</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rebalance_account_group</span><span class="p">(</span><span class="n">account_group</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">True</span></div>
 
 
@@ -1126,10 +1160,33 @@ window.runMermaid = runMermaid;</script>
         <span class="bp">self</span><span class="o">.</span><span class="n">delete_old_pods</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">remove_orphaned_distribution_entries</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">remove_orphaned_credential_assignments</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rebalance_credential_assignments_if_needed</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">manage_distribution</span><span class="p">()</span>
         <span class="n">run_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">stdout_msg</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Database revised in </span><span class="si">{</span><span class="n">run_time</span><span class="si">}</span><span class="s2"> seconds!&quot;</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="s2">&quot;info&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="Database.rebalance_credential_assignments_if_needed">
+<a class="viewcode-back" href="../../ubdcc_shared_modules.html#ubdcc_shared_modules.Database.Database.rebalance_credential_assignments_if_needed">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rebalance_credential_assignments_if_needed</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Detect DCN-population changes since the last revise() and rebalance</span>
+<span class="sd">        affected account_groups. Keeps every active DCN exactly one assigned</span>
+<span class="sd">        credential per account_group (or none if no key is configured).&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_lock</span><span class="p">:</span>
+            <span class="n">credentials</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;credentials&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{}</span>
+            <span class="n">current_dcns</span> <span class="o">=</span> <span class="p">{</span><span class="n">uid</span> <span class="k">for</span> <span class="n">uid</span><span class="p">,</span> <span class="n">pod</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;pods&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                            <span class="k">if</span> <span class="n">pod</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ROLE&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;ubdcc-dcn&quot;</span><span class="p">}</span>
+            <span class="n">groups_with_creds</span> <span class="o">=</span> <span class="p">{</span><span class="n">c</span><span class="p">[</span><span class="s1">&#39;ACCOUNT_GROUP&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">credentials</span><span class="o">.</span><span class="n">values</span><span class="p">()}</span>
+            <span class="n">assigned_by_group</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span><span class="n">g</span><span class="p">:</span> <span class="nb">set</span><span class="p">()</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">groups_with_creds</span><span class="p">}</span>
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">credentials</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="n">assigned_by_group</span><span class="p">[</span><span class="n">c</span><span class="p">[</span><span class="s1">&#39;ACCOUNT_GROUP&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="s1">&#39;ASSIGNED_DCNS&#39;</span><span class="p">])</span>
+        <span class="n">changed</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groups_with_creds</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">assigned_by_group</span><span class="p">[</span><span class="n">group</span><span class="p">]</span> <span class="o">!=</span> <span class="n">current_dcns</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rebalance_account_group</span><span class="p">(</span><span class="n">account_group</span><span class="o">=</span><span class="n">group</span><span class="p">):</span>
+                    <span class="n">changed</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="n">changed</span></div>
 
 
 <div class="viewcode-block" id="Database.manage_distribution">
@@ -1306,8 +1363,7 @@ window.runMermaid = runMermaid;</script>
         <div class="sphinxsidebarwrapper">
             <p class="logo">
                 <div style="text-align: center;">
-                    <a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite"><img src="https://raw.githubusercontent.com/oliver-zehentleitner/unicorn-binance-suite/refs/heads/master/images/logo/LUCIT-UBS-Logo.png"></a>
-                    <br>
+                    <a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite"><img src="https://raw.githubusercontent.com/oliver-zehentleitner/unicorn-binance-suite/refs/heads/master/images/logo/UBS-Logo.png"></a><br>
                 </div>
             </p>
 <div id="searchbox" style="display: block" role="search">
@@ -1360,13 +1416,9 @@ window.runMermaid = runMermaid;</script>
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
               
-                  
-                  
-              <li><img src="../../_static/py.png" alt="Python"
-                       style="vertical-align: middle; margin-top: -1px"/></li>
-              <li><a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite#documentation">Docs Index</a> | </li>
+              <li><a href="https://oliver-zehentleitner.github.io/unicorn-binance-suite/docs_index.html">Docs Index</a> | </li>
+              <li><img src="../../_static/github-logo.png" alt="GitHub Logo" style="vertical-align: middle; margin-top: -1px"/></li>
               <li><a href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster">unicorn-binance-depth-cache-cluster</a> &#187;</li>
-                  
               
               
               <a href="../../index.html">Docs</a> &#187;
@@ -1393,11 +1445,11 @@ window.runMermaid = runMermaid;</script>
     <a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite#documentation">Index of all docs</a><br />
     &copy; <a href="/license.html">Copyright</a> 2024-2026, Oliver Zehentleitner.
     See <a href="/license.html">License</a> for more information.<br />
-    Last updated on Apr 15 2026 at 19:38 (CET).
+    Last updated on Apr 21 2026 at 15:01 (CET).
     <a href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/issues/new/choose">Found a bug</a>?
     <br />
     Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
-        with <a href="https://github.com/LUCIT-Systems-and-Development/python-docs-theme-lucit">python-docs-theme-lucit</a>.
+        with <a href="https://github.com/oliver-zehentleitner/python-docs-theme-ubs">python-docs-theme-ubs</a>.
     </div>
 
   </body>

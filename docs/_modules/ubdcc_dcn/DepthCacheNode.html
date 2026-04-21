@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ubdcc_dcn.DepthCacheNode &#8212; unicorn-binance-depth-cache-cluster 0.4.0 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ubdcc_dcn.DepthCacheNode &#8212; unicorn-binance-depth-cache-cluster 0.6.0 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=92fd9be5" />
     <link rel="stylesheet" type="text/css" href="../../_static/pydoctheme.css?v=fdf8e9ae" />
@@ -476,8 +476,9 @@ window.runMermaid = runMermaid;</script>
         <nav class="menu" role="navigation" aria-label="main navigation">
             <p class="logo">
                 <div style="text-align: center;">
-                    <a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite"><img src="https://raw.githubusercontent.com/oliver-zehentleitner/unicorn-binance-suite/refs/heads/master/images/logo/LUCIT-UBS-Logo.png"></a>
-                    <br>
+                    <a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite">
+                        <img src="https://raw.githubusercontent.com/oliver-zehentleitner/unicorn-binance-suite/refs/heads/master/images/logo/UBS-Logo.png">
+                    </a>
                 </div>
             </p>
 <div id="searchbox" style="display: block" role="search">
@@ -530,13 +531,9 @@ window.runMermaid = runMermaid;</script>
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
               
-                  
-                  
-              <li><img src="../../_static/py.png" alt="Python"
-                       style="vertical-align: middle; margin-top: -1px"/></li>
-              <li><a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite#documentation">Docs Index</a> | </li>
+              <li><a href="https://oliver-zehentleitner.github.io/unicorn-binance-suite/docs_index.html">Docs Index</a> | </li>
+              <li><img src="../../_static/github-logo.png" alt="GitHub Logo" style="vertical-align: middle; margin-top: -1px"/></li>
               <li><a href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster">unicorn-binance-depth-cache-cluster</a> &#187;</li>
-                  
               
               
               <a href="../../index.html">Docs</a> &#187;
@@ -594,11 +591,6 @@ window.runMermaid = runMermaid;</script>
 <span class="kn">from</span><span class="w"> </span><span class="nn">unicorn_binance_local_depth_cache</span><span class="w"> </span><span class="kn">import</span> <span class="n">BinanceLocalDepthCacheManager</span><span class="p">,</span> <span class="n">DepthCacheNotFound</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">unicorn_binance_local_depth_cache.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">__version__</span> <span class="k">as</span> <span class="n">ubldc_version</span>
 
-<span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">unicorn_binance_rest_api</span><span class="w"> </span><span class="kn">import</span> <span class="n">BinanceRestApiManager</span>
-<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="n">BinanceRestApiManager</span> <span class="o">=</span> <span class="kc">None</span>
-
 
 <div class="viewcode-block" id="DepthCacheNode">
 <a class="viewcode-back" href="../../ubdcc_dcn.html#ubdcc_dcn.DepthCacheNode.DepthCacheNode">[docs]</a>
@@ -617,37 +609,47 @@ window.runMermaid = runMermaid;</script>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Thread-safe: invoked from UBLDC&#39;s manager thread on every stream restart.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_restart_queue</span><span class="o">.</span><span class="n">put</span><span class="p">((</span><span class="n">exchange</span><span class="p">,</span> <span class="n">market</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">))</span>
 
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_get_ubra_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exchange</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a BinanceRestApiManager for `exchange` with assigned API</span>
-<span class="sd">        credentials, or None when no credentials are configured for that</span>
-<span class="sd">        account_group (UBLDC then falls back to public rate limits).&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">BinanceRestApiManager</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span>
-        <span class="n">account_group</span> <span class="o">=</span> <span class="n">get_account_group</span><span class="p">(</span><span class="n">exchange</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">account_group</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span>
-        <span class="n">cache</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;ubra_by_account_group&#39;</span><span class="p">,</span> <span class="p">{})</span>
-        <span class="k">if</span> <span class="n">account_group</span> <span class="ow">in</span> <span class="n">cache</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">cache</span><span class="p">[</span><span class="n">account_group</span><span class="p">]</span>
-        <span class="n">credential</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">ubdcc_assign_credentials</span><span class="p">(</span><span class="n">account_group</span><span class="o">=</span><span class="n">account_group</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">credential</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">cache</span><span class="p">[</span><span class="n">account_group</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="k">return</span> <span class="kc">None</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">ubra</span> <span class="o">=</span> <span class="n">BinanceRestApiManager</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="n">credential</span><span class="p">[</span><span class="s1">&#39;api_key&#39;</span><span class="p">],</span>
-                                         <span class="n">api_secret</span><span class="o">=</span><span class="n">credential</span><span class="p">[</span><span class="s1">&#39;api_secret&#39;</span><span class="p">],</span>
-                                         <span class="n">exchange</span><span class="o">=</span><span class="n">exchange</span><span class="p">,</span>
-                                         <span class="n">disable_colorama</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                         <span class="n">warn_on_update</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error_msg</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">stdout_msg</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not create BinanceRestApiManager for &#39;</span><span class="si">{</span><span class="n">account_group</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">error_msg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-                                <span class="n">log</span><span class="o">=</span><span class="s2">&quot;error&quot;</span><span class="p">)</span>
-            <span class="n">cache</span><span class="p">[</span><span class="n">account_group</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="k">return</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">stdout_msg</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Assigned credential &#39;</span><span class="si">{</span><span class="n">credential</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&#39; for account_group &quot;</span>
-                            <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">account_group</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="s2">&quot;info&quot;</span><span class="p">)</span>
-        <span class="n">cache</span><span class="p">[</span><span class="n">account_group</span><span class="p">]</span> <span class="o">=</span> <span class="n">ubra</span>
-        <span class="k">return</span> <span class="n">ubra</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_ldcs_for_account_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">account_group</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Yield every running BinanceLocalDepthCacheManager whose exchange maps</span>
+<span class="sd">        to the given account_group.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">exchange</span><span class="p">,</span> <span class="n">by_interval</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;depthcache_instances&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">get_account_group</span><span class="p">(</span><span class="n">exchange</span><span class="p">)</span> <span class="o">!=</span> <span class="n">account_group</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">for</span> <span class="n">ldc</span> <span class="ow">in</span> <span class="n">by_interval</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">ldc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">yield</span> <span class="n">ldc</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_sync_credentials</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;For every account_group currently used by this DCN, pull the assigned</span>
+<span class="sd">        credential from mgmt. If the credential id differs from the one we last</span>
+<span class="sd">        propagated, hot-swap the UBRA in all affected UBLDCs via</span>
+<span class="sd">        `set_credentials()`. Runs once per main-loop iteration after the</span>
+<span class="sd">        mgmt sync.&quot;&quot;&quot;</span>
+        <span class="n">cache</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;credential_id_by_account_group&#39;</span><span class="p">]</span>
+        <span class="n">used_account_groups</span> <span class="o">=</span> <span class="p">{</span><span class="n">get_account_group</span><span class="p">(</span><span class="n">exch</span><span class="p">)</span>
+                               <span class="k">for</span> <span class="n">exch</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;depthcache_instances&#39;</span><span class="p">,</span> <span class="p">{})}</span>
+        <span class="n">used_account_groups</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">account_group</span> <span class="ow">in</span> <span class="n">used_account_groups</span><span class="p">:</span>
+            <span class="n">credential</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">ubdcc_assign_credentials</span><span class="p">(</span><span class="n">account_group</span><span class="o">=</span><span class="n">account_group</span><span class="p">)</span>
+            <span class="n">new_id</span> <span class="o">=</span> <span class="n">credential</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">credential</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="n">cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">account_group</span><span class="p">)</span> <span class="o">==</span> <span class="n">new_id</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">api_key</span> <span class="o">=</span> <span class="n">credential</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;api_key&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">credential</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="n">api_secret</span> <span class="o">=</span> <span class="n">credential</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;api_secret&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">credential</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">ldc</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ldcs_for_account_group</span><span class="p">(</span><span class="n">account_group</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">ldc</span><span class="o">.</span><span class="n">set_credentials</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="o">=</span><span class="n">api_secret</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error_msg</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">stdout_msg</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;set_credentials() failed for &#39;</span><span class="si">{</span><span class="n">account_group</span><span class="si">}</span><span class="s2">&#39;: &quot;</span>
+                                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">error_msg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="s2">&quot;error&quot;</span><span class="p">)</span>
+            <span class="n">cache</span><span class="p">[</span><span class="n">account_group</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_id</span>
+            <span class="k">if</span> <span class="n">new_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">stdout_msg</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Assigned credential &#39;</span><span class="si">{</span><span class="n">new_id</span><span class="si">}</span><span class="s2">&#39; for account_group &quot;</span>
+                                    <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">account_group</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="s2">&quot;info&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">stdout_msg</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No credential available for account_group &quot;</span>
+                                    <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">account_group</span><span class="si">}</span><span class="s2">&#39; — using public rate limits.&quot;</span><span class="p">,</span>
+                                    <span class="n">log</span><span class="o">=</span><span class="s2">&quot;info&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="DepthCacheNode.main">
 <a class="viewcode-back" href="../../ubdcc_dcn.html#ubdcc_dcn.DepthCacheNode.DepthCacheNode.main">[docs]</a>
@@ -655,7 +657,7 @@ window.runMermaid = runMermaid;</script>
         <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;depthcache_instances&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;local_depthcaches&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;responsibilities&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;ubra_by_account_group&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;credential_id_by_account_group&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_rest_server</span><span class="p">(</span><span class="n">endpoints</span><span class="o">=</span><span class="n">RestEndpoints</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">set_status_running</span><span class="p">()</span>
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">register_or_restart</span><span class="p">(</span><span class="n">ubldc_version</span><span class="o">=</span><span class="n">ubldc_version</span><span class="p">)</span>
@@ -664,6 +666,7 @@ window.runMermaid = runMermaid;</script>
             <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span>
             <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">ubdcc_node_sync</span><span class="p">()</span>
             <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_drain_restart_queue</span><span class="p">()</span>
+            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sync_credentials</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;responsibilities&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">get_dcn_responsibilities</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">stdout_msg</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Local DepthCaches: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;local_depthcaches&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="s2">&quot;debug&quot;</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">stdout_msg</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Responsibilities: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;responsibilities&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="s2">&quot;debug&quot;</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -677,14 +680,16 @@ window.runMermaid = runMermaid;</script>
                         <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;depthcache_instances&#39;</span><span class="p">][</span><span class="n">dc</span><span class="p">[</span><span class="s1">&#39;exchange&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
                     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;depthcache_instances&#39;</span><span class="p">][</span><span class="n">dc</span><span class="p">[</span><span class="s1">&#39;exchange&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dc</span><span class="p">[</span><span class="s1">&#39;update_interval&#39;</span><span class="p">])</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                         <span class="n">on_restart</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_stream_restart</span><span class="p">,</span> <span class="n">dc</span><span class="p">[</span><span class="s1">&#39;exchange&#39;</span><span class="p">])</span>
-                        <span class="n">ubra_manager</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_ubra_manager</span><span class="p">(</span><span class="n">exchange</span><span class="o">=</span><span class="n">dc</span><span class="p">[</span><span class="s1">&#39;exchange&#39;</span><span class="p">])</span>
                         <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;exchange&quot;</span><span class="p">:</span> <span class="n">dc</span><span class="p">[</span><span class="s1">&#39;exchange&#39;</span><span class="p">],</span> <span class="s2">&quot;on_restart&quot;</span><span class="p">:</span> <span class="n">on_restart</span><span class="p">}</span>
                         <span class="k">if</span> <span class="n">dc</span><span class="p">[</span><span class="s1">&#39;update_interval&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                             <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;depth_cache_update_interval&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dc</span><span class="p">[</span><span class="s1">&#39;update_interval&#39;</span><span class="p">]</span>
-                        <span class="k">if</span> <span class="n">ubra_manager</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;ubra_manager&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ubra_manager</span>
+                        <span class="c1"># The UBRA is managed by UBLDC itself (no ubra_manager</span>
+                        <span class="c1"># kwarg); credentials are propagated immediately below</span>
+                        <span class="c1"># so the initial snapshot already runs with an</span>
+                        <span class="c1"># authenticated key when one is assigned.</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;depthcache_instances&#39;</span><span class="p">][</span><span class="n">dc</span><span class="p">[</span><span class="s1">&#39;exchange&#39;</span><span class="p">]][</span><span class="n">dc</span><span class="p">[</span><span class="s1">&#39;update_interval&#39;</span><span class="p">]]</span> <span class="o">=</span> \
                             <span class="n">BinanceLocalDepthCacheManager</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+                        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sync_credentials</span><span class="p">()</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;depthcache_instances&#39;</span><span class="p">][</span><span class="n">dc</span><span class="p">[</span><span class="s1">&#39;exchange&#39;</span><span class="p">]][</span><span class="n">dc</span><span class="p">[</span><span class="s1">&#39;update_interval&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">create_depthcache</span><span class="p">(</span>
                             <span class="n">markets</span><span class="o">=</span><span class="n">dc</span><span class="p">[</span><span class="s1">&#39;market&#39;</span><span class="p">],</span>
@@ -750,8 +755,7 @@ window.runMermaid = runMermaid;</script>
         <div class="sphinxsidebarwrapper">
             <p class="logo">
                 <div style="text-align: center;">
-                    <a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite"><img src="https://raw.githubusercontent.com/oliver-zehentleitner/unicorn-binance-suite/refs/heads/master/images/logo/LUCIT-UBS-Logo.png"></a>
-                    <br>
+                    <a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite"><img src="https://raw.githubusercontent.com/oliver-zehentleitner/unicorn-binance-suite/refs/heads/master/images/logo/UBS-Logo.png"></a><br>
                 </div>
             </p>
 <div id="searchbox" style="display: block" role="search">
@@ -804,13 +808,9 @@ window.runMermaid = runMermaid;</script>
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
               
-                  
-                  
-              <li><img src="../../_static/py.png" alt="Python"
-                       style="vertical-align: middle; margin-top: -1px"/></li>
-              <li><a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite#documentation">Docs Index</a> | </li>
+              <li><a href="https://oliver-zehentleitner.github.io/unicorn-binance-suite/docs_index.html">Docs Index</a> | </li>
+              <li><img src="../../_static/github-logo.png" alt="GitHub Logo" style="vertical-align: middle; margin-top: -1px"/></li>
               <li><a href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster">unicorn-binance-depth-cache-cluster</a> &#187;</li>
-                  
               
               
               <a href="../../index.html">Docs</a> &#187;
@@ -837,11 +837,11 @@ window.runMermaid = runMermaid;</script>
     <a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite#documentation">Index of all docs</a><br />
     &copy; <a href="/license.html">Copyright</a> 2024-2026, Oliver Zehentleitner.
     See <a href="/license.html">License</a> for more information.<br />
-    Last updated on Apr 15 2026 at 19:38 (CET).
+    Last updated on Apr 21 2026 at 15:01 (CET).
     <a href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/issues/new/choose">Found a bug</a>?
     <br />
     Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
-        with <a href="https://github.com/LUCIT-Systems-and-Development/python-docs-theme-lucit">python-docs-theme-lucit</a>.
+        with <a href="https://github.com/oliver-zehentleitner/python-docs-theme-ubs">python-docs-theme-ubs</a>.
     </div>
 
   </body>
