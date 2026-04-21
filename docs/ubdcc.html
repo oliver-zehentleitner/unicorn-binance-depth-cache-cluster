@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>ubdcc package &#8212; unicorn-binance-depth-cache-cluster 0.5.0 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ubdcc CLI &#8212; unicorn-binance-depth-cache-cluster 0.5.0 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
     <link rel="stylesheet" type="text/css" href="_static/pydoctheme.css?v=fdf8e9ae" />
@@ -51,9 +51,17 @@
   <div>
     <h3><a href="index.html">Table of Contents</a></h3>
     <ul>
-<li><a class="reference internal" href="#">ubdcc package</a><ul>
-<li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-ubdcc">Module contents</a></li>
+<li><a class="reference internal" href="#">ubdcc CLI</a><ul>
+<li><a class="reference internal" href="#ubdcc">ubdcc</a><ul>
+<li><a class="reference internal" href="#ubdcc-credentials">ubdcc credentials</a></li>
+<li><a class="reference internal" href="#ubdcc-credentials-add">ubdcc credentials add</a></li>
+<li><a class="reference internal" href="#ubdcc-credentials-list">ubdcc credentials list</a></li>
+<li><a class="reference internal" href="#ubdcc-credentials-remove">ubdcc credentials remove</a></li>
+<li><a class="reference internal" href="#ubdcc-start">ubdcc start</a></li>
+<li><a class="reference internal" href="#ubdcc-status">ubdcc status</a></li>
+<li><a class="reference internal" href="#ubdcc-stop">ubdcc stop</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -140,7 +148,7 @@
               <a href="index.html">Docs</a> &#187;
               
           <li class="nav-item nav-item-1"><a href="modules.html" accesskey="U">Unicorn Depth Cache Cluster Modules</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">ubdcc package</a></li>
+        <li class="nav-item nav-item-this"><a href="">ubdcc CLI</a></li>
                 <li class="right">
                     
 
@@ -163,13 +171,193 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="ubdcc-package">
-<h1>ubdcc package<a class="headerlink" href="#ubdcc-package" title="Link to this heading">¶</a></h1>
-<section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+  <section id="ubdcc-cli">
+<h1>ubdcc CLI<a class="headerlink" href="#ubdcc-cli" title="Link to this heading">¶</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">ubdcc</span></code> command-line interface manages a local UBDCC cluster (start,
+status, stop, credentials). See the <code class="docutils literal notranslate"><span class="pre">start</span></code> subcommand for the interactive
+shell commands available at runtime (<code class="docutils literal notranslate"><span class="pre">add-dcn</span></code>, <code class="docutils literal notranslate"><span class="pre">remove-dcn</span></code>, <code class="docutils literal notranslate"><span class="pre">status</span></code>,
+<code class="docutils literal notranslate"><span class="pre">restart</span></code>, <code class="docutils literal notranslate"><span class="pre">stop</span></code>, <code class="docutils literal notranslate"><span class="pre">help</span></code>).</p>
+<section id="ubdcc">
+<h2>ubdcc<a class="headerlink" href="#ubdcc" title="Link to this heading">¶</a></h2>
+<p>UNICORN Binance DepthCache Cluster — Cluster Manager
+<a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster">https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster</a></p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: ubdcc [-h] [-v] {start,status,stop,credentials} ...</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ubdcc-h">
+<span id="cmdoption-ubdcc-help"></span><span class="sig-name descname"><span class="pre">-h</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--help</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ubdcc-h" title="Link to this definition">¶</a></dt>
+<dd><p>show this help message and exit</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ubdcc-v">
+<span id="cmdoption-ubdcc-version"></span><span class="sig-name descname"><span class="pre">-v</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--version</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ubdcc-v" title="Link to this definition">¶</a></dt>
+<dd><p>show program’s version number and exit</p>
+</dd></dl>
+
+<dl class="simple">
+<dt>Interactive shell commands (available inside “ubdcc start”):</dt><dd><p>add-dcn [count]       Spawn new DCN process(es)
+remove-dcn &lt;count|name&gt; Stop and remove DCN(s)
+status                Show cluster status
+restart &lt;name&gt;        Restart a specific pod
+stop                  Shut down the cluster
+help                  Show available shell commands</p>
+</dd>
+</dl>
+<section id="ubdcc-credentials">
+<h3>ubdcc credentials<a class="headerlink" href="#ubdcc-credentials" title="Link to this heading">¶</a></h3>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: ubdcc credentials [-h] {add,remove,list} ...</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ubdcc-credentials-h">
+<span id="cmdoption-ubdcc-credentials-help"></span><span class="sig-name descname"><span class="pre">-h</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--help</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ubdcc-credentials-h" title="Link to this definition">¶</a></dt>
+<dd><p>show this help message and exit</p>
+</dd></dl>
+
 </section>
-<section id="module-ubdcc">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-ubdcc" title="Link to this heading">¶</a></h2>
+<section id="ubdcc-credentials-add">
+<h3>ubdcc credentials add<a class="headerlink" href="#ubdcc-credentials-add" title="Link to this heading">¶</a></h3>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: ubdcc credentials add [-h] --account-group ACCOUNT_GROUP --api-key API_KEY --api-secret API_SECRET [--port PORT]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ubdcc-credentials-add-h">
+<span id="cmdoption-ubdcc-credentials-add-help"></span><span class="sig-name descname"><span class="pre">-h</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--help</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ubdcc-credentials-add-h" title="Link to this definition">¶</a></dt>
+<dd><p>show this help message and exit</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ubdcc-credentials-add-account-group">
+<span class="sig-name descname"><span class="pre">--account-group</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;account_group&gt;</span></span><a class="headerlink" href="#cmdoption-ubdcc-credentials-add-account-group" title="Link to this definition">¶</a></dt>
+<dd><p>binance.com | binance.com-testnet | binance.com-futures-testnet | binance.us | binance.tr</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ubdcc-credentials-add-api-key">
+<span class="sig-name descname"><span class="pre">--api-key</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;api_key&gt;</span></span><a class="headerlink" href="#cmdoption-ubdcc-credentials-add-api-key" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ubdcc-credentials-add-api-secret">
+<span class="sig-name descname"><span class="pre">--api-secret</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;api_secret&gt;</span></span><a class="headerlink" href="#cmdoption-ubdcc-credentials-add-api-secret" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ubdcc-credentials-add-port">
+<span class="sig-name descname"><span class="pre">--port</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;port&gt;</span></span><a class="headerlink" href="#cmdoption-ubdcc-credentials-add-port" title="Link to this definition">¶</a></dt>
+<dd><p>Mgmt port (default: 42080)</p>
+</dd></dl>
+
+</section>
+<section id="ubdcc-credentials-list">
+<h3>ubdcc credentials list<a class="headerlink" href="#ubdcc-credentials-list" title="Link to this heading">¶</a></h3>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: ubdcc credentials list [-h] [--port PORT]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ubdcc-credentials-list-h">
+<span id="cmdoption-ubdcc-credentials-list-help"></span><span class="sig-name descname"><span class="pre">-h</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--help</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ubdcc-credentials-list-h" title="Link to this definition">¶</a></dt>
+<dd><p>show this help message and exit</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ubdcc-credentials-list-port">
+<span class="sig-name descname"><span class="pre">--port</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;port&gt;</span></span><a class="headerlink" href="#cmdoption-ubdcc-credentials-list-port" title="Link to this definition">¶</a></dt>
+<dd><p>Mgmt port (default: 42080)</p>
+</dd></dl>
+
+</section>
+<section id="ubdcc-credentials-remove">
+<h3>ubdcc credentials remove<a class="headerlink" href="#ubdcc-credentials-remove" title="Link to this heading">¶</a></h3>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: ubdcc credentials remove [-h] [--port PORT] id</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ubdcc-credentials-remove-arg-id">
+<span class="sig-name descname"><span class="pre">id</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ubdcc-credentials-remove-arg-id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ubdcc-credentials-remove-h">
+<span id="cmdoption-ubdcc-credentials-remove-help"></span><span class="sig-name descname"><span class="pre">-h</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--help</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ubdcc-credentials-remove-h" title="Link to this definition">¶</a></dt>
+<dd><p>show this help message and exit</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ubdcc-credentials-remove-port">
+<span class="sig-name descname"><span class="pre">--port</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;port&gt;</span></span><a class="headerlink" href="#cmdoption-ubdcc-credentials-remove-port" title="Link to this definition">¶</a></dt>
+<dd><p>Mgmt port (default: 42080)</p>
+</dd></dl>
+
+</section>
+<section id="ubdcc-start">
+<h3>ubdcc start<a class="headerlink" href="#ubdcc-start" title="Link to this heading">¶</a></h3>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: ubdcc start [-h] [--dcn DCN] [--port PORT] [--logdir LOGDIR]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ubdcc-start-h">
+<span id="cmdoption-ubdcc-start-help"></span><span class="sig-name descname"><span class="pre">-h</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--help</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ubdcc-start-h" title="Link to this definition">¶</a></dt>
+<dd><p>show this help message and exit</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ubdcc-start-dcn">
+<span class="sig-name descname"><span class="pre">--dcn</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;dcn&gt;</span></span><a class="headerlink" href="#cmdoption-ubdcc-start-dcn" title="Link to this definition">¶</a></dt>
+<dd><p>Number of DCN processes (default: 1)</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ubdcc-start-port">
+<span class="sig-name descname"><span class="pre">--port</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;port&gt;</span></span><a class="headerlink" href="#cmdoption-ubdcc-start-port" title="Link to this definition">¶</a></dt>
+<dd><p>Mgmt port (default: 42080 or next free)</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ubdcc-start-logdir">
+<span class="sig-name descname"><span class="pre">--logdir</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;logdir&gt;</span></span><a class="headerlink" href="#cmdoption-ubdcc-start-logdir" title="Link to this definition">¶</a></dt>
+<dd><p>Log directory (default: current directory)</p>
+</dd></dl>
+
+</section>
+<section id="ubdcc-status">
+<h3>ubdcc status<a class="headerlink" href="#ubdcc-status" title="Link to this heading">¶</a></h3>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: ubdcc status [-h] [--port PORT]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ubdcc-status-h">
+<span id="cmdoption-ubdcc-status-help"></span><span class="sig-name descname"><span class="pre">-h</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--help</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ubdcc-status-h" title="Link to this definition">¶</a></dt>
+<dd><p>show this help message and exit</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ubdcc-status-port">
+<span class="sig-name descname"><span class="pre">--port</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;port&gt;</span></span><a class="headerlink" href="#cmdoption-ubdcc-status-port" title="Link to this definition">¶</a></dt>
+<dd><p>Mgmt port (default: 42080)</p>
+</dd></dl>
+
+</section>
+<section id="ubdcc-stop">
+<h3>ubdcc stop<a class="headerlink" href="#ubdcc-stop" title="Link to this heading">¶</a></h3>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: ubdcc stop [-h] [--port PORT]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ubdcc-stop-h">
+<span id="cmdoption-ubdcc-stop-help"></span><span class="sig-name descname"><span class="pre">-h</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--help</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ubdcc-stop-h" title="Link to this definition">¶</a></dt>
+<dd><p>show this help message and exit</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ubdcc-stop-port">
+<span class="sig-name descname"><span class="pre">--port</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;port&gt;</span></span><a class="headerlink" href="#cmdoption-ubdcc-stop-port" title="Link to this definition">¶</a></dt>
+<dd><p>Mgmt port (default: 42080)</p>
+</dd></dl>
+
+</section>
 </section>
 </section>
 
@@ -188,9 +376,17 @@
   <div>
     <h3><a href="index.html">Table of Contents</a></h3>
     <ul>
-<li><a class="reference internal" href="#">ubdcc package</a><ul>
-<li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-ubdcc">Module contents</a></li>
+<li><a class="reference internal" href="#">ubdcc CLI</a><ul>
+<li><a class="reference internal" href="#ubdcc">ubdcc</a><ul>
+<li><a class="reference internal" href="#ubdcc-credentials">ubdcc credentials</a></li>
+<li><a class="reference internal" href="#ubdcc-credentials-add">ubdcc credentials add</a></li>
+<li><a class="reference internal" href="#ubdcc-credentials-list">ubdcc credentials list</a></li>
+<li><a class="reference internal" href="#ubdcc-credentials-remove">ubdcc credentials remove</a></li>
+<li><a class="reference internal" href="#ubdcc-start">ubdcc start</a></li>
+<li><a class="reference internal" href="#ubdcc-status">ubdcc status</a></li>
+<li><a class="reference internal" href="#ubdcc-stop">ubdcc stop</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -277,7 +473,7 @@
               <a href="index.html">Docs</a> &#187;
               
           <li class="nav-item nav-item-1"><a href="modules.html" >Unicorn Depth Cache Cluster Modules</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">ubdcc package</a></li>
+        <li class="nav-item nav-item-this"><a href="">ubdcc CLI</a></li>
                 <li class="right">
                     
 
@@ -298,7 +494,7 @@
     <a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite#documentation">Index of all docs</a><br />
     &copy; <a href="/license.html">Copyright</a> 2024-2026, Oliver Zehentleitner.
     See <a href="/license.html">License</a> for more information.<br />
-    Last updated on Apr 21 2026 at 12:37 (CET).
+    Last updated on Apr 21 2026 at 12:56 (CET).
     <a href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/issues/new/choose">Found a bug</a>?
     <br />
     Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
