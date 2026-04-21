@@ -541,6 +541,7 @@ window.runMermaid = runMermaid;</script>
 </ul>
 </li>
 <li><a class="reference internal" href="#accessing-from-python">Accessing from Python</a></li>
+<li><a class="reference internal" href="#documentation">Documentation</a></li>
 <li><a class="reference internal" href="#related-articles">Related Articles</a></li>
 <li><a class="reference internal" href="#how-to-report-bugs-or-suggest-improvements">How to report Bugs or suggest Improvements?</a></li>
 <li><a class="reference internal" href="#contributing">Contributing</a><ul>
@@ -1129,7 +1130,7 @@ directly to one restapi instance — it handles all routing to mgmt and DCN proc
 <td><code>/ubdcc_add_credentials</code></td>
 <td>POST/GET</td>
 <td><code>account_group</code>, <code>api_key</code>, <code>api_secret</code></td>
-<td>Store a Binance API key (see <a href="#api-credentials">API Credentials</a>)</td>
+<td>Store a Binance <a href="https://blog.technopathy.club/how-to-create-a-binance-api-key-and-api-secret">API key</a> (see <a href="#api-credentials">API Credentials</a>)</td>
 </tr>
 <tr>
 <td><code>/ubdcc_remove_credentials</code></td>
@@ -1189,7 +1190,7 @@ understanding them helps when debugging or extending the system.</p>
 <tr>
 <td><code>/ubdcc_assign_credentials</code></td>
 <td>GET</td>
-<td>DCN requests an API key for a given <code>account_group</code> — load-balanced across available keys</td>
+<td>DCN requests an <a href="https://blog.technopathy.club/how-to-create-a-binance-api-key-and-api-secret">API key</a> for a given <code>account_group</code> — load-balanced across available keys</td>
 </tr>
 </tbody>
 </table>
@@ -1384,9 +1385,9 @@ curl<span class="w"> </span><span class="s1">&#39;http://127.0.0.1:42081/stop_de
 </section>
 <section id="api-credentials">
 <h2>API Credentials<a class="headerlink" href="#api-credentials" title="Link to this heading">¶</a></h2>
-<p>UBDCC can run entirely <strong>without</strong> Binance API keys — DepthCaches are built from public market data
-streams and endpoints. When you run at larger scale you may want to add API keys to raise the REST
-rate-limit ceiling (snapshots for initial sync, refresh cycles). Keys are optional.</p>
+<p>UBDCC can run entirely <strong>without</strong> <a class="reference external" href="https://blog.technopathy.club/how-to-create-a-binance-api-key-and-api-secret">Binance API keys</a> —
+DepthCaches are built from public market data streams and endpoints. When you run at larger scale you may want to add
+API keys to raise the REST rate-limit ceiling (snapshots for initial sync, refresh cycles). Keys are optional.</p>
 <section id="account-groups">
 <h3>Account groups<a class="headerlink" href="#account-groups" title="Link to this heading">¶</a></h3>
 <p>Each Binance account has its own keys. UBDCC groups related exchanges under one <code class="docutils literal notranslate"><span class="pre">account_group</span></code>:</p>
@@ -1503,6 +1504,13 @@ have access to UBDCC.</p>
 <a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-local-depth-cache?tab=readme-ov-file#connect-to-a-unicorn-binance-depthcache-cluster">UBLDC cluster module</a>
 for a native experience with sync and async support, automatic connection handling, and <code class="docutils literal notranslate"><span class="pre">debug=True</span></code> output.</p>
 <p>See the <a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-local-depth-cache/tree/master/examples/unicorn_binance_depth_cache_cluster">examples</a>.</p>
+</section>
+<section id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://oliver-zehentleitner.github.io/unicorn-binance-depth-cache-cluster">General</a></p></li>
+<li><p><a class="reference external" href="https://oliver-zehentleitner.github.io/unicorn-binance-depth-cache-cluster/modules.html">Modules</a></p></li>
+</ul>
 </section>
 <section id="related-articles">
 <h2>Related Articles<a class="headerlink" href="#related-articles" title="Link to this heading">¶</a></h2>
@@ -1624,6 +1632,7 @@ of any kind, including but not limited to direct or indirect damages for loss of
 </ul>
 </li>
 <li><a class="reference internal" href="#accessing-from-python">Accessing from Python</a></li>
+<li><a class="reference internal" href="#documentation">Documentation</a></li>
 <li><a class="reference internal" href="#related-articles">Related Articles</a></li>
 <li><a class="reference internal" href="#how-to-report-bugs-or-suggest-improvements">How to report Bugs or suggest Improvements?</a></li>
 <li><a class="reference internal" href="#contributing">Contributing</a><ul>
@@ -1741,7 +1750,7 @@ of any kind, including but not limited to direct or indirect damages for loss of
     <a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite#documentation">Index of all docs</a><br />
     &copy; <a href="/license.html">Copyright</a> 2024-2026, Oliver Zehentleitner.
     See <a href="/license.html">License</a> for more information.<br />
-    Last updated on Apr 21 2026 at 12:37 (CET).
+    Last updated on Apr 21 2026 at 12:43 (CET).
     <a href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/issues/new/choose">Found a bug</a>?
     <br />
     Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.

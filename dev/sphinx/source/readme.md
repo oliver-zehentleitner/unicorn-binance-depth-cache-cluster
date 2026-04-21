@@ -328,19 +328,19 @@ These endpoints are disabled in productive mode (Kubernetes).
 
 These are the endpoints you use to interact with the cluster. All requests go through the restapi.
 
-| Endpoint | Method | Parameters | Description |
-|----------|--------|------------|-------------|
-| `/create_depthcache` | GET | `exchange`, `market`, `desired_quantity`, `update_interval`, `refresh_interval` | Create a single DepthCache |
-| `/create_depthcaches` | POST/GET | `exchange`, `markets`, `desired_quantity`, `update_interval`, `refresh_interval` | Create multiple DepthCaches (POST: JSON body, GET: comma-separated markets) |
-| `/get_asks` | GET | `exchange`, `market`, `limit_count`, `threshold_volume` | Get ask side of the order book |
-| `/get_bids` | GET | `exchange`, `market`, `limit_count`, `threshold_volume` | Get bid side of the order book |
-| `/get_cluster_info` | GET | — | Cluster overview: registered pods, versions, DB state |
-| `/get_depthcache_list` | GET | — | List all DepthCaches with status and distribution |
-| `/get_depthcache_info` | GET | `exchange`, `market` | Detailed info for a specific DepthCache |
-| `/stop_depthcache` | GET | `exchange`, `market` | Stop and remove a DepthCache |
-| `/ubdcc_add_credentials` | POST/GET | `account_group`, `api_key`, `api_secret` | Store a Binance API key (see [API Credentials](#api-credentials)) |
-| `/ubdcc_remove_credentials` | POST/GET | `id` | Delete a stored API key |
-| `/ubdcc_get_credentials_list` | GET | — | List stored keys (masked) with their assigned DCNs |
+| Endpoint | Method | Parameters | Description                                                                                                                                       |
+|----------|--------|------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
+| `/create_depthcache` | GET | `exchange`, `market`, `desired_quantity`, `update_interval`, `refresh_interval` | Create a single DepthCache                                                                                                                        |
+| `/create_depthcaches` | POST/GET | `exchange`, `markets`, `desired_quantity`, `update_interval`, `refresh_interval` | Create multiple DepthCaches (POST: JSON body, GET: comma-separated markets)                                                                       |
+| `/get_asks` | GET | `exchange`, `market`, `limit_count`, `threshold_volume` | Get ask side of the order book                                                                                                                    |
+| `/get_bids` | GET | `exchange`, `market`, `limit_count`, `threshold_volume` | Get bid side of the order book                                                                                                                    |
+| `/get_cluster_info` | GET | — | Cluster overview: registered pods, versions, DB state                                                                                             |
+| `/get_depthcache_list` | GET | — | List all DepthCaches with status and distribution                                                                                                 |
+| `/get_depthcache_info` | GET | `exchange`, `market` | Detailed info for a specific DepthCache                                                                                                           |
+| `/stop_depthcache` | GET | `exchange`, `market` | Stop and remove a DepthCache                                                                                                                      |
+| `/ubdcc_add_credentials` | POST/GET | `account_group`, `api_key`, `api_secret` | Store a Binance [API key](https://blog.technopathy.club/how-to-create-a-binance-api-key-and-api-secret) (see [API Credentials](#api-credentials)) |
+| `/ubdcc_remove_credentials` | POST/GET | `id` | Delete a stored API key                                                                                                                           |
+| `/ubdcc_get_credentials_list` | GET | — | List stored keys (masked) with their assigned DCNs                                                                                                |
 
 All public endpoints accept `debug=true` as an additional parameter for timing and routing details.
 
@@ -351,14 +351,14 @@ understanding them helps when debugging or extending the system.
 
 **mgmt** (port 42080):
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/ubdcc_node_registration` | GET | DCN/restapi registers itself with mgmt on startup |
-| `/ubdcc_node_cancellation` | GET | DCN/restapi deregisters on shutdown |
-| `/ubdcc_node_sync` | GET | Periodic heartbeat — DCN/restapi reports status, mgmt pushes DB backup back |
-| `/ubdcc_get_responsible_dcn_addresses` | GET | Returns which DCN holds a specific DepthCache (used by restapi for routing) |
-| `/ubdcc_update_depthcache_distribution` | GET | DCN reports DepthCache status changes (starting, running) |
-| `/ubdcc_assign_credentials` | GET | DCN requests an API key for a given `account_group` — load-balanced across available keys |
+| Endpoint | Method | Description                                                                                                                                                               |
+|----------|--------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `/ubdcc_node_registration` | GET | DCN/restapi registers itself with mgmt on startup                                                                                                                         |
+| `/ubdcc_node_cancellation` | GET | DCN/restapi deregisters on shutdown                                                                                                                                       |
+| `/ubdcc_node_sync` | GET | Periodic heartbeat — DCN/restapi reports status, mgmt pushes DB backup back                                                                                               |
+| `/ubdcc_get_responsible_dcn_addresses` | GET | Returns which DCN holds a specific DepthCache (used by restapi for routing)                                                                                               |
+| `/ubdcc_update_depthcache_distribution` | GET | DCN reports DepthCache status changes (starting, running)                                                                                                                 |
+| `/ubdcc_assign_credentials` | GET | DCN requests an [API key](https://blog.technopathy.club/how-to-create-a-binance-api-key-and-api-secret) for a given `account_group` — load-balanced across available keys |
 
 **All pods** (shared base):
 
@@ -509,9 +509,9 @@ kubectl describe services ubdcc-restapi
 
 ## API Credentials
 
-UBDCC can run entirely **without** Binance API keys — DepthCaches are built from public market data
-streams and endpoints. When you run at larger scale you may want to add API keys to raise the REST
-rate-limit ceiling (snapshots for initial sync, refresh cycles). Keys are optional.
+UBDCC can run entirely **without** [Binance API keys](https://blog.technopathy.club/how-to-create-a-binance-api-key-and-api-secret) — 
+DepthCaches are built from public market data streams and endpoints. When you run at larger scale you may want to add 
+API keys to raise the REST rate-limit ceiling (snapshots for initial sync, refresh cycles). Keys are optional.
 
 ### Account groups
 
@@ -604,6 +604,10 @@ While the REST API can be used from any language, Python users can use the
 for a native experience with sync and async support, automatic connection handling, and `debug=True` output.
 
 See the [examples](https://github.com/oliver-zehentleitner/unicorn-binance-local-depth-cache/tree/master/examples/unicorn_binance_depth_cache_cluster).
+
+## Documentation
+- [General](https://oliver-zehentleitner.github.io/unicorn-binance-depth-cache-cluster)
+- [Modules](https://oliver-zehentleitner.github.io/unicorn-binance-depth-cache-cluster/modules.html)
 
 ## Related Articles
 - [How to create a Binance API Key and API Secret?](https://blog.technopathy.club/how-to-create-a-binance-api-key-and-api-secret)
