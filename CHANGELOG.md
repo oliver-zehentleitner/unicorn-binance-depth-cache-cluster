@@ -26,6 +26,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
   `cluster.remove_credentials()` / `cluster.get_credentials_list()`.
   The `ubdcc credentials add/list/remove` CLI continues to work unchanged
   (it now hits the new endpoints internally).
+- `packages/ubdcc-dcn`: bumped `unicorn-binance-local-depth-cache`
+  minimum to `>=2.14.0` across `setup.py`, `requirements.txt` and
+  `pyproject.toml` — the renamed cluster client methods live there.
 ### Fixed
 - `AccountGroups.py`: `binance.com-margin-testnet` and
   `binance.com-isolated_margin-testnet` are now mapped to the
