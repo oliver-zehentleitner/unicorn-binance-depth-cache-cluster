@@ -184,6 +184,10 @@ the internet typically ~60ms.
 |--------------------------------------------------------------------|-------------------------------| 
 | [Binance](https://www.binance.com)                                 | `binance.com`                 |
 | [Binance Testnet](https://testnet.binance.vision/)                 | `binance.com-testnet`         |
+| [Binance Cross Margin](https://www.binance.com)                    | `binance.com-margin`          |
+| [Binance Cross Margin Testnet](https://testnet.binance.vision/)    | `binance.com-margin-testnet`  |
+| [Binance Isolated Margin](https://www.binance.com)                 | `binance.com-isolated_margin` |
+| [Binance Isolated Margin Testnet](https://testnet.binance.vision/) | `binance.com-isolated_margin-testnet` |
 | [Binance USD-M Futures](https://www.binance.com)                   | `binance.com-futures`         |
 | [Binance USD-M Futures Testnet](https://testnet.binancefuture.com) | `binance.com-futures-testnet` |
 | [Binance European Options](https://www.binance.com)                | `binance.com-vanilla-options`         |
@@ -523,7 +527,7 @@ Each Binance account has its own keys. UBDCC groups related exchanges under one 
 | account_group                   | Covers UBLDC exchanges                                                                                       |
 |---------------------------------|--------------------------------------------------------------------------------------------------------------|
 | `binance.com`                   | `binance.com`, `binance.com-futures`, `binance.com-margin`, `binance.com-isolated_margin`, `binance.com-vanilla-options` |
-| `binance.com-testnet`           | `binance.com-testnet` (Spot testnet — separate login on testnet.binance.vision)                              |
+| `binance.com-testnet`           | `binance.com-testnet`, `binance.com-margin-testnet`, `binance.com-isolated_margin-testnet` (Spot testnet — separate login on testnet.binance.vision; margin testnet shares the same account) |
 | `binance.com-futures-testnet`   | `binance.com-futures-testnet`, `binance.com-vanilla-options-testnet` (shared Futures/Options testnet)        |
 | `binance.us`                    | `binance.us`                                                                                                 |
 | `binance.tr`                    | `trbinance.com`                                                                                              |
