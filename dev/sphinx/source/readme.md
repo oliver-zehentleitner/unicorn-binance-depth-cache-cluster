@@ -663,6 +663,7 @@ Binds to `127.0.0.1:8080` by default and opens the UI in your browser; enter the
 - [UBDCC Dashboard](https://github.com/oliver-zehentleitner/ubdcc-dashboard)
 
 ## Related Articles
+- [From `pip install` to a Redundant Binance Order Book Cluster — UBDCC + Dashboard Quickstart](https://blog.technopathy.club/from-pip-install-to-a-redundant-binance-order-book-cluster-ubdcc-dashboard-quickstart)
 - [How to create a Binance API Key and API Secret?](https://blog.technopathy.club/how-to-create-a-binance-api-key-and-api-secret)
 - [Why Your Binance Order Book Should Not Live Inside Your Bot](https://blog.technopathy.club/why-your-binance-order-book-should-not-live-inside-your-bot)
 - [Your Binance Order Book Is Wrong — Here's Why](https://blog.technopathy.club/your-binance-order-book-is-wrong-here-s-why)
