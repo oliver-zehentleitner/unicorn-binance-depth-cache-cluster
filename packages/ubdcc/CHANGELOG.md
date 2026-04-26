@@ -3,6 +3,8 @@
 All notable changes to this package will be documented in this file.
 
 ## 0.7.1.dev (development stage/unreleased/unstable)
+
+## 0.7.1
 ### Added
 - Bundled `ubdcc-dashboard >= 0.2.0` as a runtime dependency. `pip
   install ubdcc` now also installs the browser-based UBDCC Dashboard —
