@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ubdcc_dcn.DepthCacheNode &#8212; unicorn-binance-depth-cache-cluster 0.6.0 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ubdcc_dcn.DepthCacheNode &#8212; unicorn-binance-depth-cache-cluster 0.8.0 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=92fd9be5" />
     <link rel="stylesheet" type="text/css" href="../../_static/pydoctheme.css?v=fdf8e9ae" />
@@ -595,7 +595,7 @@ window.runMermaid = runMermaid;</script>
 <div class="viewcode-block" id="DepthCacheNode">
 <a class="viewcode-back" href="../../ubdcc_dcn.html#ubdcc_dcn.DepthCacheNode.DepthCacheNode">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">DepthCacheNode</span><span class="p">(</span><span class="n">ServiceBase</span><span class="p">):</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mgmt_port</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mgmt_port</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">log_level</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="c1"># Thread-safe queue: UBLDC on_restart callbacks fire from their</span>
         <span class="c1"># manager thread; the async main loop drains the queue and forwards</span>
         <span class="c1"># to mgmt. Must be initialized BEFORE super().__init__() because</span>
@@ -603,7 +603,7 @@ window.runMermaid = runMermaid;</script>
         <span class="c1"># synchronously runs main() → _drain_restart_queue(). Any attribute</span>
         <span class="c1"># set after super().__init__() is never assigned.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_restart_queue</span><span class="p">:</span> <span class="n">queue</span><span class="o">.</span><span class="n">Queue</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">app_name</span><span class="o">=</span><span class="s2">&quot;ubdcc-dcn&quot;</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span> <span class="n">mgmt_port</span><span class="o">=</span><span class="n">mgmt_port</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">app_name</span><span class="o">=</span><span class="s2">&quot;ubdcc-dcn&quot;</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span> <span class="n">mgmt_port</span><span class="o">=</span><span class="n">mgmt_port</span><span class="p">,</span> <span class="n">log_level</span><span class="o">=</span><span class="n">log_level</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_on_stream_restart</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exchange</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">market</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Thread-safe: invoked from UBLDC&#39;s manager thread on every stream restart.&quot;&quot;&quot;</span>
@@ -837,7 +837,7 @@ window.runMermaid = runMermaid;</script>
     <a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite#documentation">Index of all docs</a><br />
     &copy; <a href="/license.html">Copyright</a> 2024-2026, Oliver Zehentleitner.
     See <a href="/license.html">License</a> for more information.<br />
-    Last updated on Apr 21 2026 at 15:01 (CET).
+    Last updated on Apr 26 2026 at 16:00 (CET).
     <a href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/issues/new/choose">Found a bug</a>?
     <br />
     Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.

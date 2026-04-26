@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>ubdcc CLI &#8212; unicorn-binance-depth-cache-cluster 0.7.0 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ubdcc CLI &#8212; unicorn-binance-depth-cache-cluster 0.8.0 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
     <link rel="stylesheet" type="text/css" href="_static/pydoctheme.css?v=fdf8e9ae" />
@@ -298,7 +298,7 @@ help                  Show available shell commands</p>
 </section>
 <section id="ubdcc-start">
 <h3>ubdcc start<a class="headerlink" href="#ubdcc-start" title="Link to this heading">¶</a></h3>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: ubdcc start [-h] [--dcn DCN] [--port PORT] [--logdir LOGDIR]</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: ubdcc start [-h] [--dcn DCN] [--port PORT] [--logdir LOGDIR] [--log-level {DEBUG,INFO,WARNING,ERROR,CRITICAL}]</span>
 </pre></div>
 </div>
 <dl class="std option">
@@ -323,6 +323,12 @@ help                  Show available shell commands</p>
 <dt class="sig sig-object std" id="cmdoption-ubdcc-start-logdir">
 <span class="sig-name descname"><span class="pre">--logdir</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;logdir&gt;</span></span><a class="headerlink" href="#cmdoption-ubdcc-start-logdir" title="Link to this definition">¶</a></dt>
 <dd><p>Log directory (default: current directory)</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ubdcc-start-log-level">
+<span class="sig-name descname"><span class="pre">--log-level</span></span><span class="sig-prename descclassname"> <span class="pre">{DEBUG,INFO,WARNING,ERROR,CRITICAL}</span></span><a class="headerlink" href="#cmdoption-ubdcc-start-log-level" title="Link to this definition">¶</a></dt>
+<dd><p>Log level for spawned services (default: ERROR)</p>
 </dd></dl>
 
 </section>
@@ -498,7 +504,7 @@ help                  Show available shell commands</p>
     <a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite#documentation">Index of all docs</a><br />
     &copy; <a href="/license.html">Copyright</a> 2024-2026, Oliver Zehentleitner.
     See <a href="/license.html">License</a> for more information.<br />
-    Last updated on Apr 24 2026 at 18:25 (CET).
+    Last updated on Apr 26 2026 at 16:00 (CET).
     <a href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/issues/new/choose">Found a bug</a>?
     <br />
     Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.

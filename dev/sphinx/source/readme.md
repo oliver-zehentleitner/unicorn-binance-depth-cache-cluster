@@ -342,8 +342,9 @@ For onboarding and day-to-day exploration the
 [UBDCC Dashboard](https://github.com/oliver-zehentleitner/ubdcc-dashboard)
 ships an **API Builder** — pick a task (create a DepthCache, query asks/bids,
 add credentials, stop a cache, …), fill in a form, and copy a ready-to-paste
-REST-API snippet in your language of choice (curl, HTTPie, Python (using the
-official UBLDC `Cluster` client), JavaScript, Go, C#, Java, Rust, PHP, C/C++).
+REST-API snippet in your language of choice (curl, HTTPie, Python (using the official 
+[UBLDC `Cluster` client](https://github.com/oliver-zehentleitner/unicorn-binance-local-depth-cache#connect-to-a-unicorn-binance-depthcache-cluster)), 
+JavaScript, Go, C#, Java, Rust, PHP, C/C++).
 A `Try it →` button runs GET-safe calls against the connected cluster and
 pretty-prints the response — useful for learning the endpoints without
 writing code first.

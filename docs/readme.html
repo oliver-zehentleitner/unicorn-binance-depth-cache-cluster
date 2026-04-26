@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>UNICORN Binance DepthCache Cluster (UBDCC) &#8212; unicorn-binance-depth-cache-cluster 0.7.0 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNICORN Binance DepthCache Cluster (UBDCC) &#8212; unicorn-binance-depth-cache-cluster 0.8.0 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
     <link rel="stylesheet" type="text/css" href="_static/pydoctheme.css?v=fdf8e9ae" />
@@ -925,7 +925,9 @@ DepthCache data without duplicate WebSocket connections.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>ubdcc
 </pre></div>
 </div>
-<p>This installs all components (mgmt, restapi, dcn) and the <code class="docutils literal notranslate"><span class="pre">ubdcc</span></code> cluster manager.</p>
+<p>This installs all components (mgmt, restapi, dcn), the <code class="docutils literal notranslate"><span class="pre">ubdcc</span></code> cluster manager and the
+<a class="reference external" href="https://github.com/oliver-zehentleitner/ubdcc-dashboard">UBDCC Dashboard</a> (browser UI,
+launched via <code class="docutils literal notranslate"><span class="pre">ubdcc-dashboard</span> <span class="pre">start</span></code>).</p>
 </section>
 <section id="start-with-the-cluster-manager">
 <h3>Start with the cluster manager<a class="headerlink" href="#start-with-the-cluster-manager" title="Link to this heading">¶</a></h3>
@@ -933,7 +935,7 @@ DepthCache data without duplicate WebSocket connections.</p>
 </pre></div>
 </div>
 <p>This starts 1 mgmt + 1 restapi + 4 DCN processes and drops you into an interactive console:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>UBDCC Cluster Manager v0.7.0
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>UBDCC Cluster Manager v0.8.0
 Starting cluster with mgmt port 42080, 4 DCN(s)...
   mgmt started (PID 12345)
   restapi started (PID 12346)
@@ -947,16 +949,16 @@ Cluster is ready!
 
 ROLE             NAME                 PORT     STATUS     VERSION
 ----------------------------------------------------------------------
-ubdcc-mgmt       ubdcc-mgmt           42080    running    0.7.0
-ubdcc-restapi    TDMKiCnT6jZ39N       42081    running    0.7.0
-ubdcc-dcn        g3HcyluSZ5qWarm      42082    running    0.7.0 (ubldc 2.11.2)
-ubdcc-dcn        gpU3hkiU9Ei          42083    running    0.7.0 (ubldc 2.11.2)
-ubdcc-dcn        tDuu9mOXrt445XU      42084    running    0.7.0 (ubldc 2.11.2)
-ubdcc-dcn        xg6RZRf1APErfh1      42085    running    0.7.0 (ubldc 2.11.2)
+ubdcc-mgmt       ubdcc-mgmt           42080    running    0.8.0
+ubdcc-restapi    TDMKiCnT6jZ39N       42081    running    0.8.0
+ubdcc-dcn        g3HcyluSZ5qWarm      42082    running    0.8.0 (ubldc 2.11.2)
+ubdcc-dcn        gpU3hkiU9Ei          42083    running    0.8.0 (ubldc 2.11.2)
+ubdcc-dcn        tDuu9mOXrt445XU      42084    running    0.8.0 (ubldc 2.11.2)
+ubdcc-dcn        xg6RZRf1APErfh1      42085    running    0.8.0 (ubldc 2.11.2)
 
 DepthCaches: 0 (0 replicas: 0 running, 0 starting)
 Redundancy: 0 fully redundant, 0 degraded, 0 no redundancy
-Version: 0.7.0
+Version: 0.8.0
 
 REST API: http://127.0.0.1:42081/
 Cluster info: http://127.0.0.1:42081/get_cluster_info
@@ -1095,13 +1097,15 @@ directly to one restapi instance — it handles all routing to mgmt and DCN proc
 <a class="reference external" href="https://github.com/oliver-zehentleitner/ubdcc-dashboard">UBDCC Dashboard</a>
 ships an <strong>API Builder</strong> — pick a task (create a DepthCache, query asks/bids,
 add credentials, stop a cache, …), fill in a form, and copy a ready-to-paste
-REST-API snippet in your language of choice (curl, HTTPie, Python (using the
-official UBLDC <code class="docutils literal notranslate"><span class="pre">Cluster</span></code> client), JavaScript, Go, C#, Java, Rust). A
-<code class="docutils literal notranslate"><span class="pre">Try</span> <span class="pre">it</span> <span class="pre">→</span></code> button runs GET-safe calls against the connected cluster and
+REST-API snippet in your language of choice (curl, HTTPie, Python (using the official
+<a class="reference external" href="https://github.com/oliver-zehentleitner/unicorn-binance-local-depth-cache#connect-to-a-unicorn-binance-depthcache-cluster">UBLDC <code class="docutils literal notranslate"><span class="pre">Cluster</span></code> client</a>),
+JavaScript, Go, C#, Java, Rust, PHP, C/C++).
+A <code class="docutils literal notranslate"><span class="pre">Try</span> <span class="pre">it</span> <span class="pre">→</span></code> button runs GET-safe calls against the connected cluster and
 pretty-prints the response — useful for learning the endpoints without
 writing code first.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>ubdcc-dashboard
-ubdcc-dashboard<span class="w"> </span>start
+<p>The dashboard ships as a dependency of <code class="docutils literal notranslate"><span class="pre">ubdcc</span></code> — <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">ubdcc</span></code>
+already pulls it in. Launch it with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ubdcc-dashboard<span class="w"> </span>start
 </pre></div>
 </div>
 <p><a class="reference external" href="https://github.com/oliver-zehentleitner/ubdcc-dashboard"><img alt="UBDCC-DASHBOARD" src="https://raw.githubusercontent.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/master/images/ubdcc-dashboard/ubdcc-dashboard-screenshot.png" /></a></p>
@@ -1369,7 +1373,7 @@ curl<span class="w"> </span><span class="s1">&#39;http://127.0.0.1:42081/stop_de
 <ul class="simple">
 <li><p>Then</p></li>
 </ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">helm</span> <span class="n">install</span> <span class="n">ubdcc</span> <span class="n">ubdcc</span><span class="o">/</span><span class="n">ubdcc</span> <span class="o">--</span><span class="n">version</span> <span class="mf">0.7.0</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">helm</span> <span class="n">install</span> <span class="n">ubdcc</span> <span class="n">ubdcc</span><span class="o">/</span><span class="n">ubdcc</span> <span class="o">--</span><span class="n">version</span> <span class="mf">0.8.0</span>
 </pre></div>
 </div>
 </section>
@@ -1793,7 +1797,7 @@ of any kind, including but not limited to direct or indirect damages for loss of
     <a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite#documentation">Index of all docs</a><br />
     &copy; <a href="/license.html">Copyright</a> 2024-2026, Oliver Zehentleitner.
     See <a href="/license.html">License</a> for more information.<br />
-    Last updated on Apr 24 2026 at 19:57 (CET).
+    Last updated on Apr 26 2026 at 16:00 (CET).
     <a href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/issues/new/choose">Found a bug</a>?
     <br />
     Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
