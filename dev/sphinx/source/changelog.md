@@ -10,6 +10,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 [How to upgrade to the latest version!](https://oliver-zehentleitner.github.io/unicorn-binance-depth-cache-cluster/readme.html#installation-and-upgrade)
 
 ## 0.7.1.dev (development stage/unreleased/unstable)
+### Added
+- `packages/ubdcc`: ships `ubdcc-dashboard >= 0.2.0` as a runtime
+  dependency (`setup.py`, `requirements.txt`, `pyproject.toml`).
+  `pip install ubdcc` now also installs the browser-based UBDCC
+  Dashboard — launch it with `ubdcc-dashboard start`. README updated
+  accordingly.
 
 ## 0.7.0
 ### Changed
