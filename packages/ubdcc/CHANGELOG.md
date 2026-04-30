@@ -2,7 +2,22 @@
 
 All notable changes to this package will be documented in this file.
 
-## 0.8.0.dev (development stage/unreleased/unstable)
+## 0.9.0.dev (development stage/unreleased/unstable)
+
+## 0.8.1
+### Fixed
+- `ubdcc start` on Windows: `cwd` (and `log_level`) are now embedded
+  via `repr()` (`{cwd!r}`) into the `python -c` command spawned for
+  mgmt / restapi / dcn services. The previous `'{cwd}'` interpolation
+  emitted raw backslashes into the child Python source, so a Windows
+  working directory like `c:\ubdcc-test` was parsed by the child as
+  the string literal `'c:\ubdcc-test'` with `\u` interpreted
+  as a Unicode escape (`\ubdcc` -> U+BDCC), yielding a
+  non-existent path and making `os.chdir()` fail with
+  `FileNotFoundError [WinError 2]`. Other backslash sequences
+  (`\n`, `\t`, `\b`, ...) were equally
+  broken. Linux/macOS were unaffected because POSIX paths have no
+  backslashes.
 
 ## 0.8.0
 ### Added

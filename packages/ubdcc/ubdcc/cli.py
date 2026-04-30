@@ -109,7 +109,7 @@ def cmd_start(args):
     dcn_count = args.dcn
     logdir = args.logdir if args.logdir else UBS_LOGS
     log_level = args.log_level
-    log_level_kwarg = f", log_level='{log_level}'" if log_level else ""
+    log_level_kwarg = f", log_level={log_level!r}" if log_level else ""
     os.makedirs(logdir, exist_ok=True)
     save_port(mgmt_port)
 
@@ -126,7 +126,7 @@ def cmd_start(args):
         proc = subprocess.Popen(
             [sys.executable, "-c",
              f"import os; from ubdcc_mgmt.Mgmt import Mgmt; "
-             f"Mgmt(cwd='{cwd}', mgmt_port={mgmt_port}{log_level_kwarg})"],
+             f"Mgmt(cwd={cwd!r}, mgmt_port={mgmt_port}{log_level_kwarg})"],
             stdout=log, stderr=subprocess.STDOUT
         )
         # Remove old mgmt from processes list
@@ -142,7 +142,7 @@ def cmd_start(args):
         proc = subprocess.Popen(
             [sys.executable, "-c",
              f"import os; from ubdcc_restapi.RestApi import RestApi; "
-             f"RestApi(cwd='{cwd}', mgmt_port={mgmt_port}{log_level_kwarg})"],
+             f"RestApi(cwd={cwd!r}, mgmt_port={mgmt_port}{log_level_kwarg})"],
             stdout=log, stderr=subprocess.STDOUT
         )
         # Remove old restapi from processes list
@@ -160,7 +160,7 @@ def cmd_start(args):
         proc = subprocess.Popen(
             [sys.executable, "-c",
              f"import os; from ubdcc_dcn.DepthCacheNode import DepthCacheNode; "
-             f"DepthCacheNode(cwd='{cwd}', mgmt_port={mgmt_port}{log_level_kwarg})"],
+             f"DepthCacheNode(cwd={cwd!r}, mgmt_port={mgmt_port}{log_level_kwarg})"],
             stdout=log, stderr=subprocess.STDOUT
         )
         processes.append((f"dcn-{nr}", proc, log))

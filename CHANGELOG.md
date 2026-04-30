@@ -9,7 +9,24 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 [How to upgrade to the latest version!](https://oliver-zehentleitner.github.io/unicorn-binance-depth-cache-cluster/readme.html#installation-and-upgrade)
 
-## 0.8.0.dev (development stage/unreleased/unstable)
+## 0.9.0.dev (development stage/unreleased/unstable)
+
+## 0.8.1
+*Hotfix release — only the `ubdcc` CLI meta-package was bumped; the
+service packages (`ubdcc-mgmt`, `ubdcc-restapi`, `ubdcc-dcn`,
+`ubdcc-shared-modules`) stay at 0.8.0 because they are unchanged. The
+CLI pins them with `==0.8.0`.*
+
+### Fixed
+- `ubdcc start` on Windows: `packages/ubdcc/ubdcc/cli.py` now embeds
+  `cwd` and `log_level` via `repr()` (`{cwd!r}`) into the `python -c`
+  command used to spawn mgmt / restapi / dcn services. The previous
+  `'{cwd}'` f-string interpolation emitted raw backslashes into the
+  child Python source, so a working directory like `c:\ubdcc-test`
+  was parsed with `\u` as a Unicode escape
+  (`\ubdcc` -> U+BDCC), pointing the child at a non-existent
+  path and crashing `os.chdir()` with `FileNotFoundError [WinError 2]`.
+  Linux/macOS were unaffected because POSIX paths have no backslashes.
 
 ## 0.8.0
 ### Changed
