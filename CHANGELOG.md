@@ -9,7 +9,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 [How to upgrade to the latest version!](https://oliver-zehentleitner.github.io/unicorn-binance-depth-cache-cluster/readme.html#installation-and-upgrade)
 
-## 0.8.0.dev (development stage/unreleased/unstable)
+## 0.9.0.dev (development stage/unreleased/unstable)
+
+## 0.8.1
+*Hotfix release — only the `ubdcc` CLI meta-package was bumped; the
+service packages (`ubdcc-mgmt`, `ubdcc-restapi`, `ubdcc-dcn`,
+`ubdcc-shared-modules`) stay at 0.8.0 because they are unchanged. The
+CLI pins them with `==0.8.0`.*
+
 ### Fixed
 - `ubdcc start` on Windows: `packages/ubdcc/ubdcc/cli.py` now embeds
   `cwd` and `log_level` via `repr()` (`{cwd!r}`) into the `python -c`

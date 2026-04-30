@@ -2,7 +2,9 @@
 
 All notable changes to this package will be documented in this file.
 
-## 0.8.0.dev (development stage/unreleased/unstable)
+## 0.9.0.dev (development stage/unreleased/unstable)
+
+## 0.8.1
 ### Fixed
 - `ubdcc start` on Windows: `cwd` (and `log_level`) are now embedded
   via `repr()` (`{cwd!r}`) into the `python -c` command spawned for
