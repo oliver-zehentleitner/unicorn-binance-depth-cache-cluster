@@ -45,6 +45,12 @@ Tested with 600+ redundant DepthCaches on a single machine. Scales to Kubernetes
 
 Part of the [UNICORN Binance Suite](https://github.com/oliver-zehentleitner/unicorn-binance-suite).
 
+## Video walkthrough
+
+If you prefer to see the full setup once before going through the steps, here is the uncut quickstart video:
+
+%[https://youtu.be/o1-nCravKnc] 
+
 ## Why
 
 If you've built trading bots on Binance, you know the pain:
