@@ -49,7 +49,7 @@ Part of the [UNICORN Binance Suite](https://github.com/oliver-zehentleitner/unic
 
 If you prefer to see the full setup once before going through the steps, here is the uncut quickstart video:
 
-%[https://youtu.be/o1-nCravKnc] 
+[![UBDCC Quickstart - YouTube](https://raw.githubusercontent.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/master/images/youtube/ubdcc-quickstart.png)](https://youtu.be/o1-nCravKnc])
 
 ## Why
 
