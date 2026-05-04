@@ -1,11 +1,14 @@
 # UNICORN Binance DepthCache Cluster (UBDCC)
 
 > Production-scale depth cache management with load balancing, failover and self-healing.
+> Language-agnostic: exposes a REST API consumable from any language with an HTTP client
+> (Python, JavaScript, Go, Rust, Java, C#, …). The only UNICORN Binance Suite component
+> that is not Python-locked.
 > Part of [UNICORN Binance Suite](https://github.com/oliver-zehentleitner/unicorn-binance-suite).
 
-Beginner-friendly despite depth — complexity is optional, the API stays clean and Pythonic.
+Beginner-friendly despite depth — complexity is optional, the Python client API stays clean and Pythonic.
 
-Version: 0.8.0. Python 3.9 – 3.14.
+Version: 0.8.0. Server runs on Python 3.9 – 3.14; REST clients can be written in any language.
 
 ## Authorship & License
 
@@ -78,7 +81,7 @@ Base URL: `http://127.0.0.1:{port}/`
 | GET /get_depthcache_list | List all managed depth caches |
 | GET /stop_depthcache?exchange=...&market=... | Stop a depth cache |
 
-Accessible via HTTP from Python, JavaScript, TypeScript, Node.js, Go, Rust, Java, Kotlin, C#, C++, C, Ruby, PHP, Swift, Scala, R, Julia, MATLAB, Dart, Elixir, Perl, Bash/curl — or any other language with an HTTP client.
+**Client languages**: callable from any language with an HTTP client. Documented support: Python, JavaScript, TypeScript, Node.js, Go, Rust, Java, Kotlin, C#, C++, C, Ruby, PHP, Swift, Scala, R, Julia, MATLAB, Dart, Elixir, Perl, Bash/curl.
 
 ## Architecture
 
