@@ -31,7 +31,7 @@ setup(
     author="Oliver Zehentleitner",
     author_email='',
     url="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster",
-    description="UNICORN Binance DepthCache Cluster — cluster manager and meta-package",
+    description="UNICORN Binance DepthCache Cluster — synchronized Binance order books via REST API for Python, JavaScript, Go, Rust, Java, C#, …",
     long_description=long_description,
     long_description_content_type="text/markdown",
     license='MIT',

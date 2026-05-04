@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "ubdcc-dcn"
 version = "0.8.0"
-description = "UBDCC Depth Cache Node — manages local Binance order books in a cluster pod"
+description = "UBDCC Depth Cache Node — manages local Binance order books in a cluster pod (consumed via REST from Python, JavaScript, Go, Rust, Java, C#, …)"
 authors = ["Oliver Zehentleitner <>"]
 license = "MIT"
 readme = "README.md"

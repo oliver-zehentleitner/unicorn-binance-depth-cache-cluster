@@ -34,7 +34,7 @@ setup(
     author="Oliver Zehentleitner",
     author_email='',
     url="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster",
-    description="UBDCC Depth Cache Node — manages local Binance order books in a cluster pod",
+    description="UBDCC Depth Cache Node — manages local Binance order books in a cluster pod (consumed via REST from Python, JavaScript, Go, Rust, Java, C#, …)",
     long_description=long_description,
     long_description_content_type="text/markdown",
     license='MIT',
