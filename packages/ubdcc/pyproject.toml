@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "ubdcc"
 version = "0.8.1"
-description = "UNICORN Binance DepthCache Cluster — cluster manager and meta-package"
+description = "UNICORN Binance DepthCache Cluster — synchronized Binance order books via REST API for Python, JavaScript, Go, Rust, Java, C#, …"
 authors = ["Oliver Zehentleitner <>"]
 license = "MIT"
 readme = "README.md"

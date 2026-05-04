@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "ubdcc-restapi"
 version = "0.8.0"
-description = "UBDCC REST API — public HTTP API for the UNICORN DepthCache Cluster"
+description = "UBDCC REST API — public HTTP interface for the UNICORN DepthCache Cluster (Python, JavaScript, Go, Rust, Java, C#, …)"
 authors = ["Oliver Zehentleitner <>"]
 license = "MIT"
 readme = "README.md"

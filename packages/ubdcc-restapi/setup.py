@@ -34,7 +34,7 @@ setup(
     author="Oliver Zehentleitner",
     author_email='',
     url="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster",
-    description="UBDCC REST API — public REST interface for the UNICORN DepthCache Cluster for Binance",
+    description="UBDCC REST API — public HTTP interface for the UNICORN DepthCache Cluster (Python, JavaScript, Go, Rust, Java, C#, …)",
     long_description=long_description,
     long_description_content_type="text/markdown",
     license='MIT',
