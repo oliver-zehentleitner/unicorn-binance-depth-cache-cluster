@@ -196,6 +196,20 @@ class App:
     def get_k8s_runtime_information(self):
         try:
             kubernetes.config.load_incluster_config()
+            verify_ssl_env = os.getenv("UBDCC_K8S_VERIFY_SSL", "true").strip().lower()
+            if verify_ssl_env in ("false", "0", "no", "off"):
+                self.stdout_msg(
+                    "WARNING: UBDCC_K8S_VERIFY_SSL=false - TLS verification for the Kubernetes API "
+                    "is DISABLED. This is insecure and should only be used for clusters with broken "
+                    "API server certificates.", log="warn")
+                configuration = kubernetes.client.Configuration.get_default_copy()
+                configuration.verify_ssl = False
+                kubernetes.client.Configuration.set_default(configuration)
+                try:
+                    import urllib3
+                    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+                except Exception:
+                    pass
             with open("/etc/hostname", "r") as f:
                 pod_name = f.read().strip()
             with open("/var/run/secrets/kubernetes.io/serviceaccount/namespace", "r") as f:

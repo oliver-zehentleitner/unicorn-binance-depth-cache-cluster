@@ -9,3 +9,10 @@ replicaCount:
 
 publicPort:
   restapi: 80
+
+k8s:
+  # Set to "false" only if your cluster's Kubernetes API server certificate
+  # is rejected by strict X.509 verification (e.g. missing AuthorityKeyIdentifier,
+  # keyCertSign on a non-CA cert). This disables TLS verification for the
+  # in-cluster Kubernetes API calls and is INSECURE - use with care.
+  verifySsl: "true"

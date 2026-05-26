@@ -32,6 +32,9 @@ spec:
           ports:
             - name: rest-private
               containerPort: 8080
+          env:
+            - name: UBDCC_K8S_VERIFY_SSL
+              value: {{ .Values.k8s.verifySsl | quote }}
           resources:
             requests:
               cpu: "250m"

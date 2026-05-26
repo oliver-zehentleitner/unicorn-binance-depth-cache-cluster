@@ -32,6 +32,13 @@ spec:
           ports:
             - name: rest-private
               containerPort: 8080
+          # Set UBDCC_K8S_VERIFY_SSL to "false" only if your cluster's
+          # Kubernetes API server certificate is rejected by strict X.509
+          # verification. This disables TLS verification for the in-cluster
+          # Kubernetes API calls and is INSECURE - use with care.
+          env:
+            - name: UBDCC_K8S_VERIFY_SSL
+              value: "true"
           resources:
             requests:
               cpu: "250m"
