@@ -549,7 +549,7 @@ kubectl apply -f ./ubdcc-dcn.yaml
 - Get the "LoadBalancer Ingress" IP, the default Port is TCP 80:
 
 ```
-kubectl describe services ubdcc-restapi
+kubectl -n ubdcc describe services ubdcc-restapi
 ```
 
 ## API Credentials
