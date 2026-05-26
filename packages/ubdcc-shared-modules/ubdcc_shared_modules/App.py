@@ -195,27 +195,28 @@ class App:
 
     def get_k8s_runtime_information(self):
         try:
-            kubernetes.config.load_incluster_config()
             verify_ssl_env = os.getenv("UBDCC_K8S_VERIFY_SSL", "true").strip().lower()
-            if verify_ssl_env in ("false", "0", "no", "off"):
+            verify_ssl_disabled = verify_ssl_env in ("false", "0", "no", "off")
+            configuration = kubernetes.client.Configuration()
+            if verify_ssl_disabled:
                 self.stdout_msg(
                     "WARNING: UBDCC_K8S_VERIFY_SSL=false - TLS verification for the Kubernetes API "
                     "is DISABLED. This is insecure and should only be used for clusters with broken "
                     "API server certificates.", log="warn")
-                configuration = kubernetes.client.Configuration.get_default_copy()
                 configuration.verify_ssl = False
-                kubernetes.client.Configuration.set_default(configuration)
                 try:
                     import urllib3
                     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
                 except Exception:
                     pass
+            kubernetes.config.load_incluster_config(client_configuration=configuration)
             with open("/etc/hostname", "r") as f:
                 pod_name = f.read().strip()
             with open("/var/run/secrets/kubernetes.io/serviceaccount/namespace", "r") as f:
                 namespace = f.read().strip()
-            self.k8s_client = kubernetes.client.CoreV1Api()
-            self.k8s_metrics_client = kubernetes.client.CustomObjectsApi()
+            api_client = kubernetes.client.ApiClient(configuration=configuration)
+            self.k8s_client = kubernetes.client.CoreV1Api(api_client=api_client)
+            self.k8s_metrics_client = kubernetes.client.CustomObjectsApi(api_client=api_client)
             self.pod_info = self.k8s_client.read_namespaced_pod(name=pod_name, namespace=namespace)
             self.node_info = self.k8s_client.read_node(self.pod_info.spec.node_name)
         except kubernetes.client.exceptions.ApiException as error_msg:
