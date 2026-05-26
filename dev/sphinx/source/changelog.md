@@ -10,6 +10,21 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 [How to upgrade to the latest version!](https://oliver-zehentleitner.github.io/unicorn-binance-depth-cache-cluster/readme.html#installation-and-upgrade)
 
 ## 0.9.0.dev (development stage/unreleased/unstable)
+### Added
+- `UBDCC_K8S_VERIFY_SSL` environment variable (default `"true"`) for the
+  three services (`ubdcc-mgmt`, `ubdcc-restapi`, `ubdcc-dcn`). Set to
+  `"false"` to disable TLS verification for the in-cluster Kubernetes API
+  calls made by `get_k8s_runtime_information()` /
+  `get_k8s_nodes()` in
+  `packages/ubdcc-shared-modules/ubdcc_shared_modules/App.py`. Intended
+  as an opt-out for clusters that ship Kubernetes API server certificates
+  rejected by strict X.509 verification (e.g. missing
+  AuthorityKeyIdentifier, `keyCertSign` set on a non-CA cert — observed
+  on some managed clusters). The flag is wired through the Helm chart
+  (`dev/helm/ubdcc/values.yaml`: `k8s.verifySsl`) and the raw Kubernetes
+  manifests in `admin/k8s/`. When set to `false`, a `WARNING` is logged
+  on every service start and urllib3's `InsecureRequestWarning` is
+  silenced.
 
 ## 0.8.1
 *Hotfix release — only the `ubdcc` CLI meta-package was bumped; the
