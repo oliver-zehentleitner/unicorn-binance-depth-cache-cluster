@@ -2,6 +2,18 @@
 
 All notable changes to this package will be documented in this file.
 
+## 0.9.0.dev (development stage/unreleased/unstable)
+### Fixed
+- `get_k8s_runtime_information()`: the in-cluster Kubernetes API client
+  lost its Bearer token when `UBDCC_K8S_VERIFY_SSL=false` was set,
+  causing every API request to be sent as `system:anonymous` (403) and
+  the service to fall into dev mode. Configuration is now pre-built
+  with `verify_ssl=False`, passed into
+  `load_incluster_config(client_configuration=cfg)` so the lib writes
+  the token directly into it, and the API clients are instantiated with
+  an explicit `ApiClient(configuration=cfg)` — no more global
+  default-swap that dropped the auth header.
+
 ## 0.9.0
 ### Added
 - `UBDCC_K8S_VERIFY_SSL` environment variable (default `"true"`) for
