@@ -678,6 +678,12 @@ Binds to `127.0.0.1:8080` by default and opens the UI in your browser; enter the
 - [UBDCC Deep Dive: Building a Trust Layer for Binance Order Books](https://blog.technopathy.club/ubdcc-deep-dive-building-a-trust-layer-for-binance-order-books)
 - [UNICORN Binance Suite Article Series](https://blog.technopathy.club/series/unicorn-binance-suite)
 
+## Social
+- [Discussions](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/discussions)
+- [Telegram](https://t.me/unicorndevs) 
+- [Reddit Community](https://www.reddit.com/r/UNICORNBinanceSuite/) 
+- [https://dev.binance.vision](https://dev.binance.vision)
+
 ## How to report Bugs or suggest Improvements?
 [List of planned features](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement) - click ![thumbs-up](https://raw.githubusercontent.com/oliver-zehentleitner/unicorn-binance-suite/master/images/misc/thumbup.png) if you need one of them or suggest a new feature!
 
