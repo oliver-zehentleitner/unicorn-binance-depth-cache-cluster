@@ -479,13 +479,14 @@ The response includes a `debug` block with:
 ## Kubernetes Setup
 
 - Get a Kubernetes cluster with powerful CPUs from a provider of your choice and connect `kubectl`
+
+### Helm Chart
 - Install dependencies
 
 ```
 kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 ```
 
-### Helm Chart
 - [Install Helm](https://helm.sh/docs/intro/install) 
 - Prepare `helm`
 
@@ -534,6 +535,7 @@ helm install ubdcc ubdcc/ubdcc --set publicPort.restapi=8080
 - Apply the deployment files with `kubectl`
 
 ``` 
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 kubectl apply -f ./setup/01_namespace_ubdcc.yaml
 kubectl apply -f ./setup/02_role_ubdcc.yaml
 kubectl apply -f ./setup/03_rolebinding_ubdcc.yaml
