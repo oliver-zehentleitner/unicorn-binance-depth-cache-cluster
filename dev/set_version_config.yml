@@ -32,4 +32,5 @@ files:
 - packages/ubdcc-shared-modules/setup.py
 - README.md
 - AGENTS.md
+- llms.txt
 version: 0.8.0

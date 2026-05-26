@@ -2,6 +2,15 @@
 
 All notable changes to this package will be documented in this file.
 
+## 0.9.0
+### Added
+- `UBDCC_K8S_VERIFY_SSL` environment variable (default `"true"`) for
+  `get_k8s_runtime_information()`. When set to `"false"`, TLS
+  verification is disabled for the in-cluster Kubernetes API calls and
+  a `WARNING` is logged on every service start. Intended as an opt-out
+  for clusters with broken API server certificates (e.g. missing
+  AuthorityKeyIdentifier, `keyCertSign` on a non-CA cert).
+
 ## 0.8.0.dev (development stage/unreleased/unstable)
 
 ## 0.8.0
