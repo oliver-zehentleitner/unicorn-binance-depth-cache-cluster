@@ -2,7 +2,11 @@
 
 All notable changes to this package will be documented in this file.
 
-## 0.9.0.dev (development stage/unreleased/unstable)
+## 0.9.0
+### Added
+- `UBDCC_K8S_VERIFY_SSL` environment variable propagated to all three
+  services (`ubdcc-mgmt`, `ubdcc-restapi`, `ubdcc-dcn`). See main
+  `CHANGELOG.md` for details.
 
 ## 0.8.1
 ### Fixed
