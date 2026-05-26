@@ -9,7 +9,30 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 [How to upgrade to the latest version!](https://oliver-zehentleitner.github.io/unicorn-binance-depth-cache-cluster/readme.html#installation-and-upgrade)
 
-## 0.9.0.dev (development stage/unreleased/unstable)
+## 0.9.1.dev (development stage/unreleased/unstable)
+
+## 0.9.1
+### Fixed
+- `get_k8s_runtime_information()` in
+  `packages/ubdcc-shared-modules/ubdcc_shared_modules/App.py`: the
+  in-cluster Kubernetes API client lost its Bearer token when
+  `UBDCC_K8S_VERIFY_SSL=false` was set, causing every API request to
+  hit the API server as `system:anonymous` and fall back to dev mode
+  (random pod identity + `localhost:42080` mgmt routing). The previous
+  flow loaded the in-cluster config, then created a copy via
+  `Configuration.get_default_copy()`, mutated `verify_ssl=False` on the
+  copy, and pushed it back via `Configuration.set_default()`; in the
+  pinned kubernetes-client version this swap dropped the
+  `api_key['authorization']` Bearer header. New flow: pre-create a
+  `kubernetes.client.Configuration()`, set `verify_ssl=False` on it
+  *before* calling
+  `kubernetes.config.load_incluster_config(client_configuration=cfg)`
+  so the lib writes the token directly into the already-modified
+  Configuration, then instantiate `CoreV1Api` / `CustomObjectsApi`
+  with an explicit `ApiClient(configuration=cfg)` — no more global
+  default-swap. Verified out-of-band with a raw urllib request from
+  inside the pod (`HTTP 200`, real pod JSON) on a Vultr Kubernetes
+  cluster where the previous code path returned 403.
 
 ## 0.9.0
 ### Added

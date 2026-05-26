@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ubdcc"
-version = "0.9.0"
+version = "0.9.1"
 description = "UNICORN Binance DepthCache Cluster — synchronized Binance order books via REST API for Python, JavaScript, Go, Rust, Java, C#, …"
 authors = ["Oliver Zehentleitner <>"]
 license = "MIT"
@@ -21,9 +21,9 @@ repository = "https://github.com/oliver-zehentleitner/unicorn-binance-depth-cach
 
 [tool.poetry.dependencies]
 python = ">=3.9.0"
-ubdcc-mgmt = "==0.9.0"
-ubdcc-restapi = "==0.9.0"
-ubdcc-dcn = "==0.9.0"
+ubdcc-mgmt = "==0.9.1"
+ubdcc-restapi = "==0.9.1"
+ubdcc-dcn = "==0.9.1"
 ubdcc-dashboard = ">=0.2.0"
 
 [tool.poetry.scripts]

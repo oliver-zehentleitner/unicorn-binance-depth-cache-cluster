@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ubdcc_shared_modules.App &#8212; unicorn-binance-depth-cache-cluster 0.9.0 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ubdcc_shared_modules.App &#8212; unicorn-binance-depth-cache-cluster 0.9.1 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=92fd9be5" />
     <link rel="stylesheet" type="text/css" href="../../_static/pydoctheme.css?v=fdf8e9ae" />
@@ -607,7 +607,7 @@ window.runMermaid = runMermaid;</script>
 <span class="n">REST_SERVER_PORT_DEV_DCN</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42082</span>
 <span class="n">REST_SERVER_PORT_DEV_MGMT</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42080</span>
 <span class="n">REST_SERVER_PORT_DEV_RESTAPI</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42081</span>
-<span class="n">VERSION</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;0.9.0&quot;</span>
+<span class="n">VERSION</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;0.9.1&quot;</span>
 
 
 <div class="viewcode-block" id="App">
@@ -782,27 +782,28 @@ window.runMermaid = runMermaid;</script>
 <a class="viewcode-back" href="../../ubdcc_shared_modules.html#ubdcc_shared_modules.App.App.get_k8s_runtime_information">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_k8s_runtime_information</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">kubernetes</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">load_incluster_config</span><span class="p">()</span>
             <span class="n">verify_ssl_env</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;UBDCC_K8S_VERIFY_SSL&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">verify_ssl_env</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;false&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="s2">&quot;no&quot;</span><span class="p">,</span> <span class="s2">&quot;off&quot;</span><span class="p">):</span>
+            <span class="n">verify_ssl_disabled</span> <span class="o">=</span> <span class="n">verify_ssl_env</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;false&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="s2">&quot;no&quot;</span><span class="p">,</span> <span class="s2">&quot;off&quot;</span><span class="p">)</span>
+            <span class="n">configuration</span> <span class="o">=</span> <span class="n">kubernetes</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">Configuration</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">verify_ssl_disabled</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">stdout_msg</span><span class="p">(</span>
                     <span class="s2">&quot;WARNING: UBDCC_K8S_VERIFY_SSL=false - TLS verification for the Kubernetes API &quot;</span>
                     <span class="s2">&quot;is DISABLED. This is insecure and should only be used for clusters with broken &quot;</span>
                     <span class="s2">&quot;API server certificates.&quot;</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="s2">&quot;warn&quot;</span><span class="p">)</span>
-                <span class="n">configuration</span> <span class="o">=</span> <span class="n">kubernetes</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">Configuration</span><span class="o">.</span><span class="n">get_default_copy</span><span class="p">()</span>
                 <span class="n">configuration</span><span class="o">.</span><span class="n">verify_ssl</span> <span class="o">=</span> <span class="kc">False</span>
-                <span class="n">kubernetes</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">Configuration</span><span class="o">.</span><span class="n">set_default</span><span class="p">(</span><span class="n">configuration</span><span class="p">)</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="kn">import</span><span class="w"> </span><span class="nn">urllib3</span>
                     <span class="n">urllib3</span><span class="o">.</span><span class="n">disable_warnings</span><span class="p">(</span><span class="n">urllib3</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">InsecureRequestWarning</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                     <span class="k">pass</span>
+            <span class="n">kubernetes</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">load_incluster_config</span><span class="p">(</span><span class="n">client_configuration</span><span class="o">=</span><span class="n">configuration</span><span class="p">)</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;/etc/hostname&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
                 <span class="n">pod_name</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;/var/run/secrets/kubernetes.io/serviceaccount/namespace&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
                 <span class="n">namespace</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">k8s_client</span> <span class="o">=</span> <span class="n">kubernetes</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">CoreV1Api</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">k8s_metrics_client</span> <span class="o">=</span> <span class="n">kubernetes</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">CustomObjectsApi</span><span class="p">()</span>
+            <span class="n">api_client</span> <span class="o">=</span> <span class="n">kubernetes</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">ApiClient</span><span class="p">(</span><span class="n">configuration</span><span class="o">=</span><span class="n">configuration</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">k8s_client</span> <span class="o">=</span> <span class="n">kubernetes</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">CoreV1Api</span><span class="p">(</span><span class="n">api_client</span><span class="o">=</span><span class="n">api_client</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">k8s_metrics_client</span> <span class="o">=</span> <span class="n">kubernetes</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">CustomObjectsApi</span><span class="p">(</span><span class="n">api_client</span><span class="o">=</span><span class="n">api_client</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pod_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">k8s_client</span><span class="o">.</span><span class="n">read_namespaced_pod</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">pod_name</span><span class="p">,</span> <span class="n">namespace</span><span class="o">=</span><span class="n">namespace</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">node_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">k8s_client</span><span class="o">.</span><span class="n">read_node</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pod_info</span><span class="o">.</span><span class="n">spec</span><span class="o">.</span><span class="n">node_name</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">kubernetes</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">ApiException</span> <span class="k">as</span> <span class="n">error_msg</span><span class="p">:</span>
@@ -1346,7 +1347,7 @@ window.runMermaid = runMermaid;</script>
     <a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite#documentation">Index of all docs</a><br />
     &copy; <a href="/license.html">Copyright</a> 2024-2026, Oliver Zehentleitner.
     See <a href="/license.html">License</a> for more information.<br />
-    Last updated on May 26 2026 at 16:07 (CET).
+    Last updated on May 26 2026 at 18:06 (CET).
     <a href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/issues/new/choose">Found a bug</a>?
     <br />
     Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.

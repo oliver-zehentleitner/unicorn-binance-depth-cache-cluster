@@ -28,7 +28,7 @@ spec:
               topologyKey: "kubernetes.io/hostname"
       containers:
         - name: ubdcc-restapi
-          image: ghcr.io/oliver-zehentleitner/ubdcc-restapi:0.9.0
+          image: ghcr.io/oliver-zehentleitner/ubdcc-restapi:0.9.1
           ports:
             - name: rest-private
               containerPort: 8080
@@ -38,7 +38,7 @@ spec:
           # Kubernetes API calls and is INSECURE - use with care.
           env:
             - name: UBDCC_K8S_VERIFY_SSL
-              value: "true"
+              value: "false"
           resources:
             requests:
               cpu: "250m"
