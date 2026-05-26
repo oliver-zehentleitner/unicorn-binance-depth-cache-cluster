@@ -36,9 +36,9 @@ setup(
     long_description_content_type="text/markdown",
     license='MIT',
     packages=find_packages(),
-    install_requires=['ubdcc-mgmt==0.8.0',
-                      'ubdcc-restapi==0.8.0',
-                      'ubdcc-dcn==0.8.0',
+    install_requires=['ubdcc-mgmt==0.9.0',
+                      'ubdcc-restapi==0.9.0',
+                      'ubdcc-dcn==0.9.0',
                       'ubdcc-dashboard>=0.2.0'],
     entry_points={
         "console_scripts": [

@@ -1,1 +1,1 @@
-ubdcc-mgmt==0.8.0
+ubdcc-mgmt==0.9.0

@@ -8,7 +8,7 @@
 
 Beginner-friendly despite depth — complexity is optional, the Python client API stays clean and Pythonic.
 
-Version: 0.8.0. Server runs on Python 3.9 – 3.14; REST clients can be written in any language.
+Version: 0.9.0. Server runs on Python 3.9 – 3.14; REST clients can be written in any language.
 
 ## Authorship & License
 
