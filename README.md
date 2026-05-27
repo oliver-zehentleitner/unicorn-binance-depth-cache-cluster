@@ -536,6 +536,8 @@ helm install ubdcc ubdcc/ubdcc --set publicPort.restapi=8080
 
 ``` 
 kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+# then wait 10 minutes ...
+
 kubectl apply -f ./setup/01_namespace_ubdcc.yaml
 kubectl apply -f ./setup/02_role_ubdcc.yaml
 kubectl apply -f ./setup/03_rolebinding_ubdcc.yaml

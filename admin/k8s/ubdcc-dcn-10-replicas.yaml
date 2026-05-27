@@ -11,7 +11,7 @@ metadata:
   name: ubdcc-dcn
   namespace: ubdcc
 spec:
-  replicas: 6                       # = 2 × node-count (adjust to your cluster)
+  replicas: 10
   selector:
     matchLabels:
       app: ubdcc-dcn
