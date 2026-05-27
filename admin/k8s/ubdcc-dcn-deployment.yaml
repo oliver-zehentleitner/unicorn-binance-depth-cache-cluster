@@ -1,0 +1,39 @@
+# Alternative to ubdcc-dcn.yaml (DaemonSet, 1 pod per node).
+# Use this variant when you want N pods per node (e.g. 2 per node so each DCN
+# pins to a CPU core). Pick ONE of the two manifests — do NOT apply both.
+#
+# Pod count is set via `replicas` (= desired-per-node * node-count).
+# `topologySpreadConstraints` with maxSkew: 1 enforces an even distribution
+# across nodes, so with replicas = 2 * node-count you get exactly 2 per node.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ubdcc-dcn
+  namespace: ubdcc
+spec:
+  replicas: 6                       # = 2 × node-count (adjust to your cluster)
+  selector:
+    matchLabels:
+      app: ubdcc-dcn
+  template:
+    metadata:
+      labels:
+        app: ubdcc-dcn
+    spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: ubdcc-dcn
+      containers:
+        - name: ubdcc-dcn
+          image: ghcr.io/oliver-zehentleitner/ubdcc-dcn:0.9.1
+          # Set UBDCC_K8S_VERIFY_SSL to "false" only if your cluster's
+          # Kubernetes API server certificate is rejected by strict X.509
+          # verification. This disables TLS verification for the in-cluster
+          # Kubernetes API calls and is INSECURE - use with care.
+          env:
+            - name: UBDCC_K8S_VERIFY_SSL
+              value: "false"
