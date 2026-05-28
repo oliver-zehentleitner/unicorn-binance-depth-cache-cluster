@@ -480,6 +480,10 @@ The response includes a `debug` block with:
 
 - Get a Kubernetes cluster with powerful CPUs from a provider of your choice and connect `kubectl`
 
+    Successfully tested with:
+    - [OVH](https://www.ovhcloud.com/de/public-cloud/orchestration/)
+    - [VULTR](https://www.vultr.com/kubernetes/)
+
 ### Helm Chart
 - Install dependencies
 

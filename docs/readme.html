@@ -525,6 +525,7 @@ window.runMermaid = runMermaid;</script>
 <li><a class="reference internal" href="#choose-an-explicit-version">Choose an explicit version</a></li>
 <li><a class="reference internal" href="#choose-a-namespace">Choose a namespace</a></li>
 <li><a class="reference internal" href="#choose-an-alternate-public-port">Choose an alternate public port</a></li>
+<li><a class="reference internal" href="#scale-dcn-per-cpu-core">Scale DCN per CPU core</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#kubernetes-deployment">Kubernetes Deployment</a></li>
@@ -1339,8 +1340,14 @@ curl<span class="w"> </span><span class="s1">&#39;http://127.0.0.1:42081/stop_de
 </section>
 <section id="kubernetes-setup">
 <h2>Kubernetes Setup<a class="headerlink" href="#kubernetes-setup" title="Link to this heading">¶</a></h2>
+<ul>
+<li><p>Get a Kubernetes cluster with powerful CPUs from a provider of your choice and connect <code class="docutils literal notranslate"><span class="pre">kubectl</span></code></p>
+<p>Successfully tested with:</p>
 <ul class="simple">
-<li><p>Get a Kubernetes cluster with powerful CPUs from a provider of your choice and connect <code class="docutils literal notranslate"><span class="pre">kubectl</span></code></p></li>
+<li><p><a class="reference external" href="https://www.ovhcloud.com/de/public-cloud/orchestration/">OVH</a></p></li>
+<li><p><a class="reference external" href="https://www.vultr.com/kubernetes/">VULTR</a></p></li>
+</ul>
+</li>
 </ul>
 <section id="helm-chart">
 <h3>Helm Chart<a class="headerlink" href="#helm-chart" title="Link to this heading">¶</a></h3>
@@ -1396,6 +1403,73 @@ curl<span class="w"> </span><span class="s1">&#39;http://127.0.0.1:42081/stop_de
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">helm</span> <span class="n">install</span> <span class="n">ubdcc</span> <span class="n">ubdcc</span><span class="o">/</span><span class="n">ubdcc</span> <span class="o">--</span><span class="nb">set</span> <span class="n">publicPort</span><span class="o">.</span><span class="n">restapi</span><span class="o">=</span><span class="mi">8080</span>
 </pre></div>
 </div>
+</section>
+<section id="scale-dcn-per-cpu-core">
+<h4>Scale DCN per CPU core<a class="headerlink" href="#scale-dcn-per-cpu-core" title="Link to this heading">¶</a></h4>
+<p>By default the chart deploys the DCN as a <code class="docutils literal notranslate"><span class="pre">DaemonSet</span></code> — <strong>exactly one DCN pod per node</strong>. This
+auto-scales as you add or remove nodes and needs no extra permissions.</p>
+<p>Each DCN is a single Python process (GIL-bound), so <strong>one DCN per CPU core</strong> is the optimal
+distribution. To run more than one DCN per node, tell the chart how many cores your DCN nodes have:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">helm</span> <span class="n">install</span> <span class="n">ubdcc</span> <span class="n">ubdcc</span><span class="o">/</span><span class="n">ubdcc</span> <span class="o">--</span><span class="nb">set</span> <span class="n">dcn</span><span class="o">.</span><span class="n">coresPerNode</span><span class="o">=</span><span class="mi">4</span>
+</pre></div>
+</div>
+<p>With <code class="docutils literal notranslate"><span class="pre">coresPerNode</span> <span class="pre">&gt;</span> <span class="pre">1</span></code> the DCN becomes a <code class="docutils literal notranslate"><span class="pre">Deployment</span></code> whose pods are spread evenly across nodes
+(<code class="docutils literal notranslate"><span class="pre">topologySpreadConstraints</span></code>, <code class="docutils literal notranslate"><span class="pre">maxSkew:</span> <span class="pre">1</span></code>). The node count is auto-detected from the cluster at
+install time (only schedulable, non control-plane nodes are counted), so
+<code class="docutils literal notranslate"><span class="pre">replicas</span> <span class="pre">=</span> <span class="pre">coresPerNode</span> <span class="pre">×</span> <span class="pre">nodeCount</span></code>. Auto-detection needs permission to list nodes for whoever
+runs <code class="docutils literal notranslate"><span class="pre">helm</span> <span class="pre">install</span></code>; on <code class="docutils literal notranslate"><span class="pre">helm</span> <span class="pre">template</span></code>/<code class="docutils literal notranslate"><span class="pre">--dry-run</span></code> it falls back to a single node.</p>
+<p>Override any level explicitly:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># fix the node count instead of auto-detecting</span>
+<span class="n">helm</span> <span class="n">install</span> <span class="n">ubdcc</span> <span class="n">ubdcc</span><span class="o">/</span><span class="n">ubdcc</span> <span class="o">--</span><span class="nb">set</span> <span class="n">dcn</span><span class="o">.</span><span class="n">coresPerNode</span><span class="o">=</span><span class="mi">4</span> <span class="o">--</span><span class="nb">set</span> <span class="n">dcn</span><span class="o">.</span><span class="n">nodeCount</span><span class="o">=</span><span class="mi">3</span>   <span class="c1"># -&gt; 12 DCN pods</span>
+
+<span class="c1"># set the total replica count directly (bypasses the calculation)</span>
+<span class="n">helm</span> <span class="n">install</span> <span class="n">ubdcc</span> <span class="n">ubdcc</span><span class="o">/</span><span class="n">ubdcc</span> <span class="o">--</span><span class="nb">set</span> <span class="n">dcn</span><span class="o">.</span><span class="n">replicas</span><span class="o">=</span><span class="mi">12</span>
+
+<span class="c1"># pin DCN to a dedicated node pool</span>
+<span class="n">helm</span> <span class="n">install</span> <span class="n">ubdcc</span> <span class="n">ubdcc</span><span class="o">/</span><span class="n">ubdcc</span> <span class="o">--</span><span class="nb">set</span> <span class="n">dcn</span><span class="o">.</span><span class="n">coresPerNode</span><span class="o">=</span><span class="mi">4</span> <span class="o">--</span><span class="nb">set</span> <span class="n">dcn</span><span class="o">.</span><span class="n">nodeSelector</span><span class="o">.</span><span class="n">role</span><span class="o">=</span><span class="n">dcn</span>
+</pre></div>
+</div>
+<p>For real per-core CPU pinning, give each pod a full core with Guaranteed QoS (requests == limits,
+integer cpu) — this requires the kubelet <code class="docutils literal notranslate"><span class="pre">cpuManagerPolicy:</span> <span class="pre">static</span></code> on your nodes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">helm</span> <span class="n">install</span> <span class="n">ubdcc</span> <span class="n">ubdcc</span><span class="o">/</span><span class="n">ubdcc</span> <span class="o">--</span><span class="nb">set</span> <span class="n">dcn</span><span class="o">.</span><span class="n">coresPerNode</span><span class="o">=</span><span class="mi">4</span> \
+  <span class="o">--</span><span class="nb">set</span> <span class="n">dcn</span><span class="o">.</span><span class="n">resources</span><span class="o">.</span><span class="n">requests</span><span class="o">.</span><span class="n">cpu</span><span class="o">=</span><span class="mi">1</span> <span class="o">--</span><span class="nb">set</span> <span class="n">dcn</span><span class="o">.</span><span class="n">resources</span><span class="o">.</span><span class="n">limits</span><span class="o">.</span><span class="n">cpu</span><span class="o">=</span><span class="mi">1</span>
+</pre></div>
+</div>
+<p><strong>Operational notes (Deployment mode, <code class="docutils literal notranslate"><span class="pre">coresPerNode</span> <span class="pre">&gt;</span> <span class="pre">1</span></code>):</strong></p>
+<ul class="simple">
+<li><p><strong>Node-list permission.</strong> Auto-detection lists cluster nodes at install time, so whoever runs
+<code class="docutils literal notranslate"><span class="pre">helm</span> <span class="pre">install</span></code>/<code class="docutils literal notranslate"><span class="pre">upgrade</span></code> needs the cluster-scoped right to <code class="docutils literal notranslate"><span class="pre">list</span> <span class="pre">nodes</span></code>. If it’s missing, the
+lookup returns empty and the chart <strong>silently falls back to a single node</strong> (you get only
+<code class="docutils literal notranslate"><span class="pre">coresPerNode</span></code> pods total instead of <code class="docutils literal notranslate"><span class="pre">coresPerNode</span> <span class="pre">×</span> <span class="pre">nodes</span></code>). When in doubt, set the count
+explicitly: <code class="docutils literal notranslate"><span class="pre">--set</span> <span class="pre">dcn.nodeCount=&lt;n&gt;</span></code>.</p></li>
+<li><p><strong>Which nodes are counted.</strong> Only schedulable worker nodes — nodes that are <code class="docutils literal notranslate"><span class="pre">unschedulable</span></code> or
+carry the <code class="docutils literal notranslate"><span class="pre">node-role.kubernetes.io/control-plane</span></code> (or <code class="docutils literal notranslate"><span class="pre">…/master</span></code>) label are skipped, since DCN
+pods won’t land on a tainted control-plane anyway. If the pod count looks off, check
+<code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">nodes</span> <span class="pre">--show-labels</span></code>.</p></li>
+<li><p><strong>Adding nodes later.</strong> A <code class="docutils literal notranslate"><span class="pre">Deployment</span></code> has a fixed replica count — new nodes do <strong>not</strong>
+automatically get DCN pods. Re-run <code class="docutils literal notranslate"><span class="pre">helm</span> <span class="pre">upgrade</span></code> (re-detects the node count) or bump
+<code class="docutils literal notranslate"><span class="pre">dcn.nodeCount</span></code>/<code class="docutils literal notranslate"><span class="pre">dcn.replicas</span></code>. The default <code class="docutils literal notranslate"><span class="pre">DaemonSet</span></code> mode (<code class="docutils literal notranslate"><span class="pre">coresPerNode:</span> <span class="pre">1</span></code>) does adapt
+automatically.</p></li>
+<li><p><strong>Switching modes on upgrade.</strong> Crossing the <code class="docutils literal notranslate"><span class="pre">coresPerNode</span></code> <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">↔</span> <span class="pre">&gt;1</span></code> boundary changes the
+resource kind (<code class="docutils literal notranslate"><span class="pre">DaemonSet</span> <span class="pre">↔</span> <span class="pre">Deployment</span></code>). Helm deletes the old object and creates the new one, so
+expect a brief gap in DCN coverage during that one upgrade.</p></li>
+</ul>
+<p><strong>Example — adding a node in Deployment mode.</strong> Say you start on 3 nodes with 4 cores each:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>helm<span class="w"> </span>install<span class="w"> </span>ubdcc<span class="w"> </span>ubdcc/ubdcc<span class="w"> </span>--set<span class="w"> </span>dcn.coresPerNode<span class="o">=</span><span class="m">4</span><span class="w">   </span><span class="c1"># detects 3 nodes -&gt; 12 DCN pods (4 per node)</span>
+</pre></div>
+</div>
+<p>Later you add a 4th node. The <code class="docutils literal notranslate"><span class="pre">Deployment</span></code> still carries <code class="docutils literal notranslate"><span class="pre">replicas:</span> <span class="pre">12</span></code>, so the new node stays
+empty — Kubernetes does not add pods on its own. Re-run the upgrade to re-detect the node count:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>helm<span class="w"> </span>upgrade<span class="w"> </span>ubdcc<span class="w"> </span>ubdcc/ubdcc<span class="w"> </span>--set<span class="w"> </span>dcn.coresPerNode<span class="o">=</span><span class="m">4</span><span class="w">   </span><span class="c1"># now detects 4 nodes -&gt; 16 DCN pods (4 per node)</span>
+</pre></div>
+</div>
+<p>Or skip auto-detection and pin the numbers yourself:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>helm<span class="w"> </span>upgrade<span class="w"> </span>ubdcc<span class="w"> </span>ubdcc/ubdcc<span class="w"> </span>--set<span class="w"> </span>dcn.coresPerNode<span class="o">=</span><span class="m">4</span><span class="w"> </span>--set<span class="w"> </span>dcn.nodeCount<span class="o">=</span><span class="m">4</span><span class="w">   </span><span class="c1"># -&gt; 16 pods</span>
+helm<span class="w"> </span>upgrade<span class="w"> </span>ubdcc<span class="w"> </span>ubdcc/ubdcc<span class="w"> </span>--set<span class="w"> </span>dcn.replicas<span class="o">=</span><span class="m">16</span><span class="w">                            </span><span class="c1"># fixed total</span>
+</pre></div>
+</div>
+<p>In <code class="docutils literal notranslate"><span class="pre">DaemonSet</span></code> mode (the default, <code class="docutils literal notranslate"><span class="pre">coresPerNode:</span> <span class="pre">1</span></code>) none of this is needed — a new node gets its
+one DCN pod automatically.</p>
 </section>
 </section>
 <section id="kubernetes-deployment">
@@ -1685,6 +1759,7 @@ of any kind, including but not limited to direct or indirect damages for loss of
 <li><a class="reference internal" href="#choose-an-explicit-version">Choose an explicit version</a></li>
 <li><a class="reference internal" href="#choose-a-namespace">Choose a namespace</a></li>
 <li><a class="reference internal" href="#choose-an-alternate-public-port">Choose an alternate public port</a></li>
+<li><a class="reference internal" href="#scale-dcn-per-cpu-core">Scale DCN per CPU core</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#kubernetes-deployment">Kubernetes Deployment</a></li>
@@ -1823,7 +1898,7 @@ of any kind, including but not limited to direct or indirect damages for loss of
     <a href="https://github.com/oliver-zehentleitner/unicorn-binance-suite#documentation">Index of all docs</a><br />
     &copy; <a href="/license.html">Copyright</a> 2024-2026, Oliver Zehentleitner.
     See <a href="/license.html">License</a> for more information.<br />
-    Last updated on May 27 2026 at 11:54 (CET).
+    Last updated on May 28 2026 at 11:25 (CET).
     <a href="https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/issues/new/choose">Found a bug</a>?
     <br />
     Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.

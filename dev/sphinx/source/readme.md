@@ -480,6 +480,10 @@ The response includes a `debug` block with:
 
 - Get a Kubernetes cluster with powerful CPUs from a provider of your choice and connect `kubectl`
 
+    Successfully tested with:
+    - [OVH](https://www.ovhcloud.com/de/public-cloud/orchestration/)
+    - [VULTR](https://www.vultr.com/kubernetes/)
+
 ### Helm Chart
 - Install dependencies
 
@@ -529,7 +533,87 @@ helm install ubdcc ubdcc/ubdcc --namespace ubdcc
 ``` 
 helm install ubdcc ubdcc/ubdcc --set publicPort.restapi=8080
 ```
-  
+
+#### Scale DCN per CPU core
+By default the chart deploys the DCN as a `DaemonSet` — **exactly one DCN pod per node**. This
+auto-scales as you add or remove nodes and needs no extra permissions.
+
+Each DCN is a single Python process (GIL-bound), so **one DCN per CPU core** is the optimal
+distribution. To run more than one DCN per node, tell the chart how many cores your DCN nodes have:
+
+``` 
+helm install ubdcc ubdcc/ubdcc --set dcn.coresPerNode=4
+```
+
+With `coresPerNode > 1` the DCN becomes a `Deployment` whose pods are spread evenly across nodes
+(`topologySpreadConstraints`, `maxSkew: 1`). The node count is auto-detected from the cluster at
+install time (only schedulable, non control-plane nodes are counted), so
+`replicas = coresPerNode × nodeCount`. Auto-detection needs permission to list nodes for whoever
+runs `helm install`; on `helm template`/`--dry-run` it falls back to a single node.
+
+Override any level explicitly:
+
+``` 
+# fix the node count instead of auto-detecting
+helm install ubdcc ubdcc/ubdcc --set dcn.coresPerNode=4 --set dcn.nodeCount=3   # -> 12 DCN pods
+
+# set the total replica count directly (bypasses the calculation)
+helm install ubdcc ubdcc/ubdcc --set dcn.replicas=12
+
+# pin DCN to a dedicated node pool
+helm install ubdcc ubdcc/ubdcc --set dcn.coresPerNode=4 --set dcn.nodeSelector.role=dcn
+```
+
+For real per-core CPU pinning, give each pod a full core with Guaranteed QoS (requests == limits,
+integer cpu) — this requires the kubelet `cpuManagerPolicy: static` on your nodes:
+
+``` 
+helm install ubdcc ubdcc/ubdcc --set dcn.coresPerNode=4 \
+  --set dcn.resources.requests.cpu=1 --set dcn.resources.limits.cpu=1
+```
+
+**Operational notes (Deployment mode, `coresPerNode > 1`):**
+
+- **Node-list permission.** Auto-detection lists cluster nodes at install time, so whoever runs
+  `helm install`/`upgrade` needs the cluster-scoped right to `list nodes`. If it's missing, the
+  lookup returns empty and the chart **silently falls back to a single node** (you get only
+  `coresPerNode` pods total instead of `coresPerNode × nodes`). When in doubt, set the count
+  explicitly: `--set dcn.nodeCount=<n>`.
+- **Which nodes are counted.** Only schedulable worker nodes — nodes that are `unschedulable` or
+  carry the `node-role.kubernetes.io/control-plane` (or `…/master`) label are skipped, since DCN
+  pods won't land on a tainted control-plane anyway. If the pod count looks off, check
+  `kubectl get nodes --show-labels`.
+- **Adding nodes later.** A `Deployment` has a fixed replica count — new nodes do **not**
+  automatically get DCN pods. Re-run `helm upgrade` (re-detects the node count) or bump
+  `dcn.nodeCount`/`dcn.replicas`. The default `DaemonSet` mode (`coresPerNode: 1`) does adapt
+  automatically.
+- **Switching modes on upgrade.** Crossing the `coresPerNode` `1 ↔ >1` boundary changes the
+  resource kind (`DaemonSet ↔ Deployment`). Helm deletes the old object and creates the new one, so
+  expect a brief gap in DCN coverage during that one upgrade.
+
+**Example — adding a node in Deployment mode.** Say you start on 3 nodes with 4 cores each:
+
+```bash
+helm install ubdcc ubdcc/ubdcc --set dcn.coresPerNode=4   # detects 3 nodes -> 12 DCN pods (4 per node)
+```
+
+Later you add a 4th node. The `Deployment` still carries `replicas: 12`, so the new node stays
+empty — Kubernetes does not add pods on its own. Re-run the upgrade to re-detect the node count:
+
+```bash
+helm upgrade ubdcc ubdcc/ubdcc --set dcn.coresPerNode=4   # now detects 4 nodes -> 16 DCN pods (4 per node)
+```
+
+Or skip auto-detection and pin the numbers yourself:
+
+```bash
+helm upgrade ubdcc ubdcc/ubdcc --set dcn.coresPerNode=4 --set dcn.nodeCount=4   # -> 16 pods
+helm upgrade ubdcc ubdcc/ubdcc --set dcn.replicas=16                            # fixed total
+```
+
+In `DaemonSet` mode (the default, `coresPerNode: 1`) none of this is needed — a new node gets its
+one DCN pod automatically.
+
 ### Kubernetes Deployment
 - [Download the deployment files](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/tree/master/admin/k8s)
 - Apply the deployment files with `kubectl`

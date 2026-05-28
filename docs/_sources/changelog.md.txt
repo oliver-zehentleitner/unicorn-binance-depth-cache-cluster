@@ -10,6 +10,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 [How to upgrade to the latest version!](https://oliver-zehentleitner.github.io/unicorn-binance-depth-cache-cluster/readme.html#installation-and-upgrade)
 
 ## 0.9.1.dev (development stage/unreleased/unstable)
+### Added
+- Helm chart: optional **N DCN pods per node** — the optimal distribution is one
+  DCN per CPU core. The default is unchanged (a `DaemonSet`, exactly 1 DCN pod
+  per node). Setting `dcn.coresPerNode > 1` switches the DCN to a `Deployment`
+  that auto-detects the count of schedulable, non-control-plane nodes via a
+  cluster `lookup` and renders `replicas = coresPerNode × nodeCount`, spread
+  evenly across nodes with `topologySpreadConstraints` (`maxSkew: 1`).
+- Helm values `dcn.coresPerNode`, `dcn.nodeCount` (override auto-detection),
+  `dcn.replicas` (force Deployment mode + override the whole calculation),
+  `dcn.nodeSelector` (pin DCN to a node pool) and `dcn.resources` (set
+  requests == limits for Guaranteed QoS / per-core CPU pinning).
 
 ## 0.9.1
 ### Fixed
