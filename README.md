@@ -587,6 +587,29 @@ helm install ubdcc ubdcc/ubdcc --set dcn.coresPerNode=4 \
   resource kind (`DaemonSet ↔ Deployment`). Helm deletes the old object and creates the new one, so
   expect a brief gap in DCN coverage during that one upgrade.
 
+**Example — adding a node in Deployment mode.** Say you start on 3 nodes with 4 cores each:
+
+```bash
+helm install ubdcc ubdcc/ubdcc --set dcn.coresPerNode=4   # detects 3 nodes -> 12 DCN pods (4 per node)
+```
+
+Later you add a 4th node. The `Deployment` still carries `replicas: 12`, so the new node stays
+empty — Kubernetes does not add pods on its own. Re-run the upgrade to re-detect the node count:
+
+```bash
+helm upgrade ubdcc ubdcc/ubdcc --set dcn.coresPerNode=4   # now detects 4 nodes -> 16 DCN pods (4 per node)
+```
+
+Or skip auto-detection and pin the numbers yourself:
+
+```bash
+helm upgrade ubdcc ubdcc/ubdcc --set dcn.coresPerNode=4 --set dcn.nodeCount=4   # -> 16 pods
+helm upgrade ubdcc ubdcc/ubdcc --set dcn.replicas=16                            # fixed total
+```
+
+In `DaemonSet` mode (the default, `coresPerNode: 1`) none of this is needed — a new node gets its
+one DCN pod automatically.
+
 ### Kubernetes Deployment
 - [Download the deployment files](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/tree/master/admin/k8s)
 - Apply the deployment files with `kubectl`
