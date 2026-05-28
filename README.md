@@ -529,7 +529,45 @@ helm install ubdcc ubdcc/ubdcc --namespace ubdcc
 ``` 
 helm install ubdcc ubdcc/ubdcc --set publicPort.restapi=8080
 ```
-  
+
+#### Scale DCN per CPU core
+By default the chart deploys the DCN as a `DaemonSet` — **exactly one DCN pod per node**. This
+auto-scales as you add or remove nodes and needs no extra permissions.
+
+Each DCN is a single Python process (GIL-bound), so **one DCN per CPU core** is the optimal
+distribution. To run more than one DCN per node, tell the chart how many cores your DCN nodes have:
+
+``` 
+helm install ubdcc ubdcc/ubdcc --set dcn.coresPerNode=4
+```
+
+With `coresPerNode > 1` the DCN becomes a `Deployment` whose pods are spread evenly across nodes
+(`topologySpreadConstraints`, `maxSkew: 1`). The node count is auto-detected from the cluster at
+install time (only schedulable, non control-plane nodes are counted), so
+`replicas = coresPerNode × nodeCount`. Auto-detection needs permission to list nodes for whoever
+runs `helm install`; on `helm template`/`--dry-run` it falls back to a single node.
+
+Override any level explicitly:
+
+``` 
+# fix the node count instead of auto-detecting
+helm install ubdcc ubdcc/ubdcc --set dcn.coresPerNode=4 --set dcn.nodeCount=3   # -> 12 DCN pods
+
+# set the total replica count directly (bypasses the calculation)
+helm install ubdcc ubdcc/ubdcc --set dcn.replicas=12
+
+# pin DCN to a dedicated node pool
+helm install ubdcc ubdcc/ubdcc --set dcn.coresPerNode=4 --set dcn.nodeSelector.role=dcn
+```
+
+For real per-core CPU pinning, give each pod a full core with Guaranteed QoS (requests == limits,
+integer cpu) — this requires the kubelet `cpuManagerPolicy: static` on your nodes:
+
+``` 
+helm install ubdcc ubdcc/ubdcc --set dcn.coresPerNode=4 \
+  --set dcn.resources.requests.cpu=1 --set dcn.resources.limits.cpu=1
+```
+
 ### Kubernetes Deployment
 - [Download the deployment files](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/tree/master/admin/k8s)
 - Apply the deployment files with `kubectl`

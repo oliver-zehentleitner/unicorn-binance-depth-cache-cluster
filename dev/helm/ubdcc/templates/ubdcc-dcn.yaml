@@ -1,3 +1,73 @@
+{{- /*
+  DCN topology:
+  - Default (coresPerNode <= 1, no explicit replicas): a DaemonSet -> exactly
+    1 DCN pod per node. Auto-scales when nodes are added/removed, needs no
+    node lookup / cluster RBAC.
+  - coresPerNode > 1 (or an explicit dcn.replicas): a Deployment with
+    N pods per node, spread evenly across nodes (topologySpreadConstraints).
+    Replica precedence: dcn.replicas > coresPerNode × dcn.nodeCount >
+    coresPerNode × auto-detected nodes (schedulable, non-control-plane).
+    The lookup is empty on `helm template`/`--dry-run`, so it falls back to a
+    single node there.
+*/ -}}
+{{- $coresPerNode := .Values.dcn.coresPerNode | int -}}
+{{- $useDeployment := or (gt $coresPerNode 1) (ne (toString .Values.dcn.replicas) "") -}}
+{{- if $useDeployment -}}
+{{- $replicas := 0 -}}
+{{- if .Values.dcn.replicas -}}
+{{-   $replicas = .Values.dcn.replicas | int -}}
+{{- else -}}
+{{-   $nodeCount := 0 -}}
+{{-   if .Values.dcn.nodeCount -}}
+{{-     $nodeCount = .Values.dcn.nodeCount | int -}}
+{{-   else -}}
+{{-     range (lookup "v1" "Node" "" "").items -}}
+{{-       $labels := .metadata.labels | default dict -}}
+{{-       if and (not .spec.unschedulable) (not (hasKey $labels "node-role.kubernetes.io/control-plane")) (not (hasKey $labels "node-role.kubernetes.io/master")) -}}
+{{-         $nodeCount = add1 $nodeCount -}}
+{{-       end -}}
+{{-     end -}}
+{{-   end -}}
+{{-   if lt $nodeCount 1 -}}{{- $nodeCount = 1 -}}{{- end -}}
+{{-   $replicas = mul $coresPerNode $nodeCount -}}
+{{- end -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.name.dcn }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: {{ $replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.name.dcn }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.name.dcn }}
+    spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: {{ .Values.name.dcn }}
+      {{- with .Values.dcn.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Values.name.dcn }}
+          image: "ghcr.io/oliver-zehentleitner/ubdcc-dcn:{{ .Chart.AppVersion }}"
+          env:
+            - name: UBDCC_K8S_VERIFY_SSL
+              value: {{ .Values.k8s.verifySsl | quote }}
+          {{- with .Values.dcn.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+{{- else -}}
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
@@ -12,9 +82,18 @@ spec:
       labels:
         app: {{ .Values.name.dcn }}
     spec:
+      {{- with .Values.dcn.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - name: {{ .Values.name.dcn }}
           image: "ghcr.io/oliver-zehentleitner/ubdcc-dcn:{{ .Chart.AppVersion }}"
           env:
             - name: UBDCC_K8S_VERIFY_SSL
               value: {{ .Values.k8s.verifySsl | quote }}
+          {{- with .Values.dcn.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+{{- end -}}
