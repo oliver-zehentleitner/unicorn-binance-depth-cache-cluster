@@ -568,6 +568,25 @@ helm install ubdcc ubdcc/ubdcc --set dcn.coresPerNode=4 \
   --set dcn.resources.requests.cpu=1 --set dcn.resources.limits.cpu=1
 ```
 
+**Operational notes (Deployment mode, `coresPerNode > 1`):**
+
+- **Node-list permission.** Auto-detection lists cluster nodes at install time, so whoever runs
+  `helm install`/`upgrade` needs the cluster-scoped right to `list nodes`. If it's missing, the
+  lookup returns empty and the chart **silently falls back to a single node** (you get only
+  `coresPerNode` pods total instead of `coresPerNode × nodes`). When in doubt, set the count
+  explicitly: `--set dcn.nodeCount=<n>`.
+- **Which nodes are counted.** Only schedulable worker nodes — nodes that are `unschedulable` or
+  carry the `node-role.kubernetes.io/control-plane` (or `…/master`) label are skipped, since DCN
+  pods won't land on a tainted control-plane anyway. If the pod count looks off, check
+  `kubectl get nodes --show-labels`.
+- **Adding nodes later.** A `Deployment` has a fixed replica count — new nodes do **not**
+  automatically get DCN pods. Re-run `helm upgrade` (re-detects the node count) or bump
+  `dcn.nodeCount`/`dcn.replicas`. The default `DaemonSet` mode (`coresPerNode: 1`) does adapt
+  automatically.
+- **Switching modes on upgrade.** Crossing the `coresPerNode` `1 ↔ >1` boundary changes the
+  resource kind (`DaemonSet ↔ Deployment`). Helm deletes the old object and creates the new one, so
+  expect a brief gap in DCN coverage during that one upgrade.
+
 ### Kubernetes Deployment
 - [Download the deployment files](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/tree/master/admin/k8s)
 - Apply the deployment files with `kubectl`
