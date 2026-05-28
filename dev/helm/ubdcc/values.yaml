@@ -7,6 +7,40 @@ name:
 replicaCount:
   restapi: 3
 
+dcn:
+  # DCNs per CPU core. Each DCN is a single Python process (GIL-bound), so one
+  # DCN per CPU core is the optimal distribution.
+  #   1 (default) -> DaemonSet: exactly 1 DCN pod per node. Auto-scales with the
+  #                  cluster, needs no node lookup / RBAC.
+  #   N > 1        -> Deployment with N pods per node (see nodeCount below).
+  # Set the core count of your DCN nodes at install time, e.g.:
+  #   helm install ... --set dcn.coresPerNode=4
+  coresPerNode: 1
+
+  # Only used when coresPerNode > 1 (Deployment mode).
+  # Number of nodes to spread DCN pods across.
+  # "" (default) auto-detects the count of schedulable worker nodes from the
+  # cluster at install time. This needs permission to list nodes (cluster
+  # scope) for whoever runs `helm install`; control-plane and unschedulable
+  # nodes are skipped. On `helm template`/`--dry-run` the lookup is empty and
+  # it falls back to 1. Set an integer to override, e.g. --set dcn.nodeCount=3
+  nodeCount: ""
+
+  # Total replica count. "" (default) = coresPerNode × nodeCount.
+  # Setting an integer forces Deployment mode and overrides the whole
+  # calculation, e.g. --set dcn.replicas=12
+  replicas: ""
+
+  # Optional: pin DCN pods to specific nodes (e.g. a dedicated DCN node pool).
+  nodeSelector: {}
+
+  # Optional: set requests == limits with integer cpu for Guaranteed QoS,
+  # required for real per-core CPU pinning (needs kubelet cpuManagerPolicy: static).
+  # Example:
+  #   requests: {cpu: 1, memory: 256Mi}
+  #   limits:   {cpu: 1, memory: 256Mi}
+  resources: {}
+
 publicPort:
   restapi: 80
 
