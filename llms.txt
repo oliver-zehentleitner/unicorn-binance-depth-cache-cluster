@@ -85,9 +85,9 @@ Base URL: `http://127.0.0.1:{port}/`
 
 ## Architecture
 
-- **Management (mgmt)**: orchestrates pods, assigns depth caches to nodes
-- **REST API**: HTTP interface for external access
-- **DCN (DepthCache Node)**: runs actual UBLDC instances, managed by mgmt
+- **Management (mgmt)**: orchestrates pods, assigns depth caches to nodes (singleton)
+- **REST API (restapi)**: HTTP interface for external access; Helm chart deploys it as a `DaemonSet` (1 pod per node) by default, `restapi.perNode=N` switches to a `Deployment` with `N × nodes` pods
+- **DCN (DepthCache Node)**: runs actual UBLDC instances, managed by mgmt; Helm chart deploys it as a `DaemonSet` by default, `dcn.coresPerNode=N` switches to a `Deployment` with `N × nodes` pods (one DCN per CPU core is optimal, GIL-bound)
 
 Runs as processes on a single machine or as pods on Kubernetes.
 

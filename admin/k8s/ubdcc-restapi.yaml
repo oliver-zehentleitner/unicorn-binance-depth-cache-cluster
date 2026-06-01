@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: DaemonSet
 
 metadata:
   name: ubdcc-restapi
@@ -7,8 +7,6 @@ metadata:
   annotations:
     author: oliver-zehentleitner
 spec:
-  serviceName: ubdcc-restapi
-  replicas: 3
   selector:
     matchLabels:
       app: ubdcc-restapi
@@ -19,13 +17,6 @@ spec:
       annotations:
         author: oliver-zehentleitner
     spec:
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchLabels:
-                  app: ubdcc-restapi
-              topologyKey: "kubernetes.io/hostname"
       containers:
         - name: ubdcc-restapi
           image: ghcr.io/oliver-zehentleitner/ubdcc-restapi:0.9.1
