@@ -1,14 +1,45 @@
+{{- /*
+  RESTAPI topology:
+  - Default (perNode <= 1, no explicit replicas): a DaemonSet -> exactly
+    1 RESTAPI pod per node. Auto-scales when nodes are added/removed, needs no
+    node lookup / cluster RBAC.
+  - perNode > 1 (or an explicit restapi.replicas): a Deployment with
+    N pods per node, spread evenly across nodes (topologySpreadConstraints).
+    Replica precedence: restapi.replicas > perNode × restapi.nodeCount >
+    perNode × auto-detected nodes (schedulable, non-control-plane).
+    The lookup is empty on `helm template`/`--dry-run`, so it falls back to a
+    single node there.
+*/ -}}
+{{- $perNode := .Values.restapi.perNode | int -}}
+{{- $useDeployment := or (gt $perNode 1) (ne (toString .Values.restapi.replicas) "") -}}
+{{- if $useDeployment -}}
+{{- $replicas := 0 -}}
+{{- if .Values.restapi.replicas -}}
+{{-   $replicas = .Values.restapi.replicas | int -}}
+{{- else -}}
+{{-   $nodeCount := 0 -}}
+{{-   if .Values.restapi.nodeCount -}}
+{{-     $nodeCount = .Values.restapi.nodeCount | int -}}
+{{-   else -}}
+{{-     range (lookup "v1" "Node" "" "").items -}}
+{{-       $labels := .metadata.labels | default dict -}}
+{{-       if and (not .spec.unschedulable) (not (hasKey $labels "node-role.kubernetes.io/control-plane")) (not (hasKey $labels "node-role.kubernetes.io/master")) -}}
+{{-         $nodeCount = add1 $nodeCount -}}
+{{-       end -}}
+{{-     end -}}
+{{-   end -}}
+{{-   if lt $nodeCount 1 -}}{{- $nodeCount = 1 -}}{{- end -}}
+{{-   $replicas = mul $perNode $nodeCount -}}
+{{- end -}}
 apiVersion: apps/v1
-kind: StatefulSet
-
+kind: Deployment
 metadata:
   name: {{ .Values.name.restapi }}
   namespace: {{ .Release.Namespace }}
   annotations:
     author: oliver-zehentleitner
 spec:
-  serviceName: {{ .Values.name.restapi }}
-  replicas: {{ .Values.replicaCount.restapi }}
+  replicas: {{ $replicas }}
   selector:
     matchLabels:
       app: {{ .Values.name.restapi }}
@@ -19,13 +50,17 @@ spec:
       annotations:
         author: oliver-zehentleitner
     spec:
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchLabels:
-                  app: {{ .Values.name.restapi }}
-              topologyKey: "kubernetes.io/hostname"
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: {{ .Values.name.restapi }}
+      {{- with .Values.restapi.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - name: {{ .Values.name.restapi }}
           image: "ghcr.io/oliver-zehentleitner/ubdcc-restapi:{{ .Chart.AppVersion }}"
@@ -36,9 +71,13 @@ spec:
             - name: UBDCC_K8S_VERIFY_SSL
               value: {{ .Values.k8s.verifySsl | quote }}
           resources:
+          {{- if .Values.restapi.resources }}
+            {{- toYaml .Values.restapi.resources | nindent 12 }}
+          {{- else }}
             requests:
               cpu: "250m"
               memory: "512Mi"
+          {{- end }}
           readinessProbe:
             httpGet:
               path: /test
@@ -49,3 +88,54 @@ spec:
               path: /test
               port: rest-private
             initialDelaySeconds: 40
+{{- else -}}
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ .Values.name.restapi }}
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    author: oliver-zehentleitner
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.name.restapi }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.name.restapi }}
+      annotations:
+        author: oliver-zehentleitner
+    spec:
+      {{- with .Values.restapi.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Values.name.restapi }}
+          image: "ghcr.io/oliver-zehentleitner/ubdcc-restapi:{{ .Chart.AppVersion }}"
+          ports:
+            - name: rest-private
+              containerPort: 8080
+          env:
+            - name: UBDCC_K8S_VERIFY_SSL
+              value: {{ .Values.k8s.verifySsl | quote }}
+          resources:
+          {{- if .Values.restapi.resources }}
+            {{- toYaml .Values.restapi.resources | nindent 12 }}
+          {{- else }}
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+          {{- end }}
+          readinessProbe:
+            httpGet:
+              path: /test
+              port: rest-private
+            initialDelaySeconds: 40
+          livenessProbe:
+            httpGet:
+              path: /test
+              port: rest-private
+            initialDelaySeconds: 40
+{{- end -}}

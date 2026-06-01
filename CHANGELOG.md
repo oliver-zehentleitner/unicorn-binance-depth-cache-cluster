@@ -21,6 +21,19 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
   `dcn.replicas` (force Deployment mode + override the whole calculation),
   `dcn.nodeSelector` (pin DCN to a node pool) and `dcn.resources` (set
   requests == limits for Guaranteed QoS / per-core CPU pinning).
+- Helm values `restapi.perNode`, `restapi.nodeCount`, `restapi.replicas`,
+  `restapi.nodeSelector` and `restapi.resources` — symmetric to the `dcn.*`
+  block, for tuning the RESTAPI topology.
+### Changed
+- Helm chart: RESTAPI is now a `DaemonSet` by default (exactly 1 RESTAPI pod
+  per node, auto-scales with the cluster) instead of a hard-coded
+  `StatefulSet` with `replicas: 3` + per-host `podAntiAffinity`. The old
+  layout broke on clusters with < 3 nodes (pods stuck `Pending`) and wasted
+  capacity on clusters with > 3 nodes. Setting `restapi.perNode > 1` (or
+  an explicit `restapi.replicas`) switches RESTAPI to a `Deployment` with
+  `replicas = perNode × nodeCount`, spread evenly via
+  `topologySpreadConstraints`. The `replicaCount.restapi` value is removed.
+- `admin/k8s/ubdcc-restapi.yaml` updated to match (plain `DaemonSet`).
 
 ## 0.9.1
 ### Fixed

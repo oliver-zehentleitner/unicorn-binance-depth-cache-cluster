@@ -4,9 +4,6 @@ name:
   mgmt: ubdcc-mgmt
   restapi: ubdcc-restapi
 
-replicaCount:
-  restapi: 3
-
 dcn:
   # DCNs per CPU core. Each DCN is a single Python process (GIL-bound), so one
   # DCN per CPU core is the optimal distribution.
@@ -39,6 +36,35 @@ dcn:
   # Example:
   #   requests: {cpu: 1, memory: 256Mi}
   #   limits:   {cpu: 1, memory: 256Mi}
+  resources: {}
+
+restapi:
+  # RESTAPI pods per node.
+  #   1 (default) -> DaemonSet: exactly 1 RESTAPI pod per node. Auto-scales with
+  #                  the cluster, needs no node lookup / RBAC.
+  #   N > 1        -> Deployment with N pods per node (see nodeCount below).
+  # Override at install time, e.g.:
+  #   helm install ... --set restapi.perNode=2
+  perNode: 1
+
+  # Only used when perNode > 1 (Deployment mode).
+  # Number of nodes to spread RESTAPI pods across.
+  # "" (default) auto-detects the count of schedulable worker nodes from the
+  # cluster at install time. This needs permission to list nodes (cluster
+  # scope) for whoever runs `helm install`; control-plane and unschedulable
+  # nodes are skipped. On `helm template`/`--dry-run` the lookup is empty and
+  # it falls back to 1. Set an integer to override, e.g. --set restapi.nodeCount=3
+  nodeCount: ""
+
+  # Total replica count. "" (default) = perNode × nodeCount.
+  # Setting an integer forces Deployment mode and overrides the whole
+  # calculation, e.g. --set restapi.replicas=12
+  replicas: ""
+
+  # Optional: pin RESTAPI pods to specific nodes.
+  nodeSelector: {}
+
+  # Optional: container resource requests / limits.
   resources: {}
 
 publicPort:

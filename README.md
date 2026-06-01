@@ -112,7 +112,7 @@ API throughput, and automatic state recovery if pods restart.
 
 The system consists of three components:
 - **mgmt** (1x) — manages the cluster state and distributes DepthCaches across nodes
-- **restapi** (1-3x) — REST API gateway, load-balances data requests to DCN processes
+- **restapi** (1 per node, scalable) — REST API gateway, load-balances data requests to DCN processes
 - **dcn** (multiple) — runs the actual DepthCaches via UBLDC
 
 Each DCN runs a single Python process, so **one DCN per CPU core** gives the best performance (Python's GIL limits 
@@ -121,7 +121,7 @@ each process to one core).
 | Setup | Example configuration |
 |-------|----------------------|
 | Local (8-core PC) | 1 mgmt, 1 restapi, 6 DCN processes |
-| Kubernetes (2 servers, 4 cores each) | 1 mgmt, 3 restapi, 4 DCN pods |
+| Kubernetes (2 servers, 4 cores each) | 1 mgmt, 2 restapi (1/node), 4 DCN pods |
 
 When you create DepthCaches (e.g. 200 markets with `desired_quantity=2`), UBDCC distributes them evenly across DCN 
 processes. Each DCN downloads order book snapshots using its own network connection. Replicas are created for 
@@ -532,6 +532,37 @@ helm install ubdcc ubdcc/ubdcc --namespace ubdcc
 #### Choose an alternate public port
 ``` 
 helm install ubdcc ubdcc/ubdcc --set publicPort.restapi=8080
+```
+
+#### Scale RESTAPI per node
+By default the chart deploys the RESTAPI as a `DaemonSet` — **exactly one RESTAPI pod per node**.
+This auto-scales as you add or remove nodes and needs no extra permissions; the cluster `Service`
+load-balances incoming requests across all RESTAPI pods.
+
+To run more than one RESTAPI pod per node (e.g. to absorb heavier client load on a small
+cluster), set:
+
+```
+helm install ubdcc ubdcc/ubdcc --set restapi.perNode=2
+```
+
+With `perNode > 1` the RESTAPI becomes a `Deployment` whose pods are spread evenly across nodes
+(`topologySpreadConstraints`, `maxSkew: 1`). The node count is auto-detected from the cluster at
+install time (only schedulable, non control-plane nodes), so
+`replicas = perNode × nodeCount`. Auto-detection needs permission to list nodes for whoever runs
+`helm install`; on `helm template`/`--dry-run` it falls back to a single node.
+
+Override any level explicitly:
+
+```
+# fix the node count instead of auto-detecting
+helm install ubdcc ubdcc/ubdcc --set restapi.perNode=2 --set restapi.nodeCount=3   # -> 6 RESTAPI pods
+
+# set the total replica count directly (bypasses the calculation)
+helm install ubdcc ubdcc/ubdcc --set restapi.replicas=6
+
+# pin RESTAPI to a dedicated node pool
+helm install ubdcc ubdcc/ubdcc --set restapi.nodeSelector.role=edge
 ```
 
 #### Scale DCN per CPU core
