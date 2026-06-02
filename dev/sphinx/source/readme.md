@@ -32,7 +32,7 @@
 **Stop dealing with broken Binance order books.**
 
 Install one package, run one command — and every script, bot, or service on your machine gets reliable, 
-synchronized order book data via REST API. Use it from Python, JavaScript, TypeScript, Node.js, Go, Rust, 
+synchronized Binance order book data via REST API. Use it from Python, JavaScript, TypeScript, Node.js, Go, Rust, 
 Java, Kotlin, C#, C++, C, Ruby, PHP, Swift, Scala, R, Julia, MATLAB, Dart, Elixir, Perl, Bash/curl — or 
 any other language with an HTTP client. Any number of clients.
 
@@ -41,7 +41,9 @@ pip install ubdcc
 ubdcc start
 ```
 
-Tested with 600+ redundant DepthCaches on a single machine. Scales to Kubernetes when you need more.
+Tested with 600+ redundant DepthCaches 
+[on a single machine](https://blog.technopathy.club/from-pip-install-to-a-redundant-binance-order-book-cluster-ubdcc-dashboard-quickstart). 
+Scales to [Kubernetes when you need more](https://blog.technopathy.club/i-created-2013-binance-order-books-on-kubernetes-with-2-replicas-in-25-minutes-then-stress-tested-the-rest-api).
 
 Part of the [UNICORN Binance Suite](https://github.com/oliver-zehentleitner/unicorn-binance-suite).
 
@@ -112,7 +114,7 @@ API throughput, and automatic state recovery if pods restart.
 
 The system consists of three components:
 - **mgmt** (1x) — manages the cluster state and distributes DepthCaches across nodes
-- **restapi** (1-3x) — REST API gateway, load-balances data requests to DCN processes
+- **restapi** (1 per node, scalable) — REST API gateway, load-balances data requests to DCN processes
 - **dcn** (multiple) — runs the actual DepthCaches via UBLDC
 
 Each DCN runs a single Python process, so **one DCN per CPU core** gives the best performance (Python's GIL limits 
@@ -121,7 +123,7 @@ each process to one core).
 | Setup | Example configuration |
 |-------|----------------------|
 | Local (8-core PC) | 1 mgmt, 1 restapi, 6 DCN processes |
-| Kubernetes (2 servers, 4 cores each) | 1 mgmt, 3 restapi, 4 DCN pods |
+| Kubernetes (2 servers, 4 cores each) | 1 mgmt, 2 restapi (1/node), 4 DCN pods |
 
 When you create DepthCaches (e.g. 200 markets with `desired_quantity=2`), UBDCC distributes them evenly across DCN 
 processes. Each DCN downloads order book snapshots using its own network connection. Replicas are created for 
@@ -534,6 +536,37 @@ helm install ubdcc ubdcc/ubdcc --namespace ubdcc
 helm install ubdcc ubdcc/ubdcc --set publicPort.restapi=8080
 ```
 
+#### Scale RESTAPI per node
+By default the chart deploys the RESTAPI as a `DaemonSet` — **exactly one RESTAPI pod per node**.
+This auto-scales as you add or remove nodes and needs no extra permissions; the cluster `Service`
+load-balances incoming requests across all RESTAPI pods.
+
+To run more than one RESTAPI pod per node (e.g. to absorb heavier client load on a small
+cluster), set:
+
+```
+helm install ubdcc ubdcc/ubdcc --set restapi.perNode=2
+```
+
+With `perNode > 1` the RESTAPI becomes a `Deployment` whose pods are spread evenly across nodes
+(`topologySpreadConstraints`, `maxSkew: 1`). The node count is auto-detected from the cluster at
+install time (only schedulable, non control-plane nodes), so
+`replicas = perNode × nodeCount`. Auto-detection needs permission to list nodes for whoever runs
+`helm install`; on `helm template`/`--dry-run` it falls back to a single node.
+
+Override any level explicitly:
+
+```
+# fix the node count instead of auto-detecting
+helm install ubdcc ubdcc/ubdcc --set restapi.perNode=2 --set restapi.nodeCount=3   # -> 6 RESTAPI pods
+
+# set the total replica count directly (bypasses the calculation)
+helm install ubdcc ubdcc/ubdcc --set restapi.replicas=6
+
+# pin RESTAPI to a dedicated node pool
+helm install ubdcc ubdcc/ubdcc --set restapi.nodeSelector.role=edge
+```
+
 #### Scale DCN per CPU core
 By default the chart deploys the DCN as a `DaemonSet` — **exactly one DCN pod per node**. This
 auto-scales as you add or remove nodes and needs no extra permissions.
@@ -764,6 +797,8 @@ Binds to `127.0.0.1:8080` by default and opens the UI in your browser; enter the
 - [Your Binance Order Book Is Wrong — Here's Why](https://blog.technopathy.club/your-binance-order-book-is-wrong-here-s-why)
 - [Your Binance DepthCache Is Rotting — Here's the Proof in 25 Hours](https://blog.technopathy.club/your-binance-depthcache-is-rotting-here-s-the-proof-in-25-hours)
 - [UBDCC Deep Dive: Building a Trust Layer for Binance Order Books](https://blog.technopathy.club/ubdcc-deep-dive-building-a-trust-layer-for-binance-order-books)
+- [Install UBDCC on Kubernetes with Helm: A Redundant Binance Order Book Cluster in 20 Minutes](https://blog.technopathy.club/install-ubdcc-on-kubernetes-with-helm-a-redundant-binance-order-book-cluster-in-20-minutes)
+- [I Created 2013 Binance Order Books on Kubernetes with 2 Replicas in 25 Minutes — Then Stress-Tested the REST API](https://blog.technopathy.club/i-created-2013-binance-order-books-on-kubernetes-with-2-replicas-in-25-minutes-then-stress-tested-the-rest-api)
 - [UNICORN Binance Suite Article Series](https://blog.technopathy.club/series/unicorn-binance-suite)
 
 ## Social
