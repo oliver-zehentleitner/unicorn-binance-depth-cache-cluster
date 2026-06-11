@@ -46,7 +46,7 @@ Tested with 600+ redundant DepthCaches
 [on a single machine](https://blog.technopathy.club/from-pip-install-to-a-redundant-binance-order-book-cluster-ubdcc-dashboard-quickstart). 
 Scales to [Kubernetes when you need more](https://blog.technopathy.club/i-created-2013-binance-order-books-on-kubernetes-with-2-replicas-in-25-minutes-then-stress-tested-the-rest-api).
 
-Part of the [UNICORN Binance Suite](https://github.com/oliver-zehentleitner/unicorn-binance-suite).
+Part of '[UNICORN Binance Suite](https://blog.technopathy.club/page/unicorn-binance-suite)'.
 
 ## Video walkthrough
 
