@@ -15,6 +15,8 @@
 The `ubdcc` package is the all-in-one installer and cluster manager for the 
 [UNICORN Binance DepthCache Cluster](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster).
 
+Part of '[UNICORN Binance Suite](https://blog.technopathy.club/page/unicorn-binance-suite)'.
+
 ## What you get
 
 - **All components installed**: `ubdcc-mgmt`, `ubdcc-restapi`, `ubdcc-dcn` and their dependencies
