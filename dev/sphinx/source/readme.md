@@ -15,6 +15,7 @@
 [![Build and Push Docker Images](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/docker_build.yml/badge.svg)](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/docker_build.yml)
 [![Package and Publish Helm Chart](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/helm_release.yml/badge.svg)](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/helm_release.yml)
 [![Create GitHub Release](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/gh_release.yml/badge.svg)](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/gh_release.yml)
+[![Read the Docs](https://img.shields.io/badge/read-%20docs-yellow)](https://oliver-zehentleitner.github.io/unicorn-binance-depth-cache-cluster)
 [![Read How To`s](https://img.shields.io/badge/read-%20howto-yellow)](https://blog.technopathy.club/series/unicorn-binance-suite)
 [![Github](https://img.shields.io/badge/source-github-cbc2c8)](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster)
 [![Telegram](https://img.shields.io/badge/community-telegram-41ab8c)](https://t.me/unicorndevs)
