@@ -4,17 +4,17 @@
 # File: pypi/create_wheel.sh
 #
 # Part of ‘UNICORN Binance DepthCache Cluster’
-# Project website: https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance
-# Github: https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance
+# Project website: https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster
+# Github: https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster
 # Documentation: https://oliver-zehentleitner.github.io/unicorn-depthcache-cluster-for-binance
 # PyPI: https://pypi.org/project/unicorn-depthcache-cluster-for-binance
 #
 # License: MIT
-# https://github.com/oliver-zehentleitner/unicorn-depthcache-cluster-for-binance/blob/master/LICENSE
+# https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/blob/master/LICENSE
 #
 # Author: Oliver Zehentleitner
 #
-# Copyright (c) 2019-2024, Oliver Zehentleitner (https://about.me/oliver-zehentleitner)
+# Copyright (c) 2024-2026, Oliver Zehentleitner (https://about.me/oliver-zehentleitner)
 # All rights reserved.
 
 #set -xeuo pipefail

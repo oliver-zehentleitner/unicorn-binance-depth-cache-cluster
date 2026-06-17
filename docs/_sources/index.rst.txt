@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to unicorn-depthcache-cluster-for-binance documentation!
-================================================================
+Welcome to unicorn-binance-depth-cache-cluster documentation!
+=============================================================
 
 .. toctree::
    :maxdepth: 3

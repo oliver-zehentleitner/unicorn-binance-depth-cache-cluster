@@ -43,7 +43,7 @@ setup(
     keywords='',
     project_urls={
         'Howto': 'https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster#related-articles',
-        'Documentation': 'https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster#unicorn-binance-depthcache-cluster-ubdcc',
+        'Documentation': 'https://oliver-zehentleitner.github.io/unicorn-binance-depth-cache-cluster',
         'Wiki': 'https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/wiki',
         'Author': 'https://www.linkedin.com/in/oliver-zehentleitner',
         'Changes': 'https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/blob/master/packages/ubdcc-dcn/CHANGELOG.md',
