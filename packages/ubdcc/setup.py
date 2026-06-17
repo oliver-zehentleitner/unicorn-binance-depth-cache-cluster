@@ -47,14 +47,15 @@ setup(
     },
     keywords='binance, depth cache, cluster, order book',
     project_urls={
-        'Howto': 'https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster#howto',
-        'Documentation': 'https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster',
+        'Howto': 'https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster#related-articles',
+        'Documentation': 'https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster#unicorn-binance-depthcache-cluster-ubdcc',
         'Wiki': 'https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/wiki',
         'Author': 'https://www.linkedin.com/in/oliver-zehentleitner',
         'Changes': 'https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/blob/master/packages/ubdcc/CHANGELOG.md',
         'License': 'https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/blob/master/LICENSE',
         'Issue Tracker': 'https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/issues',
         'Telegram': 'https://t.me/unicorndevs',
+        'Umbrella Project': 'https://github.com/oliver-zehentleitner/unicorn-binance-suite',
     },
     python_requires='>=3.9.0',
     classifiers=[
