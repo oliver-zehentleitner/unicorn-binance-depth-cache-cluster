@@ -481,7 +481,7 @@ The response includes a `debug` block with:
 
 ## Kubernetes Setup
 
-[![UBDCC Quickstart - YouTube](https://raw.githubusercontent.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/master/images/youtube/ubdcc-k8s.png)](https://youtu.be/erxIkwmqlmk])
+[![UBDCC Kubernetes - YouTube](https://raw.githubusercontent.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/master/images/youtube/ubdcc-k8s.png)](https://youtu.be/erxIkwmqlmk])
 
 - Get a Kubernetes cluster with powerful CPUs from a provider of your choice and connect `kubectl`
 
