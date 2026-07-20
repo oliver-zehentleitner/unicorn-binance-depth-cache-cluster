@@ -21,9 +21,9 @@
 [![Telegram](https://img.shields.io/badge/community-telegram-41ab8c)](https://t.me/unicorndevs)
 [![Reddit](https://img.shields.io/badge/community-reddit-41ab8c)](https://www.reddit.com/r/UNICORNBinanceSuite)
 
-[![UBS-Banner](https://raw.githubusercontent.com/oliver-zehentleitner/unicorn-binance-suite/master/images/logo/UBS-Banner-Readme.png)](https://github.com/oliver-zehentleitner/unicorn-binance-suite)
+[![UBS-Banner](https://raw.githubusercontent.com/oliver-zehentleitner/unicorn-binance-suite/master/images/logo/UBS-Banner-Readme.png)](https://blog.technopathy.club/page/unicorn-binance-suite)
 
-# UNICORN Binance DepthCache Cluster (UBDCC)
+# UNICORN Binance Depth Cache Cluster (UBDCC)
 
 [Why](#why) | [How it works](#how-it-works) | [Who is this for](#who-is-this-for) | [Architecture](#architecture) | [Features](#key-features) | 
 [Local Setup](#local-setup-without-kubernetes) | [REST API](#rest-api) | [Kubernetes](#kubernetes-setup) | 
@@ -481,11 +481,13 @@ The response includes a `debug` block with:
 
 ## Kubernetes Setup
 
-- Get a Kubernetes cluster with powerful CPUs from a provider of your choice and connect `kubectl`
+Get a Kubernetes cluster with powerful CPUs from a provider of your choice and connect `kubectl`.
 
-    Successfully tested with:
-    - [OVH](https://www.ovhcloud.com/de/public-cloud/orchestration/)
-    - [VULTR](https://www.vultr.com/kubernetes/)
+Successfully tested with:
+- [OVH](https://www.ovhcloud.com/de/public-cloud/orchestration/)
+- [VULTR](https://www.vultr.com/kubernetes/)
+  
+[![UBDCC Kubernetes - YouTube](https://raw.githubusercontent.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/master/images/youtube/ubdcc-k8s.png)](https://youtu.be/erxIkwmqlmk])
 
 ### Helm Chart
 - Install dependencies

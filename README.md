@@ -23,7 +23,7 @@
 
 [![UBS-Banner](https://raw.githubusercontent.com/oliver-zehentleitner/unicorn-binance-suite/master/images/logo/UBS-Banner-Readme.png)](https://blog.technopathy.club/page/unicorn-binance-suite)
 
-# UNICORN Binance DepthCache Cluster (UBDCC)
+# UNICORN Binance Depth Cache Cluster (UBDCC)
 
 [Why](#why) | [How it works](#how-it-works) | [Who is this for](#who-is-this-for) | [Architecture](#architecture) | [Features](#key-features) | 
 [Local Setup](#local-setup-without-kubernetes) | [REST API](#rest-api) | [Kubernetes](#kubernetes-setup) | 
