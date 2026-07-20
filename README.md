@@ -486,7 +486,8 @@ The response includes a `debug` block with:
     Successfully tested with:
     - [OVH](https://www.ovhcloud.com/de/public-cloud/orchestration/)
     - [VULTR](https://www.vultr.com/kubernetes/)
-    [![UBDCC Kubernetes - YouTube](https://raw.githubusercontent.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/master/images/youtube/ubdcc-k8s.png)](https://youtu.be/erxIkwmqlmk])
+  
+  [![UBDCC Kubernetes - YouTube](https://raw.githubusercontent.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/master/images/youtube/ubdcc-k8s.png)](https://youtu.be/erxIkwmqlmk])
 
 ### Helm Chart
 - Install dependencies
