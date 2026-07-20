@@ -481,13 +481,13 @@ The response includes a `debug` block with:
 
 ## Kubernetes Setup
 
-- Get a Kubernetes cluster with powerful CPUs from a provider of your choice and connect `kubectl`
+Get a Kubernetes cluster with powerful CPUs from a provider of your choice and connect `kubectl`.
 
-    Successfully tested with:
-    - [OVH](https://www.ovhcloud.com/de/public-cloud/orchestration/)
-    - [VULTR](https://www.vultr.com/kubernetes/)
+Successfully tested with:
+- [OVH](https://www.ovhcloud.com/de/public-cloud/orchestration/)
+- [VULTR](https://www.vultr.com/kubernetes/)
   
-  [![UBDCC Kubernetes - YouTube](https://raw.githubusercontent.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/master/images/youtube/ubdcc-k8s.png)](https://youtu.be/erxIkwmqlmk])
+[![UBDCC Kubernetes - YouTube](https://raw.githubusercontent.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/master/images/youtube/ubdcc-k8s.png)](https://youtu.be/erxIkwmqlmk])
 
 ### Helm Chart
 - Install dependencies
