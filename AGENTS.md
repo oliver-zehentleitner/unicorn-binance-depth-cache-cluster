@@ -3,6 +3,10 @@
 > **End-user cheatsheet for AI-assisted consumption:** [`llms.txt`](llms.txt) — use that one if you're writing code *against* this cluster.
 > **This file** is for AI agents working *on* this repo itself.
 
+## Why things are the way they are
+
+See [`context/index.md`](context/index.md) before making non-trivial changes — it points to the reasoning behind design decisions, rejected alternatives, and constraints that aren't visible in the code. If `AGENTS.local.md` exists in this repo, that's personal/local notes, not relevant to anyone else.
+
 ## Planning & Backlog
 
 Open development tasks and decisions are tracked in **[TASKS.md](TASKS.md)**.
@@ -116,7 +120,7 @@ Interactive shell commands: `status`, `add-dcn [count]`, `remove-dcn <count|name
 - **Setup:** `admin/k8s/setup/` (namespace, RBAC)
 - **Helm chart:** `dev/helm/ubdcc/`
 
-**Note:** Helm chart and K8s YAMLs still reference the old OVH registry — migration to ghcr.io pending (see TASKS.md).
+Helm chart and K8s YAMLs reference `ghcr.io` — the OVH-registry migration (tracked in `TASKS.md`) has landed; no OVH references remain in `admin/k8s/` or `dev/helm/ubdcc/`.
 
 ---
 
@@ -150,8 +154,11 @@ CI workflows in `.github/workflows/`:
 - `build_wheels_ubdcc.yml` — pure Python wheel + sdist
 - `docker_build.yml` — Docker images to ghcr.io
 - `gh_release.yml` — GitHub Release creation
+- `helm_release.yml` — packages and publishes the Helm chart to `docs/helm/`
 - `unit-tests.yml` — Python 3.9 + 3.14 pytest with Codecov
 - `codeql.yml` — static analysis
+
+No conda-forge distribution — PyPI + ghcr.io Docker only, by design: see [`context/history.md`](context/history.md).
 
 ---
 
@@ -170,3 +177,8 @@ Placeholder tests only — see TASKS.md.
 - Port retry fallback: if the REST server can't bind on the first attempt (race condition), it increments and tries again
 - `SO_REUSEADDR` is set on the port check to handle TIME_WAIT after a restart
 - `os._exit(0)` is scheduled 0.5s after the `/shutdown` response to ensure the process terminates even if the main loop is stuck in `asyncio.sleep`
+
+<!-- keep-the-why:config -->
+- context: `context/`
+- init: complete
+<!-- /keep-the-why:config -->
