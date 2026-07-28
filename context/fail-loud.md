@@ -3,7 +3,8 @@
 ## Out-of-sync DepthCaches return an explicit error, never silently stale data
 
 **Status:** active, stable since early in the project's life
-**Confirmed** (code path in `packages/ubdcc-dcn/ubdcc_dcn/RestEndpoints.py`; present since commit `938eed7`, Oct 2024 — i.e. from the LUCIT era already, not a recent addition)
+**Evidence:** confirmed
+**Source:** code path in `packages/ubdcc-dcn/ubdcc_dcn/RestEndpoints.py`; present since commit `938eed7`, Oct 2024 — i.e. from the LUCIT era already, not a recent addition
 
 When a `DepthCacheNode` catches UBLDC's `DepthCacheOutOfSync`, `get_asks`/`get_bids` return `error_id="#6000"` instead of the last-known (now potentially stale) order-book levels.
 
