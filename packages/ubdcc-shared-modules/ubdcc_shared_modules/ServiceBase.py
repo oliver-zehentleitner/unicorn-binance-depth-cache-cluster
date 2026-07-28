@@ -28,13 +28,15 @@ class ServiceBase:
     def __init__(self, app_name=None, cwd=None, mgmt_port=None, log_level=None):
         self.db: Database | None = None
         self.rest_server = None
-        self.app = App(app_name=app_name,
-                       cwd=cwd,
-                       mgmt_port=mgmt_port,
-                       service=self,
-                       service_call=self.run,
-                       stop_call=self.stop,
-                       log_level=log_level)
+        self.app = App(
+            app_name=app_name,
+            cwd=cwd,
+            mgmt_port=mgmt_port,
+            service=self,
+            service_call=self.run,
+            stop_call=self.stop,
+            log_level=log_level,
+        )
         self.app.start()
         # Never gets executed ;)
 
@@ -46,7 +48,7 @@ class ServiceBase:
         return False
 
     @staticmethod
-    def is_port_free(port, host='127.0.0.1'):
+    def is_port_free(port, host="127.0.0.1"):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             try:
@@ -60,20 +62,26 @@ class ServiceBase:
         pass
 
     def run(self) -> None:
-        self.app.stdout_msg(f"Starting the main execution flow ...", log="debug", stdout=False)
+        self.app.stdout_msg(
+            f"Starting the main execution flow ...", log="debug", stdout=False
+        )
         asyncio.run(self.main())
 
     async def start_rest_server(self, endpoints=None) -> bool:
         while True:
             while self.is_port_free(port=self.app.api_port_rest) is False:
                 self.app.api_port_rest = self.app.api_port_rest + 1
-            self.rest_server = RestServer(app=self.app, endpoints=endpoints, port=self.app.api_port_rest)
+            self.rest_server = RestServer(
+                app=self.app, endpoints=endpoints, port=self.app.api_port_rest
+            )
             self.rest_server.start()
             await asyncio.sleep(1)
             if self.rest_server.is_alive():
                 return True
-            self.app.stdout_msg(f"REST server failed to bind on port {self.app.api_port_rest}, trying next port ...",
-                                log="warn")
+            self.app.stdout_msg(
+                f"REST server failed to bind on port {self.app.api_port_rest}, trying next port ...",
+                log="warn",
+            )
             self.app.api_port_rest = self.app.api_port_rest + 1
 
     def stop(self) -> bool:

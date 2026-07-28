@@ -29,11 +29,13 @@ class RestServer(threading.Thread):
         self.app = app
         self.endpoints = endpoints(app=self.app)
         self.endpoints.register()
-        LOGGING_CONFIG["formatters"]["access"]["fmt"] = f"%(asctime)s {LOGGING_CONFIG['formatters']['access']['fmt']}"
+        LOGGING_CONFIG["formatters"]["access"][
+            "fmt"
+        ] = f"%(asctime)s {LOGGING_CONFIG['formatters']['access']['fmt']}"
         self.app.stdout_msg(f"Registering REST Server on port {port} ...", log="info")
-        self.uvicorn = uvicorn.Server(uvicorn.Config(self.app.get_fastapi_instance(),
-                                                     host="0.0.0.0",
-                                                     port=port))
+        self.uvicorn = uvicorn.Server(
+            uvicorn.Config(self.app.get_fastapi_instance(), host="0.0.0.0", port=port)
+        )
 
     def run(self) -> None:
         self.app.stdout_msg(f"Starting REST Server Engine ...", log="info")
