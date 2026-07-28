@@ -50,18 +50,28 @@ class RestEndpoints(RestEndpointsBase):
             threshold_volume = None
         else:
             threshold_volume = float(threshold_volume)
-        for dc in self.app.data['local_depthcaches']:
-            if dc['exchange'] == exchange and dc['market'] == market:
+        for dc in self.app.data["local_depthcaches"]:
+            if dc["exchange"] == exchange and dc["market"] == market:
                 try:
-                    asks = self.app.data['depthcache_instances'][dc['exchange']][dc['update_interval']].get_asks(market=dc['market'],
-                                                                                                                 limit_count=limit_count,
-                                                                                                                 threshold_volume=threshold_volume)
+                    asks = self.app.data["depthcache_instances"][dc["exchange"]][
+                        dc["update_interval"]
+                    ].get_asks(
+                        market=dc["market"],
+                        limit_count=limit_count,
+                        threshold_volume=threshold_volume,
+                    )
                 except DepthCacheOutOfSync:
-                    return self.get_error_response(event=event, error_id="#6000",
-                                                   message=f"DepthCache '{market}' for '{exchange}' is out of sync!")
+                    return self.get_error_response(
+                        event=event,
+                        error_id="#6000",
+                        message=f"DepthCache '{market}' for '{exchange}' is out of sync!",
+                    )
                 return self.get_ok_response(event=event, params={"asks": asks})
-        return self.get_error_response(event=event, error_id="#7000", message=f"DepthCache '{market}' for '{exchange}'"
-                                                                              f" not found!")
+        return self.get_error_response(
+            event=event,
+            error_id="#7000",
+            message=f"DepthCache '{market}' for '{exchange}'" f" not found!",
+        )
 
     async def get_bids(self, request: Request):
         event = "GET_BIDS"
@@ -77,16 +87,25 @@ class RestEndpoints(RestEndpointsBase):
             threshold_volume = None
         else:
             threshold_volume = float(threshold_volume)
-        for dc in self.app.data['local_depthcaches']:
-            if dc['exchange'] == exchange and dc['market'] == market:
+        for dc in self.app.data["local_depthcaches"]:
+            if dc["exchange"] == exchange and dc["market"] == market:
                 try:
-                    bids = self.app.data['depthcache_instances'][dc['exchange']][dc['update_interval']].get_bids(market=dc['market'],
-                                                                                                                 limit_count=limit_count,
-                                                                                                                 threshold_volume=threshold_volume)
+                    bids = self.app.data["depthcache_instances"][dc["exchange"]][
+                        dc["update_interval"]
+                    ].get_bids(
+                        market=dc["market"],
+                        limit_count=limit_count,
+                        threshold_volume=threshold_volume,
+                    )
                 except DepthCacheOutOfSync:
-                    return self.get_error_response(event=event, error_id="#6000",
-                                                   message=f"DepthCache '{market}' for '{exchange}' is out of sync!")
+                    return self.get_error_response(
+                        event=event,
+                        error_id="#6000",
+                        message=f"DepthCache '{market}' for '{exchange}' is out of sync!",
+                    )
                 return self.get_ok_response(event=event, params={"bids": bids})
-        return self.get_error_response(event=event, error_id="#7000", message=f"DepthCache '{market}' for '{exchange}'"
-                                                                              f" not found!")
-
+        return self.get_error_response(
+            event=event,
+            error_id="#7000",
+            message=f"DepthCache '{market}' for '{exchange}'" f" not found!",
+        )
