@@ -4,11 +4,13 @@
 [![PyPi Downloads](https://pepy.tech/badge/ubdcc-shared-modules)](https://pepy.tech/project/ubdcc-shared-modules)
 [![License](https://img.shields.io/badge/license-MIT-blue)](https://oliver-zehentleitner.github.io/unicorn-binance-depth-cache-cluster/license.html)
 [![Supported Python Version](https://img.shields.io/pypi/pyversions/ubdcc-shared-modules.svg)](https://www.python.org/downloads/)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![PyPI - Status](https://img.shields.io/pypi/status/ubdcc-shared-modules.svg)](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/issues)
 [![Build and Publish PyPi](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/build_wheels_ubdcc_shared_modules.yml/badge.svg)](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/actions/workflows/build_wheels_ubdcc_shared_modules.yml)
 [![Read the Docs](https://img.shields.io/badge/read-%20docs-yellow)](https://oliver-zehentleitner.github.io/unicorn-binance-depth-cache-cluster)
 [![Github](https://img.shields.io/badge/source-github-cbc2c8)](https://github.com/oliver-zehentleitner/unicorn-binance-depth-cache-cluster/tree/master/packages/ubdcc-shared-modules)
 [![Telegram](https://img.shields.io/badge/community-telegram-41ab8c)](https://t.me/unicorndevs)
+[![Keep the Why](https://keepthewhy.com/assets/badge.svg)](https://keepthewhy.com)
 
 # UNICORN Binance DepthCache Cluster Shared Modules
 The general `ubdcc-shared-modules` module for the K8 Pods of the UNICORN Binance DepthCache Cluster.
