@@ -62,6 +62,8 @@
 
 ## S
 
+- [security.md](security.md) — why the cluster API has no auth, why internal endpoints expose full API secrets, and why that's deferred
+
 ## T
 
 ## U

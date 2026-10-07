@@ -726,8 +726,11 @@ assignment. `get_cluster_info` / `credentials list` show which DCNs each key is 
   self-healing). Inside the cluster they are full, cleartext — this is a deliberate trade-off so
   that the self-healing/backup flow keeps working.
 - Public responses (`get_cluster_info`, `get_credentials_list`) only return **masked
-  previews** of the key and never the secret. Only the internal `/ubdcc_assign_credentials`
-  endpoint returns the full pair, and only to a requesting DCN.
+  previews** of the key and never the secret. The internal endpoints are a different story:
+  `/ubdcc_assign_credentials` returns the full pair to a requesting DCN, and `/ubdcc_mgmt_backup`
+  — served by every pod, the public restapi included — returns the whole cluster DB including
+  the secrets, because that is how the backup reaches every pod. None of these endpoints is
+  authenticated.
 - It is **your responsibility** to protect the cluster: lock down the network (firewall, private
   VPC), restrict who can talk to mgmt/restapi, keep node images/backups safe. UBDCC does not yet
   provide transport encryption or authentication on the internal API — we are building from the

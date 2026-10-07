@@ -34,6 +34,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
   `replicas = perNode × nodeCount`, spread evenly via
   `topologySpreadConstraints`. The `replicaCount.restapi` value is removed.
 - `admin/k8s/ubdcc-restapi.yaml` updated to match (plain `DaemonSet`).
+- README "Security caveats": corrected the claim that only
+  `/ubdcc_assign_credentials` returns a full key pair — `/ubdcc_mgmt_backup`
+  on every pod returns the whole cluster DB including the secrets.
 
 ## 0.9.1
 ### Fixed
